@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>훼이맵 | 아로마테라피 힐링 공간</title>
+  <meta name="description" content="향으로 마음을 쉬게 하는 곳, 훼이맵. 아로마테라피 기반 페이셜·바디 케어와 맞춤 블렌딩." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- 헤더 -->
+  <header class="header" id="header">
+    <div class="container header__inner">
+      <a href="#home" class="logo">
+        <span class="logo__mark">❀</span>
+        <span class="logo__text">훼이맵</span>
+      </a>
+      <nav class="nav" id="nav">
+        <a href="#about">소개</a>
+        <a href="#aroma">아로마테라피</a>
+        <a href="#programs">프로그램</a>
+        <a href="#cards">향기카드</a>
+        <a href="#finder">나의 향 찾기</a>
+        <a href="#reviews">후기</a>
+        <a href="#contact" class="nav__cta">예약 문의</a>
+      </nav>
+      <button class="menu-btn" id="menuBtn" aria-label="메뉴 열기" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- 히어로 -->
+    <section class="hero" id="home">
+      <div class="hero__bg">
+        <span class="blob blob--1"></span>
+        <span class="blob blob--2"></span>
+        <span class="blob blob--3"></span>
+      </div>
+      <div class="container hero__content">
+        <p class="hero__eyebrow">AROMATHERAPY · HEALING · CARE</p>
+        <h1 class="hero__title">
+          향기로 그리는<br />
+          <em>나만의 쉼표</em>
+        </h1>
+        <p class="hero__desc">
+          천연 에센셜 오일의 향과 정성 어린 손길로<br class="br-pc" />
+          지친 몸과 마음에 편안한 휴식을 선물합니다.
+        </p>
+        <div class="hero__actions">
+          <a href="#contact" class="btn btn--primary">예약 문의하기</a>
+          <a href="#finder" class="btn btn--ghost">오늘의 향 찾기</a>
+        </div>
+      </div>
+      <a href="#about" class="scroll-hint" aria-label="아래로 스크롤">
+        <span></span>
+      </a>
+    </section>
+
+    <!-- 소개 -->
+    <section class="section about" id="about">
+      <div class="container about__grid">
+        <div class="about__visual reveal">
+          <div class="about__frame">
+            <div class="about__bottle">
+              <span class="bottle__cap"></span>
+              <span class="bottle__body"><span class="bottle__label">훼이맵</span></span>
+            </div>
+            <span class="leaf leaf--1">🌿</span>
+            <span class="leaf leaf--2">🌸</span>
+            <span class="leaf leaf--3">🍃</span>
+          </div>
+        </div>
+        <div class="about__text reveal">
+          <p class="section__eyebrow">ABOUT</p>
+          <h2 class="section__title">안녕하세요,<br />훼이맵입니다</h2>
+          <p>
+            훼이맵은 아로마테라피를 기반으로 한 힐링 케어 공간입니다.
+            하루하루 바쁘게 살아가는 분들이 잠시 멈추어
+            <strong>숨을 고르고, 향을 느끼고, 자신을 돌볼 수 있는 시간</strong>을
+            만들어 드리고 싶었습니다.
+          </p>
+          <p>
+            고객 한 분 한 분의 컨디션과 취향을 먼저 여쭙고,
+            그날의 나에게 꼭 맞는 오일을 골라 블렌딩합니다.
+            향이 닿는 순간부터 몸과 마음이 천천히 풀어지는 경험을 함께해 주세요.
+          </p>
+          <ul class="about__points">
+            <li><span>01</span>1:1 상담 후 맞춤 블렌딩</li>
+            <li><span>02</span>천연 에센셜 오일 사용</li>
+            <li><span>03</span>조용하고 아늑한 프라이빗 공간</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 아로마 오일 -->
+    <section class="section aroma" id="aroma">
+      <div class="container">
+        <div class="section__head reveal">
+          <p class="section__eyebrow">ESSENTIAL OILS</p>
+          <h2 class="section__title">훼이맵이 사랑하는 향</h2>
+          <p class="section__desc">카드를 눌러 각 오일의 이야기를 확인해 보세요.</p>
+        </div>
+        <div class="oil-grid" id="oilGrid"></div>
+      </div>
+    </section>
+
+    <!-- 프로그램 -->
+    <section class="section programs" id="programs">
+      <div class="container">
+        <div class="section__head reveal">
+          <p class="section__eyebrow">PROGRAMS</p>
+          <h2 class="section__title">케어 프로그램</h2>
+          <p class="section__desc">모든 프로그램은 상담과 향 선택 시간이 포함되어 있어요.</p>
+        </div>
+        <div class="program-grid">
+          <article class="program reveal">
+            <div class="program__icon">🌸</div>
+            <h3>아로마 페이셜 케어</h3>
+            <p>맞춤 블렌딩 오일로 얼굴과 데콜테를 부드럽게 케어하여 맑고 편안한 피부 컨디션을 도와요.</p>
+            <ul class="program__meta">
+              <li>소요시간 <b>60분</b></li>
+              <li>가격 <b>문의</b></li>
+            </ul>
+          </article>
+          <article class="program program--featured reveal">
+            <span class="program__badge">BEST</span>
+            <div class="program__icon">🌿</div>
+            <h3>아로마 바디 테라피</h3>
+            <p>등·어깨·목 중심으로 뭉친 곳을 섬세하게 풀어주며 깊은 이완과 휴식을 선물합니다.</p>
+            <ul class="program__meta">
+              <li>소요시간 <b>90분</b></li>
+              <li>가격 <b>문의</b></li>
+            </ul>
+          </article>
+          <article class="program reveal">
+            <div class="program__icon">🫧</div>
+            <h3>헤드 & 숄더 릴렉스</h3>
+            <p>두피와 어깨 라인을 집중 케어하는 짧고 알찬 코스. 바쁜 날의 짧은 휴식으로 추천해요.</p>
+            <ul class="program__meta">
+              <li>소요시간 <b>40분</b></li>
+              <li>가격 <b>문의</b></li>
+            </ul>
+          </article>
+          <article class="program reveal">
+            <div class="program__icon">🧪</div>
+            <h3>나만의 블렌딩 클래스</h3>
+            <p>향을 직접 맡아보고 골라 나만의 롤온·룸스프레이를 만들어 가는 원데이 클래스입니다.</p>
+            <ul class="program__meta">
+              <li>소요시간 <b>60분</b></li>
+              <li>가격 <b>문의</b></li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 향기카드 진단 -->
+    <section class="section cards" id="cards">
+      <div class="container">
+        <div class="section__head reveal">
+          <p class="section__eyebrow">SCENT CARD READING</p>
+          <h2 class="section__title">향기카드로 들여다보는 내 마음</h2>
+          <p class="section__desc">20장의 에센셜 오일 카드 중 마음이 끌리는 3장을 골라 보세요.<br class="br-pc" />
+            무의식적으로 끌리는 향에는 지금 내 마음의 이야기가 담겨 있어요.</p>
+        </div>
+
+        <!-- 1단계: 안내 -->
+        <div class="deck-intro reveal" id="deckIntro">
+          <ol class="deck-intro__steps">
+            <li><span>1</span><b>숨 고르기</b>눈을 감고 천천히 세 번 호흡해요</li>
+            <li><span>2</span><b>카드 섞기</b>20장의 향기카드를 섞어요</li>
+            <li><span>3</span><b>3장 뽑기</b>생각하지 말고 끌리는 카드를 골라요</li>
+          </ol>
+          <button class="btn btn--primary" id="shuffleBtn">카드 섞고 시작하기</button>
+        </div>
+
+        <!-- 2단계: 카드 뽑기 -->
+        <div class="deck" id="deck" hidden>
+          <p class="deck__status" id="deckStatus" aria-live="polite"></p>
+          <div class="deck__grid" id="deckGrid"></div>
+        </div>
+
+        <!-- 3단계: 진단 결과 -->
+        <div class="reading" id="reading" hidden>
+          <div class="reading__spread" id="spread"></div>
+          <div class="reading__summary" id="readingSummary" hidden></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 향 찾기 -->
+    <section class="section finder" id="finder">
+      <div class="container finder__inner">
+        <div class="section__head reveal">
+          <p class="section__eyebrow">FIND YOUR SCENT</p>
+          <h2 class="section__title">오늘, 나에게 필요한 향은?</h2>
+          <p class="section__desc">지금 기분에 가장 가까운 것을 골라 보세요.</p>
+        </div>
+        <div class="mood-list reveal" id="moodList">
+          <button class="mood" data-mood="tired">😮‍💨<span>지치고 피곤해요</span></button>
+          <button class="mood" data-mood="stress">😣<span>스트레스가 많아요</span></button>
+          <button class="mood" data-mood="sleep">🌙<span>잠들기 어려워요</span></button>
+          <button class="mood" data-mood="focus">📚<span>집중하고 싶어요</span></button>
+          <button class="mood" data-mood="blue">☁️<span>기분이 가라앉아요</span></button>
+          <button class="mood" data-mood="fresh">✨<span>상쾌해지고 싶어요</span></button>
+        </div>
+        <div class="result" id="result" aria-live="polite" hidden>
+          <div class="result__card">
+            <p class="result__label">훼이맵 추천 블렌드</p>
+            <h3 class="result__name" id="resultName"></h3>
+            <div class="result__oils" id="resultOils"></div>
+            <p class="result__desc" id="resultDesc"></p>
+            <a href="#contact" class="btn btn--primary btn--sm" id="resultCta">이 향으로 예약 문의</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 후기 -->
+    <section class="section reviews" id="reviews">
+      <div class="container">
+        <div class="section__head reveal">
+          <p class="section__eyebrow">REVIEWS</p>
+          <h2 class="section__title">다녀가신 분들의 이야기</h2>
+        </div>
+        <div class="slider reveal">
+          <div class="slider__track" id="sliderTrack">
+            <blockquote class="review">
+              <p>“들어서는 순간부터 향이 너무 좋아서 마음이 편안해졌어요. 상담해 주신 오일이 저랑 정말 잘 맞았어요.”</p>
+              <cite>— 김○○ 님 · 아로마 바디 테라피</cite>
+            </blockquote>
+            <blockquote class="review">
+              <p>“요즘 잠을 잘 못 잤는데, 케어 받은 날은 오랜만에 푹 잤어요. 블렌딩 오일도 집에서 잘 쓰고 있습니다.”</p>
+              <cite>— 이○○ 님 · 아로마 페이셜 케어</cite>
+            </blockquote>
+            <blockquote class="review">
+              <p>“조용하고 아늑한 분위기라 온전히 쉬다 왔어요. 나만을 위한 시간이 필요할 때 또 오고 싶어요.”</p>
+              <cite>— 박○○ 님 · 헤드 & 숄더 릴렉스</cite>
+            </blockquote>
+            <blockquote class="review">
+              <p>“친구랑 블렌딩 클래스 들었는데 향마다 설명을 자세히 해 주셔서 재미있었어요. 룸스프레이 최고!”</p>
+              <cite>— 최○○ 님 · 블렌딩 클래스</cite>
+            </blockquote>
+          </div>
+          <div class="slider__controls">
+            <button class="slider__btn" id="prevBtn" aria-label="이전 후기">←</button>
+            <div class="slider__dots" id="sliderDots"></div>
+            <button class="slider__btn" id="nextBtn" aria-label="다음 후기">→</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 예약 / 문의 -->
+    <section class="section contact" id="contact">
+      <div class="container contact__grid">
+        <div class="contact__info reveal">
+          <p class="section__eyebrow">CONTACT</p>
+          <h2 class="section__title">편하게 문의 주세요</h2>
+          <p class="contact__lead">예약은 사전 연락으로 진행됩니다. 원하시는 날짜와 프로그램을 남겨 주시면 확인 후 연락드릴게요.</p>
+          <ul class="contact__list">
+            <li><span>📞</span><div><b>전화</b><a data-config="phone"></a></div></li>
+            <li><span>✉️</span><div><b>이메일</b><a data-config="email"></a></div></li>
+            <li><span>💬</span><div><b>인스타그램</b><a data-config="instagram" target="_blank" rel="noopener"></a></div></li>
+            <li><span>📍</span><div><b>위치</b><p data-config="address"></p></div></li>
+            <li><span>🕰️</span><div><b>운영시간</b><p data-config="hours"></p></div></li>
+          </ul>
+        </div>
+        <form class="form reveal" id="contactForm" novalidate>
+          <div class="form__row">
+            <label for="name">성함</label>
+            <input type="text" id="name" name="name" placeholder="홍길동" required />
+          </div>
+          <div class="form__row">
+            <label for="tel">연락처</label>
+            <input type="tel" id="tel" name="tel" placeholder="010-0000-0000" required />
+          </div>
+          <div class="form__row form__row--half">
+            <div>
+              <label for="program">프로그램</label>
+              <select id="program" name="program">
+                <option>아로마 페이셜 케어</option>
+                <option>아로마 바디 테라피</option>
+                <option>헤드 & 숄더 릴렉스</option>
+                <option>나만의 블렌딩 클래스</option>
+                <option>상담 후 결정</option>
+              </select>
+            </div>
+            <div>
+              <label for="date">희망 날짜</label>
+              <input type="date" id="date" name="date" />
+            </div>
+          </div>
+          <div class="form__row">
+            <label for="message">요청사항</label>
+            <textarea id="message" name="message" rows="4" placeholder="컨디션, 선호하는 향, 피하고 싶은 향 등을 알려주세요."></textarea>
+          </div>
+          <p class="form__error" id="formError" aria-live="polite"></p>
+          <button type="submit" class="btn btn--primary btn--block">문의 보내기</button>
+          <p class="form__note">문의하기를 누르면 메일 앱이 열리며 작성하신 내용이 자동으로 채워집니다.</p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <a href="#home" class="logo logo--light">
+        <span class="logo__mark">❀</span>
+        <span class="logo__text">훼이맵</span>
+      </a>
+      <p class="footer__copy">향기로 그리는 나만의 쉼표 · © <span id="year"></span> 훼이맵. All rights reserved.</p>
+      <p class="footer__notice">아로마테라피는 휴식과 웰니스를 위한 케어이며, 의학적 진단·치료를 대신하지 않습니다.</p>
+    </div>
+  </footer>
+
+  <!-- 오일 상세 모달 -->
+  <div class="modal" id="oilModal" hidden>
+    <div class="modal__backdrop" data-close></div>
+    <div class="modal__box" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal__close" data-close aria-label="닫기">×</button>
+      <div class="modal__emoji" id="modalEmoji"></div>
+      <h3 id="modalTitle"></h3>
+      <p class="modal__en" id="modalEn"></p>
+      <p id="modalDesc"></p>
+      <div class="modal__tags" id="modalTags"></div>
+    </div>
+  </div>
+
+  <a href="#home" class="to-top" id="toTop" aria-label="맨 위로">↑</a>
+
+  <script src="script.js"></script>
+</body>
+</html>
