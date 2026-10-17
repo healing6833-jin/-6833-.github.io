@@ -9,6 +9,8 @@ const SITE = {
   address: '대구광역시 북구 · 방문 상담 예약제',
   // 온라인 접수 주소 (탈리 폼 등). 비어 있으면 문자 · 메일로 보내도록 안내합니다.
   formEndpoint: '',
+  // 탈리 폼 ID (https://tally.so/r/ 뒤의 글자). 채우면 문의 칸이 탈리 폼으로 바뀝니다.
+  tallyId: 'q5ZJ2Y',
 };
 // 주소가 생기면 채워 주세요. 비어 있으면 버튼이 예약 문의로 연결됩니다.
 const LINKS = {
@@ -554,7 +556,32 @@ const programSel = $('#contact-program');
 function syncReportFields(){ $('#report-fields').hidden = programSel.value !== '정식 오행 사주 리포트'; }
 programSel.addEventListener('change', syncReportFields);
 
+// 탈리 폼 넣기: 숨은 칸(program, note)에 체험 결과를 담아 전달
+let tallyFrame = null;
+function tallySrc(program, note){
+  const q = new URLSearchParams({alignLeft:'1', hideTitle:'1', transparentBackground:'1', dynamicHeight:'1'});
+  if (program) q.set('program', program);
+  if (note) q.set('note', note);
+  return `https://tally.so/embed/${SITE.tallyId}?${q}`;
+}
+(function initTally(){
+  if (!SITE.tallyId) return;
+  form.hidden = true;
+  const box = document.createElement('div');
+  box.className = 'contact-form tally-box reveal in';
+  box.innerHTML = `<iframe title="훼이맵 상담 · 예약 신청" loading="lazy" width="100%" height="720" frameborder="0" src="${tallySrc()}"></iframe>
+    <p class="fine" style="margin:8px 0 0">폼이 보이지 않으면 <a href="https://tally.so/r/${SITE.tallyId}" target="_blank" rel="noopener">새 창에서 열기</a></p>`;
+  form.after(box);
+  tallyFrame = $('iframe', box);
+  // 탈리 공식 스크립트: 폼 높이를 내용에 맞게 자동 조절
+  const s = document.createElement('script');
+  s.src = 'https://tally.so/widgets/embed.js'; s.async = true;
+  s.onload = () => window.Tally && window.Tally.loadEmbeds();
+  document.body.appendChild(s);
+})();
+
 function prefillContact(program, note){
+  if (tallyFrame){ tallyFrame.src = tallySrc(program, note); return; }
   if (program && [...programSel.options].some(o => o.text === program)) programSel.value = program;
   if (note) $('#contact-message').value = note;
   syncReportFields();
