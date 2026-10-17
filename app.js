@@ -16,7 +16,7 @@ const SITE = {
 const LINKS = {
   wadiz: '',
   smartstore: 'https://smartstore.naver.com/healing6833',
-  // 제품 카드의 '구매하러 가기' 버튼
+  // 제품 카드의 '구매하기' 버튼
   product: 'https://smartstore.naver.com/healing6833/products/10129726013',
   instagram: 'https://www.instagram.com/joyhealing6833/',
   threads: 'https://www.threads.com/@joyhealing6833',
