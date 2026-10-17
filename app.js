@@ -15,7 +15,9 @@ const SITE = {
 // 주소가 생기면 채워 주세요. 비어 있으면 버튼이 예약 문의로 연결됩니다.
 const LINKS = {
   wadiz: '',
-  smartstore: 'https://smartstore.naver.com/healing6833/products/10129726013',
+  smartstore: 'https://smartstore.naver.com/healing6833',
+  // 제품 카드의 '구매하러 가기' 버튼
+  product: 'https://smartstore.naver.com/healing6833/products/10129726013',
   instagram: 'https://www.instagram.com/joyhealing6833/',
   threads: 'https://www.threads.com/@joyhealing6833',
   blog: 'https://blog.naver.com/healing6833',
