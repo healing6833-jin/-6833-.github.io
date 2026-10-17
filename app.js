@@ -717,3 +717,8 @@ addEventListener('hashchange', () => {
   history.replaceState(null, '', location.pathname + location.search);
   scrollToId(id);
 });
+// 자격증 이미지: 키보드(Enter · Space)로도 크게 보기
+document.addEventListener('keydown', e => {
+  const o = e.target.closest && e.target.closest('[data-open][role="button"]');
+  if (o && (e.key === 'Enter' || e.key === ' ')){ e.preventDefault(); $('#' + o.dataset.open).showModal(); }
+});

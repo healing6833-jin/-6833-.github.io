@@ -242,8 +242,8 @@
 <!-- 대표 -->
 <section class="section" id="maker">
   <div class="container maker">
-    <figure class="maker-cert reveal">
-      <img src="img/cert.jpg" alt="조영진 대표의 맞춤형화장품조제관리사 자격증과 아로마테라피전문가 1급 자격증서" loading="lazy" width="925" height="600">
+    <figure class="maker-cert reveal" role="button" tabindex="0" data-open="cert-modal" aria-label="자격증 크게 보기">
+      <img src="img/cert.jpg" alt="조영진 대표의 자격증 3종 — 맞춤형화장품조제관리사(식품의약품안전처), 국가기술자격 미용사(피부)(한국산업인력공단), 아로마테라피전문가 1급(한국아로마테라피전문가협회)" loading="lazy" width="1800" height="867">
     </figure>
     <div class="maker-text reveal">
       <p class="eyebrow">05 · FOUNDER</p>
@@ -430,6 +430,12 @@
     <dt>동의 거부</dt><dd>동의를 거부하실 수 있으며, 이 경우 온라인 문의 접수가 어렵습니다. 전화로 문의해 주세요.</dd>
     <dt>문의</dt><dd>개인정보 보호책임자 조영진 · <span data-config="email"></span></dd>
   </dl>
+</dialog>
+
+<dialog class="modal modal-cert" id="cert-modal" aria-label="자격증 크게 보기">
+  <button class="modal-close" type="button" data-close aria-label="닫기">×</button>
+  <img src="img/cert.jpg" alt="조영진 대표의 자격증 3종" width="1800" height="867">
+  <p class="fine" style="text-align:center">개인정보(생년월일 · 주소 · 주민등록번호 · 자격번호)는 가림 처리했습니다.</p>
 </dialog>
 
 <a class="to-top" id="to-top" href="#top" aria-label="맨 위로">↑</a>
