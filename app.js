@@ -14,6 +14,7 @@ const SITE = {
 };
 // 주소가 생기면 채워 주세요. 비어 있으면 버튼이 예약 문의로 연결됩니다.
 const LINKS = {
+  // 와디즈 펀딩이 열리면 주소를 넣어 주세요 → 스탠다드·프리미엄 '구매하기'가 와디즈로 연결됩니다.
   wadiz: '',
   smartstore: 'https://smartstore.naver.com/healing6833',
   // 제품 카드의 '구매하기' 버튼
@@ -516,11 +517,14 @@ $$('[data-config-href]').forEach(el => {
   const tel = SITE.phone.replace(/[^0-9+]/g, '');
   el.href = el.dataset.configHref === 'sms' ? `sms:${tel}` : `tel:${tel}`;
 });
+// 주소가 있으면 그 링크로, 없으면 data-fallback-link(예: 와디즈 → 스마트스토어 상품)로 연결
 $$('[data-link]').forEach(el => {
-  const url = LINKS[el.dataset.link];
+  const url = LINKS[el.dataset.link] || LINKS[el.dataset.fallbackLink];
   if (url){ el.href = url; el.target = '_blank'; el.rel = 'noopener'; }
   else { el.dataset.prefill = el.dataset.fallbackPrefill; el.dataset.note = el.dataset.fallbackNote; }
 });
+// 와디즈 주소가 들어가면 '준비 중' 표시도 자동으로 바뀜
+if (LINKS.wadiz) $$('[data-wadiz-tag]').forEach(el => { el.textContent = el.dataset.wadizTag; });
 // 채널 로고 버튼 (주소가 있는 채널만 표시)
 const CHANNEL_ICONS = {
   instagram:{ name:'Instagram', handle:'@joyhealing6833', bg:'linear-gradient(45deg,#F9CE34 0%,#EE2A7B 45%,#6228D7 100%)',
