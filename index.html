@@ -1,341 +1,439 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>훼이맵 | 아로마테라피 힐링 공간</title>
-  <meta name="description" content="향으로 마음을 쉬게 하는 곳, 훼이맵. 아로마테라피 기반 페이셜·바디 케어와 맞춤 블렌딩." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>훼이맵 | 아로마테라피 상담·클래스</title>
+<meta name="description" content="12별자리와 8행성, 20가지 싱글 에센셜오일로 오늘의 나에게 맞는 향을 찾는 훼이맵FateMap. 향기카드 20 리딩, 4원소 자가진단, 1:1 오행·별자리 아로마 컨설팅과 블렌딩 클래스.">
+<meta name="theme-color" content="#1D2147">
+<link rel="canonical" href="https://healing6833-jin.github.io/">
+<link rel="icon" href="img/logo-sm.png">
+<link rel="apple-touch-icon" href="img/logo-sm.png">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="훼이맵FateMap">
+<meta property="og:title" content="훼이맵 | 아로마테라피 상담·클래스">
+<meta property="og:description" content="향기카드 20으로 오늘의 나를 읽고, 나만의 블렌딩 레시피를 만나 보세요.">
+<meta property="og:url" content="https://healing6833-jin.github.io/">
+<meta property="og:image" content="https://healing6833-jin.github.io/img/fatemap-og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="img/hero-photo.jpg" media="(min-width: 721px)">
+<link rel="stylesheet" href="style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "훼이맵FateMap (국제실용아로마테라피학회)",
+  "description": "사주·오행, 서양 점성학, 아로마테라피를 엮은 맞춤 향 상담과 블렌딩 클래스",
+  "url": "https://healing6833-jin.github.io/",
+  "image": "https://healing6833-jin.github.io/img/fatemap-og-image.png",
+  "telephone": "+82-10-5270-6833",
+  "email": "infor423@naver.com",
+  "founder": { "@type": "Person", "name": "조영진" },
+  "sameAs": ["https://www.instagram.com/joyhealing6833/", "https://www.threads.com/@joyhealing6833", "https://www.youtube.com/@%ED%96%A5%EA%B8%B0%EC%B9%98%EC%9C%A0%EC%A0%95%EC%9B%90%ED%9B%BC%EC%9D%B4%EB%A7%B5Fat", "https://smartstore.naver.com/healing6833", "https://blog.naver.com/healing6833"],
+  "address": { "@type": "PostalAddress", "addressLocality": "대구광역시 북구", "addressCountry": "KR" }
+}
+</script>
 </head>
 <body>
+<a class="skip" href="#main">본문 바로가기</a>
 
-  <!-- 헤더 -->
-  <header class="header" id="header">
-    <div class="container header__inner">
-      <a href="#home" class="logo">
-        <span class="logo__mark">❀</span>
-        <span class="logo__text">훼이맵</span>
-      </a>
-      <nav class="nav" id="nav">
-        <a href="#about">소개</a>
-        <a href="#aroma">아로마테라피</a>
-        <a href="#programs">프로그램</a>
-        <a href="#cards">향기카드</a>
-        <a href="#finder">나의 향 찾기</a>
-        <a href="#reviews">후기</a>
-        <a href="#contact" class="nav__cta">예약 문의</a>
-      </nav>
-      <button class="menu-btn" id="menuBtn" aria-label="메뉴 열기" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
+<header class="site-header" id="header">
+  <div class="container header-inner">
+    <a class="brand" href="#top" aria-label="훼이맵FateMap 처음으로">
+      <img src="img/logo-sm.png" alt="" width="36" height="36">
+      <span>훼이맵<em>FateMap</em></span>
+    </a>
+    <nav class="nav" id="nav" aria-label="주요 메뉴">
+      <a href="#brand">브랜드</a>
+      <a href="#experience">무료 체험</a>
+      <a href="#atlas">향의 지도</a>
+      <a href="#programs">상담·클래스</a>
+      <a href="#store">제품</a>
+      <a href="#faq">FAQ</a>
+      <a class="nav-cta" href="#contact">예약 문의</a>
+    </nav>
+    <button class="menu-btn" id="menu-btn" type="button" aria-label="메뉴 열기" aria-expanded="false" aria-controls="nav"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- 히어로 -->
+<section class="hero" id="top">
+  <div class="hero-bg" aria-hidden="true"></div>
+  <div class="container hero-inner">
+    <p class="eyebrow light">AROMATHERAPY · ASTROLOGY · 五行</p>
+    <h1>별과 오행이 고른<br><span>오늘의 향</span></h1>
+    <p class="hero-lede">12별자리와 8행성, 20가지 싱글 에센셜오일.<br>지금의 나를 읽고, 나에게 맞는 향을 함께 고릅니다.</p>
+    <div class="hero-cta">
+      <a class="btn btn-gold" href="#experience" data-open-tab="cards">향기카드 뽑아보기</a>
+      <a class="btn btn-ghost-light" href="#contact" data-prefill="1:1 오행·별자리 아로마 컨설팅">1:1 상담 예약</a>
     </div>
-  </header>
+    <ul class="hero-trust">
+      <li><b>맞춤형화장품조제관리사</b>식품의약품안전처</li>
+      <li><b>아로마테라피전문가 1급</b>국제실용아로마테라피학회</li>
+      <li><b>누적 리뷰 240건</b>스마트스토어 싱글 오일</li>
+    </ul>
+  </div>
+  <a class="scroll-cue" href="#brand" aria-label="아래로"><span></span></a>
+</section>
 
-  <main>
-    <!-- 히어로 -->
-    <section class="hero" id="home">
-      <div class="hero__bg">
-        <span class="blob blob--1"></span>
-        <span class="blob blob--2"></span>
-        <span class="blob blob--3"></span>
-      </div>
-      <div class="container hero__content">
-        <p class="hero__eyebrow">AROMATHERAPY · HEALING · CARE</p>
-        <h1 class="hero__title">
-          향기로 그리는<br />
-          <em>나만의 쉼표</em>
-        </h1>
-        <p class="hero__desc">
-          천연 에센셜 오일의 향과 정성 어린 손길로<br class="br-pc" />
-          지친 몸과 마음에 편안한 휴식을 선물합니다.
-        </p>
-        <div class="hero__actions">
-          <a href="#contact" class="btn btn--primary">예약 문의하기</a>
-          <a href="#finder" class="btn btn--ghost">오늘의 향 찾기</a>
-        </div>
-      </div>
-      <a href="#about" class="scroll-hint" aria-label="아래로 스크롤">
-        <span></span>
-      </a>
-    </section>
-
-    <!-- 소개 -->
-    <section class="section about" id="about">
-      <div class="container about__grid">
-        <div class="about__visual reveal">
-          <div class="about__frame">
-            <div class="about__bottle">
-              <span class="bottle__cap"></span>
-              <span class="bottle__body"><span class="bottle__label">훼이맵</span></span>
-            </div>
-            <span class="leaf leaf--1">🌿</span>
-            <span class="leaf leaf--2">🌸</span>
-            <span class="leaf leaf--3">🍃</span>
-          </div>
-        </div>
-        <div class="about__text reveal">
-          <p class="section__eyebrow">ABOUT</p>
-          <h2 class="section__title">안녕하세요,<br />훼이맵입니다</h2>
-          <p>
-            훼이맵은 아로마테라피를 기반으로 한 힐링 케어 공간입니다.
-            하루하루 바쁘게 살아가는 분들이 잠시 멈추어
-            <strong>숨을 고르고, 향을 느끼고, 자신을 돌볼 수 있는 시간</strong>을
-            만들어 드리고 싶었습니다.
-          </p>
-          <p>
-            고객 한 분 한 분의 컨디션과 취향을 먼저 여쭙고,
-            그날의 나에게 꼭 맞는 오일을 골라 블렌딩합니다.
-            향이 닿는 순간부터 몸과 마음이 천천히 풀어지는 경험을 함께해 주세요.
-          </p>
-          <ul class="about__points">
-            <li><span>01</span>1:1 상담 후 맞춤 블렌딩</li>
-            <li><span>02</span>천연 에센셜 오일 사용</li>
-            <li><span>03</span>조용하고 아늑한 프라이빗 공간</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- 아로마 오일 -->
-    <section class="section aroma" id="aroma">
-      <div class="container">
-        <div class="section__head reveal">
-          <p class="section__eyebrow">ESSENTIAL OILS</p>
-          <h2 class="section__title">훼이맵이 사랑하는 향</h2>
-          <p class="section__desc">카드를 눌러 각 오일의 이야기를 확인해 보세요.</p>
-        </div>
-        <div class="oil-grid" id="oilGrid"></div>
-      </div>
-    </section>
-
-    <!-- 프로그램 -->
-    <section class="section programs" id="programs">
-      <div class="container">
-        <div class="section__head reveal">
-          <p class="section__eyebrow">PROGRAMS</p>
-          <h2 class="section__title">케어 프로그램</h2>
-          <p class="section__desc">모든 프로그램은 상담과 향 선택 시간이 포함되어 있어요.</p>
-        </div>
-        <div class="program-grid">
-          <article class="program reveal">
-            <div class="program__icon">🌸</div>
-            <h3>아로마 페이셜 케어</h3>
-            <p>맞춤 블렌딩 오일로 얼굴과 데콜테를 부드럽게 케어하여 맑고 편안한 피부 컨디션을 도와요.</p>
-            <ul class="program__meta">
-              <li>소요시간 <b>60분</b></li>
-              <li>가격 <b>문의</b></li>
-            </ul>
-          </article>
-          <article class="program program--featured reveal">
-            <span class="program__badge">BEST</span>
-            <div class="program__icon">🌿</div>
-            <h3>아로마 바디 테라피</h3>
-            <p>등·어깨·목 중심으로 뭉친 곳을 섬세하게 풀어주며 깊은 이완과 휴식을 선물합니다.</p>
-            <ul class="program__meta">
-              <li>소요시간 <b>90분</b></li>
-              <li>가격 <b>문의</b></li>
-            </ul>
-          </article>
-          <article class="program reveal">
-            <div class="program__icon">🫧</div>
-            <h3>헤드 & 숄더 릴렉스</h3>
-            <p>두피와 어깨 라인을 집중 케어하는 짧고 알찬 코스. 바쁜 날의 짧은 휴식으로 추천해요.</p>
-            <ul class="program__meta">
-              <li>소요시간 <b>40분</b></li>
-              <li>가격 <b>문의</b></li>
-            </ul>
-          </article>
-          <article class="program reveal">
-            <div class="program__icon">🧪</div>
-            <h3>나만의 블렌딩 클래스</h3>
-            <p>향을 직접 맡아보고 골라 나만의 롤온·룸스프레이를 만들어 가는 원데이 클래스입니다.</p>
-            <ul class="program__meta">
-              <li>소요시간 <b>60분</b></li>
-              <li>가격 <b>문의</b></li>
-            </ul>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- 향기카드 진단 -->
-    <section class="section cards" id="cards">
-      <div class="container">
-        <div class="section__head reveal">
-          <p class="section__eyebrow">SCENT CARD READING</p>
-          <h2 class="section__title">향기카드로 들여다보는 내 마음</h2>
-          <p class="section__desc">20장의 에센셜 오일 카드 중 마음이 끌리는 3장을 골라 보세요.<br class="br-pc" />
-            무의식적으로 끌리는 향에는 지금 내 마음의 이야기가 담겨 있어요.</p>
-        </div>
-
-        <!-- 1단계: 안내 -->
-        <div class="deck-intro reveal" id="deckIntro">
-          <ol class="deck-intro__steps">
-            <li><span>1</span><b>숨 고르기</b>눈을 감고 천천히 세 번 호흡해요</li>
-            <li><span>2</span><b>카드 섞기</b>20장의 향기카드를 섞어요</li>
-            <li><span>3</span><b>3장 뽑기</b>생각하지 말고 끌리는 카드를 골라요</li>
-          </ol>
-          <button class="btn btn--primary" id="shuffleBtn">카드 섞고 시작하기</button>
-        </div>
-
-        <!-- 2단계: 카드 뽑기 -->
-        <div class="deck" id="deck" hidden>
-          <p class="deck__status" id="deckStatus" aria-live="polite"></p>
-          <div class="deck__grid" id="deckGrid"></div>
-        </div>
-
-        <!-- 3단계: 진단 결과 -->
-        <div class="reading" id="reading" hidden>
-          <div class="reading__spread" id="spread"></div>
-          <div class="reading__summary" id="readingSummary" hidden></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 향 찾기 -->
-    <section class="section finder" id="finder">
-      <div class="container finder__inner">
-        <div class="section__head reveal">
-          <p class="section__eyebrow">FIND YOUR SCENT</p>
-          <h2 class="section__title">오늘, 나에게 필요한 향은?</h2>
-          <p class="section__desc">지금 기분에 가장 가까운 것을 골라 보세요.</p>
-        </div>
-        <div class="mood-list reveal" id="moodList">
-          <button class="mood" data-mood="tired">😮‍💨<span>지치고 피곤해요</span></button>
-          <button class="mood" data-mood="stress">😣<span>스트레스가 많아요</span></button>
-          <button class="mood" data-mood="sleep">🌙<span>잠들기 어려워요</span></button>
-          <button class="mood" data-mood="focus">📚<span>집중하고 싶어요</span></button>
-          <button class="mood" data-mood="blue">☁️<span>기분이 가라앉아요</span></button>
-          <button class="mood" data-mood="fresh">✨<span>상쾌해지고 싶어요</span></button>
-        </div>
-        <div class="result" id="result" aria-live="polite" hidden>
-          <div class="result__card">
-            <p class="result__label">훼이맵 추천 블렌드</p>
-            <h3 class="result__name" id="resultName"></h3>
-            <div class="result__oils" id="resultOils"></div>
-            <p class="result__desc" id="resultDesc"></p>
-            <a href="#contact" class="btn btn--primary btn--sm" id="resultCta">이 향으로 예약 문의</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 후기 -->
-    <section class="section reviews" id="reviews">
-      <div class="container">
-        <div class="section__head reveal">
-          <p class="section__eyebrow">REVIEWS</p>
-          <h2 class="section__title">다녀가신 분들의 이야기</h2>
-        </div>
-        <div class="slider reveal">
-          <div class="slider__track" id="sliderTrack">
-            <blockquote class="review">
-              <p>“들어서는 순간부터 향이 너무 좋아서 마음이 편안해졌어요. 상담해 주신 오일이 저랑 정말 잘 맞았어요.”</p>
-              <cite>— 김○○ 님 · 아로마 바디 테라피</cite>
-            </blockquote>
-            <blockquote class="review">
-              <p>“요즘 잠을 잘 못 잤는데, 케어 받은 날은 오랜만에 푹 잤어요. 블렌딩 오일도 집에서 잘 쓰고 있습니다.”</p>
-              <cite>— 이○○ 님 · 아로마 페이셜 케어</cite>
-            </blockquote>
-            <blockquote class="review">
-              <p>“조용하고 아늑한 분위기라 온전히 쉬다 왔어요. 나만을 위한 시간이 필요할 때 또 오고 싶어요.”</p>
-              <cite>— 박○○ 님 · 헤드 & 숄더 릴렉스</cite>
-            </blockquote>
-            <blockquote class="review">
-              <p>“친구랑 블렌딩 클래스 들었는데 향마다 설명을 자세히 해 주셔서 재미있었어요. 룸스프레이 최고!”</p>
-              <cite>— 최○○ 님 · 블렌딩 클래스</cite>
-            </blockquote>
-          </div>
-          <div class="slider__controls">
-            <button class="slider__btn" id="prevBtn" aria-label="이전 후기">←</button>
-            <div class="slider__dots" id="sliderDots"></div>
-            <button class="slider__btn" id="nextBtn" aria-label="다음 후기">→</button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 예약 / 문의 -->
-    <section class="section contact" id="contact">
-      <div class="container contact__grid">
-        <div class="contact__info reveal">
-          <p class="section__eyebrow">CONTACT</p>
-          <h2 class="section__title">편하게 문의 주세요</h2>
-          <p class="contact__lead">예약은 사전 연락으로 진행됩니다. 원하시는 날짜와 프로그램을 남겨 주시면 확인 후 연락드릴게요.</p>
-          <ul class="contact__list">
-            <li><span>📞</span><div><b>전화</b><a data-config="phone"></a></div></li>
-            <li><span>✉️</span><div><b>이메일</b><a data-config="email"></a></div></li>
-            <li><span>💬</span><div><b>인스타그램</b><a data-config="instagram" target="_blank" rel="noopener"></a></div></li>
-            <li><span>📍</span><div><b>위치</b><p data-config="address"></p></div></li>
-            <li><span>🕰️</span><div><b>운영시간</b><p data-config="hours"></p></div></li>
-          </ul>
-        </div>
-        <form class="form reveal" id="contactForm" novalidate>
-          <div class="form__row">
-            <label for="name">성함</label>
-            <input type="text" id="name" name="name" placeholder="홍길동" required />
-          </div>
-          <div class="form__row">
-            <label for="tel">연락처</label>
-            <input type="tel" id="tel" name="tel" placeholder="010-0000-0000" required />
-          </div>
-          <div class="form__row form__row--half">
-            <div>
-              <label for="program">프로그램</label>
-              <select id="program" name="program">
-                <option>아로마 페이셜 케어</option>
-                <option>아로마 바디 테라피</option>
-                <option>헤드 & 숄더 릴렉스</option>
-                <option>나만의 블렌딩 클래스</option>
-                <option>상담 후 결정</option>
-              </select>
-            </div>
-            <div>
-              <label for="date">희망 날짜</label>
-              <input type="date" id="date" name="date" />
-            </div>
-          </div>
-          <div class="form__row">
-            <label for="message">요청사항</label>
-            <textarea id="message" name="message" rows="4" placeholder="컨디션, 선호하는 향, 피하고 싶은 향 등을 알려주세요."></textarea>
-          </div>
-          <p class="form__error" id="formError" aria-live="polite"></p>
-          <button type="submit" class="btn btn--primary btn--block">문의 보내기</button>
-          <p class="form__note">문의하기를 누르면 메일 앱이 열리며 작성하신 내용이 자동으로 채워집니다.</p>
-        </form>
-      </div>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <div class="container footer__inner">
-      <a href="#home" class="logo logo--light">
-        <span class="logo__mark">❀</span>
-        <span class="logo__text">훼이맵</span>
-      </a>
-      <p class="footer__copy">향기로 그리는 나만의 쉼표 · © <span id="year"></span> 훼이맵. All rights reserved.</p>
-      <p class="footer__notice">아로마테라피는 휴식과 웰니스를 위한 케어이며, 의학적 진단·치료를 대신하지 않습니다.</p>
+<!-- 브랜드 -->
+<section class="section" id="brand">
+  <div class="container">
+    <header class="section-head reveal">
+      <p class="eyebrow">01 · BRAND</p>
+      <h2>세 갈래의 오래된 지혜를<br>한 병의 향으로</h2>
+      <p class="lede">훼이맵FateMap은 수천 년을 이어 온 세 체계가 겹치는 지점에서 사람마다 다른 균형을 읽고, 그 결과를 실제 향으로 잇는 아로마 브랜드입니다.</p>
+    </header>
+    <div class="pillars">
+      <article class="pillar reveal">
+        <span class="pillar-no">Ⅰ</span>
+        <h3>아로마테라피</h3>
+        <p>약 5천 년 전 이집트에서 시작된 향의 문명. 식물에서 얻은 싱글 에센셜오일 20가지로 하루의 결을 돌봅니다.</p>
+      </article>
+      <article class="pillar reveal">
+        <span class="pillar-no">Ⅱ</span>
+        <h3>서양 점성학</h3>
+        <p>메소포타미아에서 체계화된 별의 언어. 12별자리와 8행성의 상징을 20가지 향과 하나씩 짝지었습니다.</p>
+      </article>
+      <article class="pillar reveal">
+        <span class="pillar-no">Ⅲ</span>
+        <h3>사주 · 음양오행</h3>
+        <p>목·화·토·금·수 다섯 기운의 균형으로 지금의 나를 읽는 동양의 시선. 1:1 컨설팅의 바탕이 됩니다.</p>
+      </article>
     </div>
-  </footer>
 
-  <!-- 오일 상세 모달 -->
-  <div class="modal" id="oilModal" hidden>
-    <div class="modal__backdrop" data-close></div>
-    <div class="modal__box" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-      <button class="modal__close" data-close aria-label="닫기">×</button>
-      <div class="modal__emoji" id="modalEmoji"></div>
-      <h3 id="modalTitle"></h3>
-      <p class="modal__en" id="modalEn"></p>
-      <p id="modalDesc"></p>
-      <div class="modal__tags" id="modalTags"></div>
+    <div class="method reveal">
+      <div class="method-title">
+        <p class="eyebrow">THE IGNITION METHOD</p>
+        <h3>문제를 짚고, 읽고, 다시 점화합니다</h3>
+        <p>플래그십 라인 '이그니션'의 흐름입니다. 20가지 싱글 오일을 7개 차크라와 12개 삶의 영역에 매핑해, 읽어 낸 결과를 실제 향으로 연결합니다.</p>
+      </div>
+      <ol class="method-steps">
+        <li><b>01 · 알아차림</b><span>향기카드와 4원소 자가진단으로 지금 마음이 머무는 곳을 짚어요.</span></li>
+        <li><b>02 · 읽기</b><span>사주·오행과 별자리로 두드러진 기운과 보완할 기운을 읽어요.</span></li>
+        <li><b>03 · 점화</b><span>나에게 맞는 싱글 오일을 블렌딩해 하루의 리추얼로 이어요.</span></li>
+      </ol>
     </div>
   </div>
+</section>
 
-  <a href="#home" class="to-top" id="toTop" aria-label="맨 위로">↑</a>
+<!-- 무료 체험 -->
+<section class="section section-alt" id="experience">
+  <div class="container">
+    <header class="section-head reveal">
+      <p class="eyebrow">02 · FREE EXPERIENCE</p>
+      <h2>지금 바로 체험해 보세요</h2>
+      <p class="lede">가입 없이, 1분이면 충분해요. 결과는 상담 예약 문의서에 그대로 옮겨 담을 수 있어요.</p>
+    </header>
 
-  <script src="script.js"></script>
+    <div class="tabs" role="tablist" aria-label="무료 체험 프로그램">
+      <button class="tab" role="tab" id="tab-cards" aria-controls="panel-cards" aria-selected="true" data-tab="cards">향기카드 20</button>
+      <button class="tab" role="tab" id="tab-element" aria-controls="panel-element" aria-selected="false" data-tab="element" tabindex="-1">4원소 자가진단</button>
+      <button class="tab" role="tab" id="tab-mood" aria-controls="panel-mood" aria-selected="false" data-tab="mood" tabindex="-1">오늘의 향 찾기</button>
+    </div>
+
+    <div class="panel" id="panel-cards" role="tabpanel" aria-labelledby="tab-cards">
+      <div class="methods" id="card-methods">
+        <button class="method-btn active" type="button" data-method="one"><b>오늘의 한 장</b><span>직관으로 카드 한 장</span></button>
+        <button class="method-btn" type="button" data-method="three"><b>3장 리딩</b><span>지금 · 필요한 것 · 리추얼 + 블렌딩 레시피</span></button>
+        <button class="method-btn" type="button" data-method="sign"><b>내 별자리로</b><span>생일이 속한 별자리 카드</span></button>
+        <button class="method-btn" type="button" data-method="keyword"><b>오늘의 키워드로</b><span>지금 필요한 단어 하나</span></button>
+      </div>
+      <div class="card-stage" id="card-stage" aria-live="polite"></div>
+    </div>
+
+    <div class="panel" id="panel-element" role="tabpanel" aria-labelledby="tab-element" hidden>
+      <div id="element-stage" aria-live="polite"></div>
+    </div>
+
+    <div class="panel" id="panel-mood" role="tabpanel" aria-labelledby="tab-mood" hidden>
+      <p class="panel-intro">지금 기분에 가장 가까운 것 하나를 골라 보세요.</p>
+      <div class="mood-grid" id="mood-grid"></div>
+      <div id="mood-result" aria-live="polite"></div>
+    </div>
+
+    <p class="disclaimer">향기카드와 자가진단은 향과 별의 상징으로 하루를 돌아보는 자기 성찰 콘텐츠입니다. 미래를 예측하거나 특정한 효과를 약속하지 않으며, 의학적 진단·치료를 대신하지 않습니다.</p>
+  </div>
+</section>
+
+<!-- 향의 지도 -->
+<section class="section" id="atlas">
+  <div class="container">
+    <header class="section-head reveal">
+      <p class="eyebrow">03 · SCENT ATLAS</p>
+      <h2>20가지 향의 지도</h2>
+      <p class="lede">바깥 원은 열두 별자리, 안쪽 원은 여덟 행성. 점을 누르면 그 자리의 향기카드가 열립니다.</p>
+    </header>
+    <div class="atlas">
+      <svg class="wheel reveal" id="wheel" viewBox="0 0 640 640" role="img" aria-label="열두 별자리와 여덟 행성을 두 겹의 원으로 배치한 향의 지도"></svg>
+      <div class="atlas-side reveal">
+        <form class="birth" id="birth-form">
+          <label for="birth-date">생일로 나의 별자리 향 찾기</label>
+          <div class="birth-row">
+            <input type="date" id="birth-date" required>
+            <button class="btn btn-dark btn-sm" type="submit">찾기</button>
+          </div>
+          <p class="birth-out" id="birth-out" aria-live="polite"></p>
+        </form>
+        <div class="notes">
+          <p class="notes-title">탑 8 · 미들 8 · 베이스 4</p>
+          <div class="notes-bar"><span style="flex:8">탑</span><span style="flex:8">미들</span><span style="flex:4">베이스</span></div>
+          <p class="notes-desc">먼저 퍼지는 향, 중심을 잡는 향, 오래 머무는 향을 고르게 담아 처음이어도 블렌딩이 쉬워요.</p>
+        </div>
+      </div>
+    </div>
+    <div class="oil-list" id="oil-list"></div>
+  </div>
+</section>
+
+<!-- 상담·클래스 -->
+<section class="section section-dark" id="programs">
+  <div class="container">
+    <header class="section-head reveal">
+      <p class="eyebrow gold">04 · PROGRAMS</p>
+      <h2>상담 · 케어 · 클래스</h2>
+      <p class="lede">모든 프로그램은 컨디션과 좋아하는 향을 먼저 여쭙고, 향기카드로 지금의 마음을 함께 살피는 시간에서 시작합니다. 100% 예약제로 운영합니다.</p>
+    </header>
+    <div class="program-grid">
+      <article class="program featured reveal">
+        <span class="badge">SIGNATURE</span>
+        <h3>1:1 오행·별자리<br>아로마 컨설팅</h3>
+        <p>사주·오행과 별자리로 지금의 균형을 읽고, 20가지 향 중 나에게 맞는 조합을 함께 고릅니다. 상담 후 맞춤 블렌드 레시피를 드립니다.</p>
+        <ul class="program-meta"><li><span>소요</span>약 60분</li><li><span>방식</span>방문 · 비대면</li></ul>
+        <a class="btn btn-gold btn-block" href="#contact" data-prefill="1:1 오행·별자리 아로마 컨설팅">상담 예약 문의</a>
+      </article>
+      <article class="program reveal">
+        <span class="badge">REPORT</span>
+        <h3>정식 오행 사주<br>리포트</h3>
+        <p>생년월일시로 사주 원국·오행 분포·별자리 4대 지표를 읽고, 맞춤 오일 4가지와 시그니처 블렌드를 담은 리포트를 대표가 직접 검수해 보내드립니다.</p>
+        <ul class="program-meta"><li><span>제공</span>PDF 리포트</li><li><span>필요 정보</span>생년월일시</li></ul>
+        <a class="btn btn-line-light btn-block" href="#contact" data-prefill="정식 오행 사주 리포트">리포트 신청</a>
+      </article>
+      <article class="program reveal">
+        <span class="badge">CARE</span>
+        <h3>아로마 케어</h3>
+        <p>페이셜 · 바디 · 헤드&amp;숄더 중에서 고르고, 그날 블렌딩한 오일로 진행하는 휴식 케어입니다.</p>
+        <ul class="program-meta"><li><span>소요</span>40 ~ 90분</li><li><span>방식</span>방문</li></ul>
+        <a class="btn btn-line-light btn-block" href="#contact" data-prefill="아로마 케어">케어 예약 문의</a>
+      </article>
+      <article class="program reveal">
+        <span class="badge">CLASS</span>
+        <h3>나만의 블렌딩<br>클래스</h3>
+        <p>향기카드 3장 리딩으로 고른 오일을 직접 섞어 나만의 롤온이나 룸스프레이를 만들어 가는 원데이 클래스입니다. 단체·기관 출강도 가능합니다.</p>
+        <ul class="program-meta"><li><span>소요</span>약 60분</li><li><span>인원</span>1인 ~ 단체</li></ul>
+        <a class="btn btn-line-light btn-block" href="#contact" data-prefill="나만의 블렌딩 클래스">클래스 문의</a>
+      </article>
+    </div>
+    <ol class="flow reveal" aria-label="예약 진행 순서">
+      <li><b>문의 남기기</b>폼 · 전화 · 문자</li>
+      <li><b>일정 확정</b>연락드려 날짜 조율</li>
+      <li><b>사전 질문</b>컨디션 · 좋아하는 향</li>
+      <li><b>상담 · 클래스</b>향기카드로 시작</li>
+    </ol>
+  </div>
+</section>
+
+<!-- 대표 -->
+<section class="section" id="maker">
+  <div class="container maker">
+    <figure class="maker-cert reveal">
+      <img src="img/cert.jpg" alt="조영진 대표의 맞춤형화장품조제관리사 자격증과 아로마테라피전문가 1급 자격증서" loading="lazy" width="925" height="600">
+    </figure>
+    <div class="maker-text reveal">
+      <p class="eyebrow">05 · FOUNDER</p>
+      <h2>향을 오래 공부해 온 사람이<br>직접 설계합니다</h2>
+      <p class="maker-name">조영진 <span>훼이맵FateMap 대표 · 국제실용아로마테라피학회</span></p>
+      <ul class="creds">
+        <li><b>맞춤형화장품조제관리사</b><span>식품의약품안전처 · 2022</span></li>
+        <li><b>아로마테라피전문가 1급</b><span>(사)국제실용아로마테라피학회 · 2008</span></li>
+      </ul>
+      <blockquote>"향기는 보이지 않지만, 마음의 방향을 바꿀 수 있습니다. 오늘의 나에게 끌리는 향을 고르는 작은 선택이 나를 돌보는 시간이 되기를 바랍니다."</blockquote>
+    </div>
+  </div>
+</section>
+
+<!-- 후기 -->
+<section class="section section-alt" id="reviews">
+  <div class="container">
+    <header class="section-head reveal">
+      <p class="eyebrow">06 · REVIEWS</p>
+      <h2>먼저 써 본 분들의 이야기</h2>
+      <p class="lede">스마트스토어에서 훼이맵 싱글 오일을 구매하신 분들이 남긴 실제 후기입니다.</p>
+    </header>
+    <div class="reviews">
+      <blockquote class="review reveal"><span>향</span><p>"향도 깔끔하고 인위적이지 않아 좋습니다."</p><cite>dbgu******* · 레몬</cite></blockquote>
+      <blockquote class="review reveal"><span>진하기</span><p>"향이 진해서 희석해도 진하게 나네요."</p><cite>peti***** · 프랑킨센스</cite></blockquote>
+      <blockquote class="review reveal"><span>다양함 · 응대</span><p>"오일 종류도 다양하고 향도 좋아요. 문의사항에 대해 사장님과 소통이 잘 되어 좋았습니다."</p><cite>peti***** · 프랑킨센스</cite></blockquote>
+      <blockquote class="review reveal"><span>순함</span><p>"향이 좋고 순해요. 가격도 저렴해서 또 구매할 예정이에요."</p><cite>tt**** · 네롤리</cite></blockquote>
+      <blockquote class="review reveal"><span>좋아하는 향</span><p>"향이 상쾌하고 시원해서 제일 좋아하는 향입니다."</p><cite>peti***** · 페퍼민트</cite></blockquote>
+    </div>
+    <p class="fine">스마트스토어 구매 후기 원문에서 발췌했으며, 띄어쓰기만 다듬었습니다.</p>
+  </div>
+</section>
+
+<!-- 제품 -->
+<section class="section" id="store">
+  <div class="container">
+    <header class="section-head reveal">
+      <p class="eyebrow">07 · PRODUCTS</p>
+      <h2>훼이맵의 향을 집으로</h2>
+    </header>
+    <div class="products">
+      <article class="product reveal">
+        <div class="product-visual" data-fan="1,6,12" aria-hidden="true"></div>
+        <div class="product-body">
+          <span class="product-tag">와디즈 펀딩 준비 중</span>
+          <h3>아로마테라피 20 · 스탠다드</h3>
+          <p>12별자리와 8행성에 맞춘 싱글 에센셜오일 20종(각 10ml)과 향기카드 20장. 처음이어도 블렌딩이 쉬운 탑 8 · 미들 8 · 베이스 4 구성.</p>
+          <a class="btn btn-dark btn-block" data-link="wadiz" data-fallback-prefill="제품 · 기타 문의" data-fallback-note="[와디즈 오픈 알림] 아로마테라피 20 펀딩이 열리면 알려 주세요." href="#contact">오픈 알림 신청</a>
+        </div>
+      </article>
+      <article class="product reveal">
+        <div class="product-visual" data-fan="4,7,20" aria-hidden="true"></div>
+        <div class="product-body">
+          <span class="product-tag">와디즈 펀딩 준비 중</span>
+          <h3>아로마테라피 20 · 프리미엄</h3>
+          <p>스탠다드 구성에 로먼 캐모마일과 로즈를 더한 22병 에디션. 게자리·천칭자리 카드의 깊은 꽃향을 함께 만날 수 있어요.</p>
+          <a class="btn btn-dark btn-block" data-link="wadiz" data-fallback-prefill="제품 · 기타 문의" data-fallback-note="[와디즈 오픈 알림] 아로마테라피 20 프리미엄 에디션 펀딩이 열리면 알려 주세요." href="#contact">오픈 알림 신청</a>
+        </div>
+      </article>
+      <article class="product reveal">
+        <div class="product-visual" data-fan="13,14,16" aria-hidden="true"></div>
+        <div class="product-body">
+          <span class="product-tag">스마트스토어</span>
+          <h3>싱글 에센셜오일 10ml</h3>
+          <p>라벤더 · 티트리 · 페퍼민트 · 프랑킨센스 등 한 병씩 고를 수 있는 싱글 오일. 누적 리뷰 240건.</p>
+          <a class="btn btn-dark btn-block" data-link="smartstore" data-fallback-prefill="제품 · 기타 문의" data-fallback-note="[제품 문의] 싱글 에센셜오일 구매를 문의합니다." href="#contact">구매 · 문의</a>
+        </div>
+      </article>
+    </div>
+    <div class="channel-block reveal">
+      <p class="channel-title">훼이맵 채널에서 더 많은 이야기를 만나 보세요</p>
+      <div class="channels" data-channels></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section section-alt" id="faq">
+  <div class="container narrow">
+    <header class="section-head reveal">
+      <p class="eyebrow">08 · FAQ</p>
+      <h2>자주 묻는 질문 · 안전 안내</h2>
+    </header>
+    <div class="faq">
+      <details><summary>아로마오일을 처음 써 봐도 괜찮을까요?</summary><p>네. 시향지나 티슈에 한 방울부터 시작해 보세요. 피부에 쓸 때는 반드시 캐리어오일에 희석합니다(10ml에 총 4방울 이내, 약 2%).</p></details>
+      <details><summary>향기카드 20은 운세나 점인가요?</summary><p>아니요. 향과 별의 상징을 빌려 하루를 돌아보는 자기 성찰 콘텐츠입니다. 미래를 예측하거나 특정한 효과를 약속하지 않습니다.</p></details>
+      <details><summary>상담은 어떻게 진행되나요?</summary><p>문의를 남겨 주시면 연락드려 일정을 정합니다. 상담 전 컨디션과 좋아하는 향, 피하고 싶은 향을 여쭙고, 당일에는 향기카드로 지금의 마음을 함께 살핀 뒤 오일을 고릅니다.</p></details>
+      <details><summary>정식 사주 리포트는 어떻게 받나요?</summary><p>예약 문의에서 '정식 오행 사주 리포트'를 고르고 생년월일시를 남겨 주세요. 대표가 직접 검수한 리포트를 PDF로 보내드립니다. 태어난 시간을 모르셔도 연·월·일 중심으로 읽어 드려요.</p></details>
+      <details><summary>오일 향이 금방 날아가는 것 같아요.</summary><p>천연 에센셜오일은 합성 보향제가 없어 탑 노트는 20~30분이면 은은해집니다. 향을 오래 두고 싶다면 베이스 노트(시더우드·베티버·파출리·프랑킨센스)를 함께 섞어 보세요.</p></details>
+      <details><summary>임신 중이거나 아이·반려동물이 있어요.</summary><p>사용 전 전문가와 상의해 주세요. 로즈마리·주니퍼베리·클라리세이지는 임신 중 사용에 주의가 필요하고, 페퍼민트·유칼립투스는 영유아 주변에서 피해 주세요.</p></details>
+      <details><summary>시트러스 오일을 피부에 써도 되나요?</summary><p>레몬·그레이프후룻·버가못은 광독성이 있어, 피부에 사용한 뒤에는 햇빛 노출을 피해 주세요. 낮에는 디퓨저나 티슈로 즐기는 것을 권합니다.</p></details>
+      <details><summary>단체 클래스나 기관 출강도 되나요?</summary><p>가능합니다. 인원·장소·희망 일정을 예약 문의에 남겨 주시면 맞춤 구성으로 안내드립니다.</p></details>
+    </div>
+    <p class="fine">아로마테라피는 일상의 휴식을 위한 셀프케어이며, 의학적 진단이나 치료를 대신하지 않습니다.</p>
+  </div>
+</section>
+
+<!-- 예약 문의 -->
+<section class="section" id="contact">
+  <div class="container contact">
+    <div class="contact-info reveal">
+      <p class="eyebrow">09 · CONTACT</p>
+      <h2>예약 · 문의</h2>
+      <p class="lede">남겨 주신 내용을 확인한 뒤 영업일 기준 하루 안에 연락드립니다. 급하신 분은 전화나 문자를 이용해 주세요.</p>
+      <ul class="contact-list">
+        <li><span>전화 · 문자</span><a data-config="phone"></a></li>
+        <li><span>이메일</span><a data-config="email"></a></li>
+        <li><span>운영</span><em data-config="hours"></em></li>
+        <li><span>위치</span><em data-config="address"></em></li>
+      </ul>
+      <div class="contact-quick">
+        <a class="btn btn-dark btn-sm" data-config-href="tel">전화하기</a>
+        <a class="btn btn-line btn-sm" data-config-href="sms">문자 보내기</a>
+      </div>
+      <div class="channels channels-icon" data-channels aria-label="훼이맵 SNS 채널"></div>
+    </div>
+
+    <form class="contact-form reveal" id="contact-form" name="contact" novalidate>
+      <label><span>성함 <b>*</b></span><input type="text" name="name" required autocomplete="name" placeholder="홍길동"></label>
+      <label><span>연락처 <b>*</b></span><input type="tel" name="tel" required autocomplete="tel" inputmode="tel" placeholder="010-0000-0000"></label>
+      <label>상담 · 프로그램
+        <select name="program" id="contact-program">
+          <option>1:1 오행·별자리 아로마 컨설팅</option>
+          <option>정식 오행 사주 리포트</option>
+          <option>아로마 케어</option>
+          <option>나만의 블렌딩 클래스</option>
+          <option>제품 · 기타 문의</option>
+        </select>
+      </label>
+      <label>희망 날짜<input type="date" name="date"></label>
+
+      <fieldset class="report-fields full" id="report-fields" hidden>
+        <legend>리포트 정보</legend>
+        <label>생년월일<input type="date" name="birth"></label>
+        <label>달력<select name="calendar"><option>양력</option><option>음력</option></select></label>
+        <label>태어난 시간<input type="time" name="birth_time"></label>
+        <label>출생지<input type="text" name="birth_place" placeholder="예: 대구광역시"></label>
+        <label class="check"><input type="checkbox" name="time_unknown" value="시간 모름"> 태어난 시간을 몰라요</label>
+      </fieldset>
+
+      <label class="full">요청사항<textarea name="message" id="contact-message" rows="4" placeholder="컨디션, 좋아하는 향, 피하고 싶은 향, 단체 인원 등을 알려주세요."></textarea></label>
+      <label class="check full"><input type="checkbox" name="agree" value="동의" required> <span>개인정보 수집·이용에 동의합니다. <button type="button" class="link" data-open="privacy">내용 보기</button></span></label>
+      <p class="form-error full" id="form-error" aria-live="polite"></p>
+      <button type="submit" class="btn btn-gold btn-block full" id="form-submit">문의 내용 보내기</button>
+      <p class="fine full" style="margin:0">버튼을 누르면 작성하신 내용이 담긴 문자 · 메일 보내기 화면이 열립니다.</p>
+      <div class="form-done full" id="form-done" hidden></div>
+    </form>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>
+      <a class="brand brand-light" href="#top"><img src="img/logo-sm.png" alt="" width="32" height="32"><span>훼이맵<em>FateMap</em></span></a>
+      <p class="footer-tag">별과 오행이 고른 오늘의 향</p>
+      <div class="channels channels-icon channels-footer" data-channels aria-label="훼이맵 SNS 채널"></div>
+    </div>
+    <div class="footer-info">
+      <p>상호 국제실용아로마테라피학회 · 브랜드 훼이맵FateMap · 대표 조영진</p>
+      <p>사업자등록번호 289-41-01075 · 통신판매업신고 2023-대구북구-1264</p>
+      <p>전화 <span data-config="phone"></span> · 이메일 <span data-config="email"></span></p>
+      <p><button type="button" class="link" data-open="privacy">개인정보처리방침</button></p>
+      <p class="copy">© <span id="year"></span> FateMap. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- 카드 상세 / 개인정보 모달 -->
+<dialog class="modal" id="card-modal" aria-labelledby="card-modal-title">
+  <button class="modal-close" type="button" data-close aria-label="닫기">×</button>
+  <div id="card-modal-body"></div>
+</dialog>
+
+<dialog class="modal modal-text" id="privacy" aria-labelledby="privacy-title">
+  <button class="modal-close" type="button" data-close aria-label="닫기">×</button>
+  <h3 id="privacy-title">개인정보 수집·이용 안내</h3>
+  <dl>
+    <dt>수집 항목</dt><dd>성함, 연락처, 문의 내용 (리포트 신청 시 생년월일·태어난 시간·출생지)</dd>
+    <dt>이용 목적</dt><dd>상담·예약 일정 안내, 문의 응대, 리포트 작성</dd>
+    <dt>보유 기간</dt><dd>상담 종료 후 1년 이내 파기 (관련 법령에 따라 보관이 필요한 경우 해당 기간까지)</dd>
+    <dt>동의 거부</dt><dd>동의를 거부하실 수 있으며, 이 경우 온라인 문의 접수가 어렵습니다. 전화로 문의해 주세요.</dd>
+    <dt>문의</dt><dd>개인정보 보호책임자 조영진 · <span data-config="email"></span></dd>
+  </dl>
+</dialog>
+
+<a class="to-top" id="to-top" href="#top" aria-label="맨 위로">↑</a>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="app.js" defer></script>
 </body>
 </html>
