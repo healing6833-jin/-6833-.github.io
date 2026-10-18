@@ -106,7 +106,7 @@ h1,h2,h3,h4{ font-family:var(--serif); line-height:1.35; margin:0; letter-spacin
 .hero-trust li{ flex:1 1 200px; padding:18px 20px 0 0; font-size:12.5px; color:#B9B3CB; }
 .hero-trust b{ display:block; font-size:14.5px; color:#fff; font-weight:500; }
 .hero-inner > *{ opacity:0; transform:translateY(18px); animation:rise .9s ease forwards; }
-.hero-inner > *:nth-child(2){ animation-delay:.1s; } .hero-inner > *:nth-child(3){ animation-delay:.2s; } .hero-inner > *:nth-child(4){ animation-delay:.3s; } .hero-inner > *:nth-child(5){ animation-delay:.45s; }
+.hero-inner > *:nth-child(2){ animation-delay:.1s; } .hero-inner > *:nth-child(3){ animation-delay:.2s; } .hero-inner > *:nth-child(4){ animation-delay:.3s; } .hero-inner > *:nth-child(5){ animation-delay:.4s; } .hero-inner > *:nth-child(6){ animation-delay:.5s; }
 @keyframes rise{ to{ opacity:1; transform:none; } }
 .scroll-cue{ position:absolute; left:50%; bottom:26px; width:24px; height:40px; margin-left:-12px; border:1.5px solid rgba(255,255,255,.6); border-radius:14px; }
 .scroll-cue span{ position:absolute; left:50%; top:8px; width:3px; height:8px; margin-left:-1.5px; border-radius:2px; background:#fff; animation:cue 1.8s infinite; }
@@ -491,3 +491,8 @@ textarea{ resize:vertical; }
   .maker-text{ grid-template-columns:1fr; }
   .maker-text .creds{ grid-column:1; grid-row:auto; margin:0 0 24px; }
 }
+
+/* 히어로: 생일로 바로 찾기 */
+.hero-quick{ margin:18px 0 0; font-size:14px; color:#BDB7D0; }
+.hero-quick a{ color:var(--gold-soft); font-weight:700; text-decoration:none; border-bottom:1px solid rgba(231,212,164,.5); }
+.hero-quick a:hover{ color:#fff; }

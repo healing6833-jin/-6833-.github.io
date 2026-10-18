@@ -316,8 +316,8 @@ function quizStart(){
   elStage.innerHTML = `
     <div style="text-align:center;padding:10px 0">
       <p class="eyebrow">FOUR ELEMENTS</p>
-      <h3 style="font-size:24px;margin:0 0 10px">지금 나에게 두드러진 원소는?</h3>
-      <p class="panel-intro">심리 · 생활 12가지 질문으로 불 · 흙 · 공기 · 물 중 지금 두드러진 기운과<br>보완하면 좋은 기운을 찾고, 어울리는 향기카드를 추천해 드려요. (약 1분)</p>
+      <h3 style="font-size:24px;margin:0 0 10px">지금 나에게 가장 강한 기운은?</h3>
+      <p class="panel-intro">마음과 생활에 관한 12가지 질문에 답하면, 불 · 흙 · 공기 · 물 가운데<br>지금 강한 기운과 채우면 좋은 기운을 알려 드리고 어울리는 향기카드를 골라 드려요. (약 1분)</p>
       <button class="btn btn-dark" type="button" id="quiz-go">진단 시작하기</button>
     </div>`;
   $('#quiz-go').addEventListener('click', () => quizStep(0));
@@ -349,19 +349,19 @@ function quizResult(){
     <div class="el-result">
       <div>
         <span class="el-badge" style="background:${top.color}">${top.icon} ${top.en} · ${top.name}</span>
-        <h3 class="el-title">지금 두드러진 원소는 '${top.name}'${josaIeyo(top.name)}</h3>
+        <h3 class="el-title">지금 가장 강한 기운은 '${top.name}'${josaIeyo(top.name)}</h3>
         <p class="card-text">${top.desc}</p>
         <div class="el-bars">${sorted.map(k => `
           <div class="el-bar"><span>${ELEMENTS[k].icon} ${ELEMENTS[k].name}</span><span class="recipe-bar"><i style="width:${count[k] / QUIZ.length * 100}%;background:${ELEMENTS[k].color}"></i></span><span>${Math.round(count[k] / QUIZ.length * 100)}%</span></div>`).join('')}
         </div>
       </div>
       <div>
-        <p class="card-label">보완하면 좋은 원소 · ${low.icon} ${low.name} (${low.key})</p>
+        <p class="card-label">채우면 좋은 기운 · ${low.icon} ${low.name} (${low.key})</p>
         <p class="card-text">${low.balance}. ${low.name}의 기운을 닮은 향기카드 세 장을 추천해요.</p>
         <div class="el-cards">${cs.map(c => `<img src="${c.img}" alt="${esc(c.name)} · ${esc(mainOil(c))} 카드" data-card="${c.n}" loading="lazy" width="1024" height="1536">`).join('')}</div>
-        <p class="fine" style="margin-top:6px">${cs.map(c => `${c.symbol}︎ ${esc(mainOil(c))}`).join(' · ')} — 카드를 누르면 자세히 볼 수 있어요.</p>
+        <p class="fine" style="margin-top:6px">${cs.map(c => `${c.symbol}︎ ${esc(mainOil(c))}`).join(' · ')} · 카드를 누르면 자세히 볼 수 있어요.</p>
         <div class="card-actions">
-          <a class="btn btn-dark" href="#contact" data-prefill="1:1 오행·별자리 아로마 컨설팅" data-note="[4원소 자가진단] 두드러진 원소: ${top.name} / 보완할 원소: ${low.name} — 결과로 상담받고 싶어요.">결과로 1:1 상담 받기</a>
+          <a class="btn btn-dark" href="#contact" data-prefill="1:1 오행·별자리 아로마 컨설팅" data-note="[4원소 자가진단] 강한 기운: ${top.name} / 채우면 좋은 기운: ${low.name} · 이 결과로 상담받고 싶어요.">결과로 1:1 상담 받기</a>
           <button class="btn btn-line" type="button" id="quiz-again">다시 하기</button>
         </div>
       </div>
@@ -456,7 +456,7 @@ document.addEventListener('click', e => {
 
   $('#oil-list').innerHTML = FRAG_CARDS.map(c => {
     const n = NOTE_INFO[NOTE_OF[c.n]];
-    return `<button class="oil-item" type="button" data-card="${c.n}"><img src="${c.thumb}" alt="" loading="lazy" width="120" height="180"><span><small>${pad(c.n)} · ${c.symbol}︎ ${c.name}</small><b>${esc(c.oil.replace('(P)', ''))}</b></span><span class="note" style="background:${n.color}">${n.label}</span></button>`;
+    return `<button class="oil-item" type="button" data-card="${c.n}"><img src="${c.thumb}" alt="" loading="lazy" width="120" height="180"><span><small>${pad(c.n)} · ${c.symbol}︎ ${c.name} · ${esc(c.kwKr)}</small><b>${esc(c.oil.replace('(P)', ''))}</b></span><span class="note" style="background:${n.color}">${n.label}</span></button>`;
   }).join('');
   $('#oil-list').addEventListener('click', e => { const b = e.target.closest('[data-card]'); if (b) openCard(Number(b.dataset.card)); });
 
@@ -597,7 +597,7 @@ document.addEventListener('click', e => {
   const a = e.target.closest('[data-prefill]'); if (!a) return;
   if (cardModal.open) cardModal.close();
   prefillContact(a.dataset.prefill, a.dataset.note);
-  if (a.dataset.note) toast('선택하신 내용을 문의서에 담아 두었어요.');
+  if (a.dataset.note) toast('고르신 결과를 상담 신청서에 담아 두었어요.');
 });
 
 (function(){
@@ -721,4 +721,9 @@ addEventListener('hashchange', () => {
 document.addEventListener('keydown', e => {
   const o = e.target.closest && e.target.closest('[data-open][role="button"]');
   if (o && (e.key === 'Enter' || e.key === ' ')){ e.preventDefault(); $('#' + o.dataset.open).showModal(); }
+});
+// 링크를 누르면 해당 입력칸으로 바로 이동 (예: 히어로 → 생일 입력)
+document.addEventListener('click', e => {
+  const a = e.target.closest('[data-focus]'); if (!a) return;
+  setTimeout(() => document.getElementById(a.dataset.focus)?.focus({preventScroll:true}), 700);
 });
