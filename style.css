@@ -549,3 +549,11 @@ textarea{ resize:vertical; }
   .hero-sky .tw{ opacity:.7 !important; }
   .hero-sky .shoot{ display:none; }
 }
+
+/* 공유 창 */
+.modal-share h3{ margin-bottom:10px; }
+.share-card{ font-family:var(--serif); font-size:18px; font-weight:700; margin:0 0 10px; }
+.share-preview{ white-space:pre-wrap; font-family:var(--sans); font-size:13.5px; line-height:1.7; background:var(--surface-2); border-radius:12px; padding:14px 16px; margin:0 0 16px; color:var(--muted); }
+.share-acts{ display:grid; gap:8px; }
+.btn-kakao{ background:#FEE500; color:#191919; }
+.btn-kakao:hover{ background:#F5DC00; }

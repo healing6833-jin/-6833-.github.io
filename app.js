@@ -483,18 +483,54 @@ $('#birth-form').addEventListener('submit', e => {
   $('button', out).addEventListener('click', () => openCard(c.n));
 });
 
-/* ---------- 공유 ---------- */
+/* ---------- 공유 ----------
+   휴대폰: 기기 공유 창(카카오톡이 바로 보임)
+   PC: Windows 공유 창에는 PC 카카오톡이 없어서 '설치'로 뜨므로, 자체 공유 창을 띄움 */
+const SITE_URL = 'https://healing6833-jin.github.io/';
+const isMobile = () => matchMedia('(pointer:coarse)').matches && /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+function shareData(c){
+  const url = `${SITE_URL}?card=${c.n}`;
+  const text = `[훼이맵 향기카드] 오늘 나에게 온 카드는 ${c.name} · ${mainOil(c)}
+"${c.message}"
+
+나도 카드 뽑아 보기 👉 ${url}`;
+  return { title:'훼이맵FateMap 향기카드', url, text };
+}
+async function copyText(t){
+  try { await navigator.clipboard.writeText(t); return true; }
+  catch (_) { const ta = document.createElement('textarea'); ta.value = t; document.body.appendChild(ta); ta.select(); const ok = document.execCommand('copy'); ta.remove(); return ok; }
+}
 document.addEventListener('click', async e => {
   const b = e.target.closest('[data-share]'); if (!b) return;
-  const c = cardBy(Number(b.dataset.share));
-  const text = `오늘의 향기카드: ${c.name} · ${mainOil(c)} — "${c.message}"`;
-  const url = 'https://healing6833-jin.github.io/#experience';
-  try {
-    if (navigator.share){ await navigator.share({title:'훼이맵FateMap 향기카드', text, url}); return; }
-    await navigator.clipboard.writeText(`${text}\n${url}`);
-    toast('결과를 복사했어요. 원하는 곳에 붙여 넣어 공유해 보세요.');
-  } catch (_) { /* 공유 취소 */ }
+  const c = cardBy(Number(b.dataset.share)), d = shareData(c);
+  if (isMobile() && navigator.share){
+    try { await navigator.share({title:d.title, text:d.text}); } catch (_) {}
+    return;
+  }
+  $('#share-title').textContent = `${c.symbol}︎ ${c.name} · ${mainOil(c)}`;
+  $('#share-preview').textContent = d.text;
+  $('#share-modal').dataset.card = c.n;
+  $('#share-modal').showModal();
 });
+document.addEventListener('click', async e => {
+  const b = e.target.closest('[data-share-act]'); if (!b) return;
+  const d = shareData(cardBy(Number($('#share-modal').dataset.card)));
+  const act = b.dataset.shareAct;
+  if (act === 'kakao'){
+    if (await copyText(d.text)) toast('복사했어요. 카카오톡 대화창에 Ctrl+V로 붙여 넣어 보내세요.');
+  } else if (act === 'link'){
+    if (await copyText(d.url)) toast('링크를 복사했어요.');
+  } else if (act === 'more' && navigator.share){
+    try { await navigator.share({title:d.title, text:d.text}); } catch (_) {}
+  }
+});
+// 공유받은 링크(?card=번호)로 들어오면 그 카드를 바로 보여 줌
+(function openSharedCard(){
+  const n = Number(new URLSearchParams(location.search).get('card'));
+  if (!n || !cardBy(n)) return;
+  history.replaceState(null, '', location.pathname);
+  addEventListener('load', () => setTimeout(() => openCard(n), 400));
+})();
 
 /* ---------- 모달 ---------- */
 $$('dialog').forEach(d => {
