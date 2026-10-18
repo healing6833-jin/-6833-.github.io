@@ -727,3 +727,35 @@ document.addEventListener('click', e => {
   const a = e.target.closest('[data-focus]'); if (!a) return;
   setTimeout(() => document.getElementById(a.dataset.focus)?.focus({preventScroll:true}), 700);
 });
+
+/* ---------- 첫 화면 밤하늘: 반짝이는 별 · 별자리 선 · 별똥별 ---------- */
+(function heroSky(){
+  const sky = $('#hero-sky'); if (!sky) return;
+  let seed = 11; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  const W = 1600, H = 900;
+  let s = `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid slice"><defs>
+    <radialGradient id="mist" cx="72%" cy="30%" r="45%"><stop offset="0" stop-color="#E7D4A4" stop-opacity=".16"/><stop offset="1" stop-color="#E7D4A4" stop-opacity="0"/></radialGradient>
+    <linearGradient id="trail" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#fff" stop-opacity=".9"/></linearGradient>
+  </defs><rect width="${W}" height="${H}" fill="url(#mist)"/>`;
+  // 반짝이는 별 (오른쪽과 위쪽에 더 많이 — 글자 뒤는 비워 둠)
+  for (let i = 0; i < 110; i++){
+    let x = rnd() * W, y = rnd() * H * 0.75;
+    if (x < 760 && y > 180 && rnd() < 0.75) x = 760 + rnd() * (W - 760);
+    const r = (rnd() * 1.2 + 0.4).toFixed(2), d = (2.5 + rnd() * 4).toFixed(1), delay = (rnd() * 5).toFixed(1);
+    s += `<circle class="tw" cx="${x.toFixed(0)}" cy="${y.toFixed(0)}" r="${r}" fill="#fff" style="animation-duration:${d}s;animation-delay:-${delay}s"/>`;
+  }
+  // 금색 별자리 선 (그려지듯 나타남)
+  const CONST = [
+    [[1150,120],[1235,175],[1320,150],[1395,230],[1320,300],[1235,175]],
+    [[1210,430],[1290,480],[1385,455],[1470,525],[1430,600]],
+    [[860,95],[925,140],[1000,118],[1060,165]],
+  ];
+  CONST.forEach((pts, k) => {
+    const d = pts.map(p => p.join(',')).join(' ');
+    s += `<polyline class="cline" points="${d}" style="animation-delay:${0.6 + k * 0.7}s"/>`;
+    pts.forEach(([x, y], j) => { if (pts.findIndex(q => q[0] === x && q[1] === y) === j) s += `<circle class="cstar" cx="${x}" cy="${y}" r="3.2" style="animation-delay:${0.6 + k * 0.7 + j * 0.15}s"/>`; });
+  });
+  // 별똥별
+  s += `<g class="shoot"><line x1="0" y1="0" x2="140" y2="0" stroke="url(#trail)" stroke-width="1.6" stroke-linecap="round"/></g></svg>`;
+  sky.innerHTML = s;
+})();
