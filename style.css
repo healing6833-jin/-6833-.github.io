@@ -557,3 +557,10 @@ textarea{ resize:vertical; }
 .share-acts{ display:grid; gap:8px; }
 .btn-kakao{ background:#FEE500; color:#191919; }
 .btn-kakao:hover{ background:#F5DC00; }
+.share-status{ min-height:0; margin:0; font-size:14px; font-weight:700; text-align:center; }
+.share-status.ok, .share-status.fail{ margin:0 0 12px; padding:10px 14px; border-radius:10px; }
+.share-status.ok{ background:color-mix(in srgb, #2E9E5B 16%, transparent); color:#2E9E5B; }
+.share-status.fail{ background:color-mix(in srgb, var(--fire) 14%, transparent); color:var(--fire); }
+.share-preview{ user-select:all; }
+/* 알림 메시지가 창 뒤로 숨지 않게 */
+.toast{ z-index:2147483647; }

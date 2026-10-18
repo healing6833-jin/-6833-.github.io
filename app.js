@@ -498,7 +498,14 @@ function shareData(c){
 }
 async function copyText(t){
   try { await navigator.clipboard.writeText(t); return true; }
-  catch (_) { const ta = document.createElement('textarea'); ta.value = t; document.body.appendChild(ta); ta.select(); const ok = document.execCommand('copy'); ta.remove(); return ok; }
+  catch (_) {
+    // 창(모달)이 열려 있으면 그 안에서 복사해야 브라우저가 막지 않음
+    const host = document.querySelector('dialog[open]') || document.body;
+    const ta = document.createElement('textarea'); ta.value = t; ta.setAttribute('readonly', '');
+    ta.style.cssText = 'position:fixed;opacity:0;left:0;top:0;'; host.appendChild(ta); ta.select();
+    let ok = false; try { ok = document.execCommand('copy'); } catch (_) {}
+    ta.remove(); return ok;
+  }
 }
 document.addEventListener('click', async e => {
   const b = e.target.closest('[data-share]'); if (!b) return;
@@ -510,16 +517,22 @@ document.addEventListener('click', async e => {
   $('#share-title').textContent = `${c.symbol}︎ ${c.name} · ${mainOil(c)}`;
   $('#share-preview').textContent = d.text;
   $('#share-modal').dataset.card = c.n;
+  $('#share-status').textContent = ''; $('#share-status').className = 'share-status';
   $('#share-modal').showModal();
 });
 document.addEventListener('click', async e => {
   const b = e.target.closest('[data-share-act]'); if (!b) return;
   const d = shareData(cardBy(Number($('#share-modal').dataset.card)));
-  const act = b.dataset.shareAct;
+  const act = b.dataset.shareAct, status = $('#share-status');
+  const done = (ok, msg) => {
+    status.textContent = ok ? msg : '자동 복사가 막혀 있어요. 위 글을 마우스로 드래그해 복사(Ctrl+C)해 주세요.';
+    status.className = 'share-status ' + (ok ? 'ok' : 'fail');
+    if (ok){ const t = b.innerHTML; b.innerHTML = '✓ 복사했어요'; setTimeout(() => { b.innerHTML = t; }, 2200); }
+  };
   if (act === 'kakao'){
-    if (await copyText(d.text)) toast('복사했어요. 카카오톡 대화창에 Ctrl+V로 붙여 넣어 보내세요.');
+    done(await copyText(d.text), '복사 완료! 카카오톡 대화창을 열고 Ctrl+V로 붙여 넣어 보내세요.');
   } else if (act === 'link'){
-    if (await copyText(d.url)) toast('링크를 복사했어요.');
+    done(await copyText(d.url), '링크를 복사했어요. 원하는 곳에 붙여 넣으세요.');
   } else if (act === 'more' && navigator.share){
     try { await navigator.share({title:d.title, text:d.text}); } catch (_) {}
   }
