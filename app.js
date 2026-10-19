@@ -21,6 +21,8 @@ const LINKS = {
   product: 'https://smartstore.naver.com/healing6833/products/10129726013',
   // 향기카드의 '이 향 구입하기' 기본 주소 (오일별 주소는 아래 BUY_LINKS에)
   buy: 'https://smartstore.naver.com/healing6833',
+  // 블렌딩 · 추천 조합 결과의 '이 조합 구입하기' 주소 (예: 아로마테라피 20 세트, 블렌딩 키트)
+  blend: 'https://smartstore.naver.com/healing6833/products/10129726013',
   instagram: 'https://www.instagram.com/joyhealing6833/',
   threads: 'https://www.threads.com/@joyhealing6833',
   blog: 'https://blog.naver.com/healing6833',
@@ -244,8 +246,9 @@ function renderRecipe(cs){
         <div><p class="card-label">디퓨저 · 물 100ml 기준 총 6방울</p>${cs.map((c, i) => row(c, diff[i], 6)).join('')}</div>
       </div>
       <ul>${[...new Set(cs.map(c => c.caution))].map(t => `<li>${esc(t)}</li>`).join('')}<li>처음엔 시향지에 섞어 맡아 본 뒤 사용하세요.</li></ul>
-      <div class="card-actions">
-        <a class="btn btn-dark" href="#contact" data-prefill="나만의 블렌딩 클래스" data-note="${esc(note)}">이 조합으로 클래스 · 상담 신청</a>
+      <div class="card-actions card-actions-3">
+        <a class="btn btn-buy" href="${LINKS.blend}" target="_blank" rel="noopener">이 조합 구입하기</a>
+        <a class="btn btn-dark" href="#contact" data-prefill="나만의 블렌딩 클래스" data-note="${esc(note)}">이 조합으로 클래스 신청</a>
         <button class="btn btn-line" type="button" id="again3">다시 뽑기</button>
       </div>
     </div>`;
@@ -368,7 +371,8 @@ function quizResult(){
         <p class="card-text">${low.balance}. ${low.name}의 기운을 닮은 향기카드 세 장을 추천해요.</p>
         <div class="el-cards">${cs.map(c => `<img src="${c.img}" alt="${esc(c.name)} · ${esc(mainOil(c))} 카드" data-card="${c.n}" loading="lazy" width="1024" height="1536">`).join('')}</div>
         <p class="fine" style="margin-top:6px">${cs.map(c => `${c.symbol}︎ ${esc(mainOil(c))}`).join(' · ')} · 카드를 누르면 자세히 볼 수 있어요.</p>
-        <div class="card-actions">
+        <div class="card-actions card-actions-3">
+          <a class="btn btn-buy" href="${LINKS.blend}" target="_blank" rel="noopener">이 조합 구입하기</a>
           <a class="btn btn-dark" href="#contact" data-prefill="1:1 오행·별자리 아로마 컨설팅" data-note="[4원소 자가진단] 강한 기운: ${top.name} / 채우면 좋은 기운: ${low.name} · 이 결과로 상담받고 싶어요.">결과로 1:1 상담 받기</a>
           <button class="btn btn-line" type="button" id="quiz-again">다시 하기</button>
         </div>
@@ -401,7 +405,7 @@ $('#mood-grid').addEventListener('click', e => {
         <h3 class="card-title">${cs.map(c => esc(mainOil(c))).join(' · ')}</h3>
         <p class="card-text" style="margin-top:8px">${m.line}</p>
         <p class="fine" style="margin-top:6px">카드를 누르면 향의 이야기와 1분 리추얼을 볼 수 있어요.</p>
-        <div class="card-actions"><a class="btn btn-dark" href="#contact" data-prefill="1:1 오행·별자리 아로마 컨설팅" data-note="[오늘의 향 찾기] ${m.label} → ${cs.map(mainOil).join(', ')}">이 향으로 상담 받기</a></div>
+        <div class="card-actions"><a class="btn btn-buy" href="${LINKS.blend}" target="_blank" rel="noopener">이 조합 구입하기</a><a class="btn btn-dark" href="#contact" data-prefill="1:1 오행·별자리 아로마 컨설팅" data-note="[오늘의 향 찾기] ${m.label} → ${cs.map(mainOil).join(', ')}">이 향으로 상담 받기</a></div>
       </div>
     </div>`;
   $$('#mood-result [data-card]').forEach(img => img.addEventListener('click', () => openCard(Number(img.dataset.card))));
