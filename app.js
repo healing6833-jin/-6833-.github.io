@@ -19,10 +19,17 @@ const LINKS = {
   smartstore: 'https://smartstore.naver.com/healing6833',
   // 제품 카드의 '구매하기' 버튼
   product: 'https://smartstore.naver.com/healing6833/products/10129726013',
+  // 향기카드의 '이 향 구입하기' 기본 주소 (오일별 주소는 아래 BUY_LINKS에)
+  buy: 'https://smartstore.naver.com/healing6833',
   instagram: 'https://www.instagram.com/joyhealing6833/',
   threads: 'https://www.threads.com/@joyhealing6833',
   blog: 'https://blog.naver.com/healing6833',
   youtube: 'https://www.youtube.com/@%ED%96%A5%EA%B8%B0%EC%B9%98%EC%9C%A0%EC%A0%95%EC%9B%90%ED%9B%BC%EC%9D%B4%EB%A7%B5Fat',
+};
+
+// 오일별 구입 주소 — 카드 번호: '주소' 로 넣으면 그 카드만 해당 상품으로 연결 (비어 있으면 LINKS.buy)
+// 예) 6: 'https://smartstore.naver.com/healing6833/products/○○○○',  // 처녀자리 · 라벤더
+const BUY_LINKS = {
 };
 
 const FRAG_CARDS = [
@@ -132,7 +139,8 @@ function cardDetailHTML(c, {flip = false} = {}){
         <div class="card-sec"><p class="card-label">오늘의 메시지</p><p class="card-text">${esc(c.message)}</p></div>
         <div class="card-sec"><p class="card-label">1분 향기 리추얼</p><p class="card-text">${esc(c.ritual)}</p></div>
         <p class="card-caution">주의 · ${esc(c.caution)}</p>
-        <div class="card-actions">
+        <div class="card-actions card-actions-3">
+          <a class="btn btn-buy" href="${BUY_LINKS[c.n] || LINKS.buy}" target="_blank" rel="noopener">이 향 구입하기</a>
           <a class="btn btn-dark" href="#contact" data-prefill="1:1 오행·별자리 아로마 컨설팅" data-note="향기카드 ${pad(c.n)} ${esc(c.name)} · ${esc(mainOil(c))} 카드를 뽑았어요. 이 향으로 상담받고 싶어요.">이 향으로 상담 받기</a>
           <button class="btn btn-line" type="button" data-share="${c.n}">결과 공유</button>
         </div>

@@ -564,3 +564,8 @@ textarea{ resize:vertical; }
 .share-preview{ user-select:all; }
 /* 알림 메시지가 창 뒤로 숨지 않게 */
 .toast{ z-index:2147483647; }
+
+/* 향기카드 하단: 구입 · 상담 · 공유 */
+.btn-buy{ background:#03C75A; color:#fff; }
+.btn-buy:hover{ background:#02B350; }
+.card-actions-3 .btn{ flex:1 1 150px; padding-left:14px; padding-right:14px; }
