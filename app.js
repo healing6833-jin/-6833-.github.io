@@ -26,6 +26,8 @@ const LINKS = {
   instagram: 'https://www.instagram.com/joyhealing6833/',
   threads: 'https://www.threads.com/@joyhealing6833',
   blog: 'https://blog.naver.com/healing6833',
+  // 카카오톡 채널 공개 주소 (예: https://pf.kakao.com/_xxxxx) — 손님이 누르면 채널 추가 · 채팅으로 연결
+  kakao: '',
   youtube: 'https://www.youtube.com/@%ED%96%A5%EA%B8%B0%EC%B9%98%EC%9C%A0%EC%A0%95%EC%9B%90%ED%9B%BC%EC%9D%B4%EB%A7%B5Fat',
 };
 
@@ -598,10 +600,13 @@ const CHANNEL_ICONS = {
     svg:'<rect x="2.5" y="5.5" width="19" height="13" rx="4" fill="#fff"/><path d="M10.2 9.2v5.6l4.8-2.8z" fill="#FF0000"/>' },
   smartstore:{ name:'스마트스토어', handle:'healing6833', bg:'#03C75A',
     svg:'<path fill="#fff" d="M6 8.2h12l-.9 11.1a1.4 1.4 0 0 1-1.4 1.3H8.3a1.4 1.4 0 0 1-1.4-1.3L6 8.2Z"/><path d="M9 8.6V7a3 3 0 0 1 6 0v1.6" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round"/><path fill="#03C75A" d="M9.6 11.3h1.7l1.9 2.9v-2.9h1.6v6.1h-1.6l-1.9-2.9v2.9H9.6z"/>' },
+  kakao:{ name:'카카오 채널', handle:'1:1 채팅 상담', bg:'#FEE500',
+    svg:'<path fill="#191919" d="M12 4.2c-4.7 0-8.5 3-8.5 6.6 0 2.4 1.6 4.4 4 5.6l-.9 3.3c-.1.3.3.6.6.4l3.9-2.6c.3 0 .6.1.9.1 4.7 0 8.5-3 8.5-6.7S16.7 4.2 12 4.2Z"/><text x="12" y="13.3" text-anchor="middle" font-family="Arial,sans-serif" font-size="4.6" font-weight="700" fill="#FEE500">TALK</text>' },
   wadiz:{ name:'와디즈', handle:'', bg:'#00C4C4',
     svg:'<text x="12" y="16" text-anchor="middle" font-family="Arial,sans-serif" font-size="11" font-weight="700" fill="#fff">W</text>' },
 };
-const CHANNEL_ORDER = ['instagram', 'threads', 'blog', 'youtube', 'smartstore', 'wadiz'];
+// 스마트스토어는 제품 '구매하기' 버튼에 연결되어 있어 채널 목록에서는 뺌
+const CHANNEL_ORDER = ['instagram', 'threads', 'blog', 'youtube', 'kakao', 'wadiz'];
 (function channels(){
   const list = CHANNEL_ORDER.filter(k => LINKS[k]);
   $$('[data-channels]').forEach(box => {
