@@ -27,7 +27,7 @@ const LINKS = {
   threads: 'https://www.threads.com/@joyhealing6833',
   blog: 'https://blog.naver.com/healing6833',
   // 카카오톡 채널 공개 주소 (예: https://pf.kakao.com/_xxxxx) — 손님이 누르면 채널 추가 · 채팅으로 연결
-  kakao: '',
+  kakao: 'https://pf.kakao.com/_MCiNxj/chat',
   youtube: 'https://www.youtube.com/@%ED%96%A5%EA%B8%B0%EC%B9%98%EC%9C%A0%EC%A0%95%EC%9B%90%ED%9B%BC%EC%9D%B4%EB%A7%B5Fat',
 };
 
