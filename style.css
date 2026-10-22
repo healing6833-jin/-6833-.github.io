@@ -1,13 +1,14 @@
 /* 훼이맵FateMap — 별과 오행이 고른 오늘의 향 */
 
+/* 바탕은 늘 라이트 베이지 (html의 data-theme="light"로 기기 다크 모드를 따르지 않음) */
 :root{
-  --bg:#F7F3EC;
-  --bg-alt:#EFE8DC;
-  --surface:#FFFFFF;
-  --surface-2:#F3EEE5;
+  --bg:#F5EEE3;
+  --bg-alt:#ECE2D2;
+  --surface:#FFFCF7;
+  --surface-2:#F2EADD;
   --text:#24212C;
   --muted:#6B6472;
-  --border:#E2D9CA;
+  --border:#E3D7C3;
   --navy:#1D2147;
   --navy-2:#2B3062;
   --navy-ink:#ECE6F4;
