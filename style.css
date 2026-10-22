@@ -280,8 +280,8 @@ h1,h2,h3,h4{ font-family:var(--serif); line-height:1.35; margin:0; letter-spacin
 .notes-bar span:nth-child(1){ background:var(--top); } .notes-bar span:nth-child(2){ background:var(--middle); } .notes-bar span:nth-child(3){ background:var(--base); }
 .notes-desc{ font-size:14px; color:var(--muted); margin:10px 0 0; }
 .oil-list{ display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-top:44px; }
-.oil-item{ display:flex; align-items:center; gap:12px; padding:12px 14px; border-radius:12px; border:1px solid var(--border); background:var(--surface); cursor:pointer; text-align:left; transition:border-color .2s, transform .2s; }
-.oil-item:hover{ border-color:var(--muted); transform:translateY(-2px); }
+.oil-item{ display:flex; align-items:center; gap:12px; padding:12px 14px; border-radius:12px; border:1px solid #DCD3EA; background:#F1ECF8; cursor:pointer; text-align:left; transition:border-color .2s, transform .2s, background .2s; }
+.oil-item:hover{ border-color:#B9AAD3; background:#EAE3F5; transform:translateY(-2px); }
 .oil-item img{ width:34px; border-radius:4px; aspect-ratio:2/3; object-fit:cover; }
 .oil-item small{ display:block; font-size:11.5px; color:var(--muted); }
 .oil-item b{ font-size:14px; font-weight:500; line-height:1.35; display:block; }
