@@ -233,6 +233,19 @@ h1,h2,h3,h4{ font-family:var(--serif); line-height:1.35; margin:0; letter-spacin
 .el-cards img{ width:31%; border-radius:10px; cursor:pointer; box-shadow:var(--shadow); transition:transform .2s; }
 .el-cards img:hover{ transform:translateY(-4px); }
 
+/* 나의 향기 찾기 */
+.sq-intro{ text-align:center; padding:10px 0; }
+.sq-intro h3{ font-size:24px; margin:0 0 10px; }
+.sq-intro .el-cards{ justify-content:center; max-width:330px; margin:6px auto 22px; }
+.sq-type{ font-family:var(--serif); font-size:15px; margin:16px 0 2px; color:var(--muted); }
+.sq-partners{ display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:8px 0 4px; }
+.sq-partner{ display:flex; gap:12px; align-items:center; padding:10px; border-radius:14px; border:1px solid var(--border); background:var(--surface-2); cursor:pointer; text-align:left; font-size:13px; color:var(--muted); }
+.sq-partner img{ width:48px; border-radius:6px; flex:none; }
+.sq-partner b{ display:block; font-size:14.5px; color:var(--text); }
+.sq-partner:hover{ border-color:var(--muted); }
+.sq-recipe{ margin-top:16px; padding:16px 18px; border-radius:14px; background:var(--surface-2); }
+.sq-recipe .recipe-row{ margin:6px 0; }
+
 /* 오늘의 향 */
 .mood-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
 .mood-btn{ padding:18px 12px; border-radius:14px; border:1px solid var(--border); background:var(--surface-2); cursor:pointer; font-size:14.5px; font-weight:500; }

@@ -74,7 +74,7 @@
       <a class="btn btn-gold" href="#experience" data-open-tab="cards">향기카드 뽑아보기</a>
       <a class="btn btn-ghost-light" href="#contact" data-prefill="1:1 오행·별자리 아로마 컨설팅">1:1 상담 예약</a>
     </div>
-    <p class="hero-quick">생일만 알면 10초면 돼요 · <a href="#atlas" data-focus="birth-date">나의 별자리 향 찾기 →</a></p>
+    <p class="hero-quick">생일만 알면 10초면 돼요 · <a href="#atlas" data-focus="birth-date">나의 별자리 향 찾기 →</a> · <a href="#experience" data-open-tab="scent">8문항 나의 향기 찾기 →</a></p>
     <ul class="hero-trust">
       <li><b>맞춤형화장품조제관리사</b>식품의약품안전처</li>
       <li><b>아로마테라피전문가 1급</b>한국아로마테라피전문가협회</li>
@@ -136,6 +136,7 @@
 
     <div class="tabs" role="tablist" aria-label="무료 체험 프로그램">
       <button class="tab" role="tab" id="tab-cards" aria-controls="panel-cards" aria-selected="true" data-tab="cards">향기카드 20</button>
+      <button class="tab" role="tab" id="tab-scent" aria-controls="panel-scent" aria-selected="false" data-tab="scent" tabindex="-1">나의 향기 찾기</button>
       <button class="tab" role="tab" id="tab-element" aria-controls="panel-element" aria-selected="false" data-tab="element" tabindex="-1">4원소 자가진단</button>
       <button class="tab" role="tab" id="tab-mood" aria-controls="panel-mood" aria-selected="false" data-tab="mood" tabindex="-1">오늘의 향 찾기</button>
     </div>
@@ -148,6 +149,10 @@
         <button class="method-btn" type="button" data-method="keyword"><b>오늘의 키워드로</b><span>오늘 마음에 닿는 단어 하나</span></button>
       </div>
       <div class="card-stage" id="card-stage" aria-live="polite"></div>
+    </div>
+
+    <div class="panel" id="panel-scent" role="tabpanel" aria-labelledby="tab-scent" hidden>
+      <div id="scent-stage" aria-live="polite"></div>
     </div>
 
     <div class="panel" id="panel-element" role="tabpanel" aria-labelledby="tab-element" hidden>

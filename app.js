@@ -413,6 +413,118 @@ $('#mood-grid').addEventListener('click', e => {
   $$('#mood-result [data-card]').forEach(img => img.addEventListener('click', () => openCard(Number(img.dataset.card))));
 });
 
+/* ---------- 나의 향기 찾기 (8문항 → 시그니처 향 1 + 어울리는 향 2) ---------- */
+const SCENT_TYPES = {
+  citrus:{ name:'햇살 시트러스형', color:'var(--gold)', cards:[5,13,14,16],
+    desc:'밝고 가벼운 향에 마음이 열리는 사람. 주변을 환하게 데우는 힘이 있어요. 기분을 바꾸고 싶은 날, 시트러스 한 방울이 좋은 출발점이 됩니다.' },
+  herb:{ name:'맑은 허브형', color:'var(--earth)', cards:[1,3,11,15,18,19],
+    desc:'또렷하고 시원한 향에 끌리는 사람. 생각이 빠르고 새로운 것에 호기심이 많아요. 머리가 복잡한 날, 허브 향이 생각에 바람길을 내 줍니다.' },
+  floral:{ name:'부드러운 플로럴형', color:'var(--fire)', cards:[2,4,6,7,20],
+    desc:'다정하고 부드러운 향에 마음이 놓이는 사람. 다른 이의 마음을 잘 살피는 따뜻함이 있어요. 애쓴 하루 끝에 꽃향기로 나를 먼저 안아 주세요.' },
+  wood:{ name:'깊은 우디형', color:'var(--base)', cards:[8,9,10,12,17],
+    desc:'오래 머무는 깊은 향에 편안해지는 사람. 한결같고 믿음직한 중심을 가졌어요. 마음이 흔들리는 날, 나무와 흙 향이 단단한 바닥이 되어 줍니다.' },
+};
+const typeOf = n => Object.keys(SCENT_TYPES).find(k => SCENT_TYPES[k].cards.includes(n));
+// 보기마다 어울리는 카드 번호 — 첫 번째 카드에 2점, 나머지에 1점
+const SCENT_QUIZ = [
+  ['가장 먼저 손이 가는 향의 첫인상은?', [['갓 깐 과일 껍질처럼 상큼한', [13,5,16,14]], ['풀잎과 허브처럼 시원한', [3,1,18,15]], ['꽃잎처럼 부드럽고 달콤한', [6,2,7,20]], ['숲과 나무처럼 깊고 차분한', [10,8,17,12]]]],
+  ['마음이 편안해지는 장소는?', [['햇살 드는 카페 테라스', [5,16,14]], ['바람이 드는 들판과 창가', [11,3,18]], ['꽃이 핀 정원', [7,2,4]], ['비 온 뒤의 숲길', [9,10,17]]]],
+  ['요즘 나에게 가장 필요한 것은?', [['기분 전환과 활력', [16,5,18,1]], ['또렷한 집중', [13,1,3,11]], ['다정한 위로', [4,6,20,2]], ['고요한 쉼', [12,8,17,10]]]],
+  ['향을 피우고 싶은 순간은?', [['하루를 여는 아침', [13,16,3]], ['일하거나 공부할 때', [1,11,15,13]], ['따뜻한 저녁 목욕', [6,2,4,7]], ['잠들기 전 · 명상할 때', [12,17,19,10]]]],
+  ['자주 고르는 음료는?', [['레모네이드 · 자몽에이드', [16,13,5]], ['민트티 · 허브티', [3,15,19]], ['꽃차 · 얼그레이', [14,6,4,7]], ['진한 커피 · 보이차', [8,17,10]]]],
+  ['가장 듣고 싶은 말은?', [['"너랑 있으면 밝아져"', [5,14,16]], ['"생각이 깊고 똑똑해"', [11,13,19]], ['"곁에 있으면 편해"', [6,4,7,2]], ['"단단하고 믿음직해"', [10,17,12]]]],
+  ['지금 내 마음의 날씨는?', [['맑음 · 더 신나고 싶어요', [18,16,5]], ['흐림 · 머리가 복잡해요', [3,13,11,6]], ['비 · 마음이 젖어 있어요', [20,4,7,14]], ['바람 · 조금 흔들려요', [17,10,12,9]]]],
+  ['떠나고 싶은 여행은?', [['발길 닿는 대로 즉흥 여행', [1,18,9]], ['꼼꼼히 계획한 도시 여행', [15,10,13]], ['좋은 사람들과 함께하는 여행', [14,7,2]], ['혼자 조용히 쉬는 여행', [8,12,19]]]],
+];
+const scentStage = $('#scent-stage');
+let scentAnswers = [];
+
+function scentStart(){
+  scentAnswers = [];
+  scentStage.innerHTML = `
+    <div class="sq-intro">
+      <p class="eyebrow">MY SCENT</p>
+      <h3>스무 가지 향 가운데, 나의 향기는?</h3>
+      <p class="panel-intro">좋아하는 것과 요즘 마음에 관한 8가지 질문에 답하면<br>나를 닮은 <b>시그니처 향 하나</b>와 함께 섞으면 좋은 향 두 가지를 골라 드려요. (약 1분)</p>
+      <div class="el-cards">${[6,13,10].map(n => `<img src="${cardBy(n).thumb}" alt="" width="120" height="180">`).join('')}</div>
+      <button class="btn btn-dark" type="button" id="scent-go">나의 향기 찾기</button>
+    </div>`;
+  $('#scent-go').addEventListener('click', () => scentStep(0));
+}
+
+function scentStep(i){
+  const [q, opts] = SCENT_QUIZ[i];
+  scentStage.innerHTML = `
+    <div class="quiz-progress"><i style="width:${i / SCENT_QUIZ.length * 100}%"></i></div>
+    <p class="quiz-count">${i + 1} / ${SCENT_QUIZ.length}</p>
+    <h3 class="quiz-q">${q}</h3>
+    <div class="quiz-opts">${opts.map(([label], k) => `<button class="quiz-opt" type="button" data-k="${k}">${esc(label)}</button>`).join('')}</div>
+    <div class="quiz-nav">${i > 0 ? '<button class="link" type="button" id="scent-back">← 이전 질문</button>' : '<span></span>'}<span style="color:var(--muted)">가장 가까운 것 하나</span></div>`;
+  $$('.quiz-opt', scentStage).forEach(b => b.addEventListener('click', () => {
+    scentAnswers[i] = Number(b.dataset.k);
+    i + 1 < SCENT_QUIZ.length ? scentStep(i + 1) : scentResult();
+  }));
+  $('#scent-back')?.addEventListener('click', () => scentStep(i - 1));
+}
+
+function scentResult(){
+  const score = {}, firsts = {};
+  scentAnswers.forEach((k, i) => SCENT_QUIZ[i][1][k][1].forEach((n, j) => {
+    score[n] = (score[n] || 0) + (j ? 1 : 2);
+    if (!j) firsts[n] = (firsts[n] || 0) + 1;
+  }));
+  const ranked = Object.keys(score).map(Number)
+    .sort((a, b) => score[b] - score[a] || (firsts[b] || 0) - (firsts[a] || 0) || a - b);
+  const sig = cardBy(ranked[0]), type = SCENT_TYPES[typeOf(sig.n)];
+  // 함께 섞을 향: 시그니처와 다른 노트를 먼저 골라 탑 · 미들 · 베이스가 고르게 섞이도록
+  const notes = [NOTE_OF[sig.n]], partners = [];
+  for (const pass of [true, false]) for (const n of ranked.slice(1)){
+    if (partners.length === 2) break;
+    if (partners.includes(n) || (pass && notes.includes(NOTE_OF[n]))) continue;
+    partners.push(n); notes.push(NOTE_OF[n]);
+  }
+  // 시그니처 향이 중심이 되도록 2 : 1 : 1
+  const blend = [sig, ...partners.map(cardBy)], drops = [2, 1, 1];
+  const note = `[나의 향기 찾기] ${type.name} · 시그니처 향 ${mainOil(sig)} / 어울리는 향 ${blend.slice(1).map(mainOil).join(', ')} — 이 결과로 상담받고 싶어요.`;
+  scentStage.innerHTML = `
+    <div class="card-result">
+      <div class="card-flip" id="scent-flip" data-card="${sig.n}" role="button" tabindex="0" aria-label="${esc(sig.name)} 카드 자세히 보기"><div class="inner"><div class="face"></div><div class="face front" style="background-image:url('${sig.img}')"></div></div></div>
+      <div>
+        <span class="el-badge" style="background:${type.color}">${type.name}</span>
+        <p class="sq-type">나의 시그니처 향은</p>
+        <h3 class="card-title" style="margin:0">${esc(mainOil(sig))} <small style="font-size:16px;color:var(--muted)">${sig.symbol}︎ ${esc(sig.name)} · ${esc(sig.kwKr)}</small></h3>
+        <p class="card-text" style="margin:12px 0 16px">${type.desc}</p>
+        <div class="card-sec"><p class="card-label">향의 이미지</p><p class="card-text">${esc(sig.image)}</p></div>
+        <p class="card-label" style="margin-top:20px">함께 섞으면 좋은 향</p>
+        <div class="sq-partners">${blend.slice(1).map(c => `
+          <button class="sq-partner" type="button" data-card="${c.n}"><img src="${c.thumb}" alt="" width="120" height="180"><span><b>${esc(mainOil(c))}</b>${esc(c.kwKr)} · ${NOTE_INFO[NOTE_OF[c.n]].label} 노트</span></button>`).join('')}
+        </div>
+        <div class="sq-recipe">
+          <p class="card-label">나만의 롤온 · 캐리어오일 10ml + 총 4방울(약 2%)</p>
+          ${blend.map((c, i) => `<div class="recipe-row"><span>${esc(mainOil(c))}</span><span class="recipe-bar"><i style="width:${drops[i] / 4 * 100}%;background:${NOTE_INFO[NOTE_OF[c.n]].color}"></i></span><span>${drops[i]}방울</span></div>`).join('')}
+        </div>
+        <p class="card-caution">주의 · ${[...new Set(blend.map(c => c.caution))].map(esc).join(' · ')}</p>
+        <div class="card-actions card-actions-3">
+          <a class="btn btn-buy" href="${BUY_LINKS[sig.n] || LINKS.buy}" target="_blank" rel="noopener">이 향 구입하기</a>
+          <a class="btn btn-dark" href="#contact" data-prefill="1:1 오행·별자리 아로마 컨설팅" data-note="${esc(note)}">결과로 상담 받기</a>
+          <button class="btn btn-line" type="button" data-share="${sig.n}" data-share-kind="scent">결과 공유</button>
+        </div>
+        <p style="margin:16px 0 0"><button class="link" type="button" id="scent-again">다시 해 보기</button></p>
+      </div>
+    </div>`;
+  setTimeout(() => $('#scent-flip')?.classList.add('open'), 60);
+  $('#scent-again').addEventListener('click', scentStart);
+  scentStage.scrollIntoView({behavior:'smooth', block:'start'});
+}
+scentStage.addEventListener('click', e => {
+  const c = e.target.closest('[data-card]'); if (c) openCard(Number(c.dataset.card));
+});
+scentStage.addEventListener('keydown', e => {
+  const f = e.target.closest('.card-flip[data-card]');
+  if (f && (e.key === 'Enter' || e.key === ' ')){ e.preventDefault(); openCard(Number(f.dataset.card)); }
+});
+scentStart();
+
 /* ---------- 탭 ---------- */
 function selectTab(name){
   $$('.tab').forEach(t => {
@@ -502,7 +614,15 @@ $('#birth-form').addEventListener('submit', e => {
    PC: Windows 공유 창에는 PC 카카오톡이 없어서 '설치'로 뜨므로, 자체 공유 창을 띄움 */
 const SITE_URL = 'https://healing6833-jin.github.io/';
 const isMobile = () => matchMedia('(pointer:coarse)').matches && /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-function shareData(c){
+function shareData(c, kind){
+  if (kind === 'scent'){
+    const url = `${SITE_URL}?tab=scent`;
+    const text = `[훼이맵 나의 향기 찾기] 나는 ${SCENT_TYPES[typeOf(c.n)].name}, 시그니처 향은 ${mainOil(c)}
+"${c.image}"
+
+나의 향기도 찾아보기 👉 ${url}`;
+    return { title:'훼이맵FateMap 나의 향기 찾기', url, text };
+  }
   const url = `${SITE_URL}?card=${c.n}`;
   const text = `[훼이맵 향기카드] 오늘 나에게 온 카드는 ${c.name} · ${mainOil(c)}
 "${c.message}"
@@ -523,20 +643,22 @@ async function copyText(t){
 }
 document.addEventListener('click', async e => {
   const b = e.target.closest('[data-share]'); if (!b) return;
-  const c = cardBy(Number(b.dataset.share)), d = shareData(c);
+  const c = cardBy(Number(b.dataset.share)), kind = b.dataset.shareKind || '', d = shareData(c, kind);
   if (isMobile() && navigator.share){
     try { await navigator.share({title:d.title, text:d.text}); } catch (_) {}
     return;
   }
+  $('#share-head').textContent = kind === 'scent' ? '나의 향기 공유하기' : '향기카드 공유하기';
   $('#share-title').textContent = `${c.symbol}︎ ${c.name} · ${mainOil(c)}`;
   $('#share-preview').textContent = d.text;
   $('#share-modal').dataset.card = c.n;
+  $('#share-modal').dataset.kind = kind;
   $('#share-status').textContent = ''; $('#share-status').className = 'share-status';
   $('#share-modal').showModal();
 });
 document.addEventListener('click', async e => {
   const b = e.target.closest('[data-share-act]'); if (!b) return;
-  const d = shareData(cardBy(Number($('#share-modal').dataset.card)));
+  const d = shareData(cardBy(Number($('#share-modal').dataset.card)), $('#share-modal').dataset.kind);
   const act = b.dataset.shareAct, status = $('#share-status');
   const done = (ok, msg) => {
     status.textContent = ok ? msg : '자동 복사가 막혀 있어요. 위 글을 마우스로 드래그해 복사(Ctrl+C)해 주세요.';
@@ -557,6 +679,14 @@ document.addEventListener('click', async e => {
   if (!n || !cardBy(n)) return;
   history.replaceState(null, '', location.pathname);
   addEventListener('load', () => setTimeout(() => openCard(n), 400));
+})();
+// ?tab=scent 처럼 들어오면 무료 체험의 해당 탭을 열고 그 위치로 이동 (SNS 소개 링크용)
+(function openSharedTab(){
+  const t = new URLSearchParams(location.search).get('tab');
+  if (!t || !$('#panel-' + t)) return;
+  selectTab(t);
+  history.replaceState(null, '', location.pathname);
+  addEventListener('load', () => setTimeout(() => $('#experience').scrollIntoView({behavior:'smooth'}), 300));
 })();
 
 /* ---------- 모달 ---------- */
