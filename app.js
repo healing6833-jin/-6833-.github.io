@@ -551,26 +551,28 @@ document.addEventListener('click', e => {
 (function atlas(){
   const C = 320;
   const pt = (r, deg) => { const a = (deg - 90) * Math.PI / 180; return [(C + r * Math.cos(a)).toFixed(1), (C + r * Math.sin(a)).toFixed(1)]; };
-  let h = `<circle cx="${C}" cy="${C}" r="304" style="fill:none;stroke:var(--border)"/>
-    <circle cx="${C}" cy="${C}" r="232" style="fill:none;stroke:var(--gold);stroke-opacity:.55"/>
-    <circle cx="${C}" cy="${C}" r="148" style="fill:none;stroke:var(--air);stroke-opacity:.5" stroke-dasharray="3 6"/>
-    <circle cx="${C}" cy="${C}" r="64" style="fill:var(--surface);stroke:var(--border)"/>
-    <text x="${C}" y="${C - 4}" text-anchor="middle" style="fill:var(--text)" font-size="19" font-weight="700">향의</text>
-    <text x="${C}" y="${C + 22}" text-anchor="middle" style="fill:var(--text)" font-size="19" font-weight="700">지도</text>`;
+  // 밤하늘 같은 남색 원판 위에 밝은 글자 (휴대폰에서도 읽히도록 글자를 크게)
+  let h = `<defs><radialGradient id="wheel-bg" cx="50%" cy="42%" r="58%"><stop offset="0" stop-color="#2E3470"/><stop offset=".65" stop-color="#1D2147"/><stop offset="1" stop-color="#12142F"/></radialGradient></defs>
+    <circle cx="${C}" cy="${C}" r="331" fill="url(#wheel-bg)" style="stroke:#D6B66F;stroke-opacity:.55;stroke-width:2"/>
+    <circle cx="${C}" cy="${C}" r="232" style="fill:none;stroke:#D6B66F;stroke-opacity:.6"/>
+    <circle cx="${C}" cy="${C}" r="148" style="fill:none;stroke:#8FB0C4;stroke-opacity:.55" stroke-dasharray="3 6"/>
+    <circle cx="${C}" cy="${C}" r="58" style="fill:#262B5E;stroke:#D6B66F;stroke-opacity:.6"/>
+    <text x="${C}" y="${C - 4}" text-anchor="middle" style="fill:#F3EAD6" font-size="21" font-weight="700">향의</text>
+    <text x="${C}" y="${C + 23}" text-anchor="middle" style="fill:#F3EAD6" font-size="21" font-weight="700">지도</text>`;
   const node = (c, x, y, r, color, tx, ty, size) => `
     <g class="node" data-card="${c.n}" tabindex="0" role="button" aria-label="${c.name} ${mainOil(c)} 카드 보기">
       <circle cx="${x}" cy="${y}" r="${r}" style="fill:${color}"/>
-      <text x="${tx}" y="${ty - 3}" text-anchor="middle" style="fill:var(--text)" font-size="${size}">${c.symbol}︎ ${c.name.replace('자리', '')}</text>
-      <text x="${tx}" y="${Number(ty) + size - 1}" text-anchor="middle" style="fill:var(--muted)" font-size="${size - 3.5}">${shortOil(c)}</text>
+      <text x="${tx}" y="${ty - 3}" text-anchor="middle" style="fill:#F3EAD6" font-size="${size}" font-weight="700">${c.symbol}︎ ${c.name.replace('자리', '')}</text>
+      <text x="${tx}" y="${Number(ty) + size - 1}" text-anchor="middle" style="fill:#C9C2D6" font-size="${size - 3}">${shortOil(c)}</text>
     </g>`;
   FRAG_CARDS.filter(c => c.type === 'zodiac').forEach((c, i) => {
-    const deg = i * 30, [l1x, l1y] = pt(232, deg + 15), [l2x, l2y] = pt(304, deg + 15);
-    const [dx, dy] = pt(232, deg), [tx, ty] = pt(270, deg);
-    h += `<line x1="${l1x}" y1="${l1y}" x2="${l2x}" y2="${l2y}" style="stroke:var(--border)"/>` + node(c, dx, dy, 10, 'var(--gold)', tx, ty, 16);
+    const deg = i * 30, [l1x, l1y] = pt(232, deg + 15), [l2x, l2y] = pt(331, deg + 15);
+    const [dx, dy] = pt(232, deg), [tx, ty] = pt(288, deg);
+    h += `<line x1="${l1x}" y1="${l1y}" x2="${l2x}" y2="${l2y}" style="stroke:#D6B66F;stroke-opacity:.22"/>` + node(c, dx, dy, 10, '#D6B66F', tx, ty, 21);
   });
   FRAG_CARDS.filter(c => c.type === 'planet').forEach((c, i) => {
-    const deg = i * 45 + 22.5, [dx, dy] = pt(148, deg), [tx, ty] = pt(104, deg);
-    h += node(c, dx, dy, 9, 'var(--air)', tx, ty, 13.5);
+    const deg = i * 45 + 22.5, [dx, dy] = pt(148, deg), [tx, ty] = pt(100, deg);
+    h += node(c, dx, dy, 9, '#8FB0C4', tx, ty, 18);
   });
   const wheel = $('#wheel');
   wheel.innerHTML = h;
