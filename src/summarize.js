@@ -1,10 +1,11 @@
 // 필터를 통과한 공고를 Claude에게 보내 적합도(상/중/하)·이유·마감일·분류를 JSON으로 받는다.
 import Anthropic from '@anthropic-ai/sdk';
-import { betaZodOutputFormat } from '@anthropic-ai/sdk/helpers/beta/zod';
+import { zodOutputFormat } from '@anthropic-ai/sdk/helpers/zod';
 import { z } from 'zod';
 import { normalizeDate } from './filter.js';
 
-const MODEL = process.env.CLAUDE_MODEL || 'claude-opus-5-5';
+// 비용을 아끼려고 가장 저렴한 Haiku를 쓴다. 더 정밀한 판단이 필요하면 CLAUDE_MODEL로 바꾼다.
+const MODEL = process.env.CLAUDE_MODEL || 'claude-haiku-5-5';
 const CONCURRENCY = 3;
 
 const Judgement = z.object({
@@ -43,13 +44,10 @@ async function judgeOne(item) {
     `내용: ${item.summary || '정보 없음'}`,
   ].join('\n');
 
-  const res = await client.beta.messages.parse({
+  const res = await client.messages.parse({
     model: MODEL,
     max_tokens: 4000,
-    // 안전 분류기가 요청을 거절하면 서버가 기본 대체 모델로 다시 처리한다.
-    betas: ['server-side-fallback-2026-07-01'],
-    fallbacks: 'default',
-    output_config: { effort: 'low', format: betaZodOutputFormat(Judgement) },
+    output_config: { effort: 'low', format: zodOutputFormat(Judgement) },
     system: SYSTEM,
     messages: [{ role: 'user', content }],
   });
