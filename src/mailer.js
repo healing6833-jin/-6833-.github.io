@@ -2,11 +2,6 @@
 import nodemailer from 'nodemailer';
 
 const DEFAULT_TO = ['infor423@naver.com', 'healing6833@gmail.com'];
-const SECTIONS = [
-  ['폐교임대', '■ 폐교 임대'],
-  ['지원사업', '■ 지원사업'],
-  ['강사모집', '■ 강사 모집'],
-];
 
 // 마감일 빠른 순, 마감일 없는 공고(상시 등)는 맨 뒤
 function byDeadline(a, b) {
@@ -25,22 +20,17 @@ export function buildMail(items, today, notes = []) {
   if (!items.length) {
     lines.push('오늘 신규 공고 없음', '');
   } else {
-    for (const [category, heading] of SECTIONS) {
-      const group = sorted.filter((it) => it.category === category);
-      lines.push(`${heading} (${group.length}건)`, '');
-      if (!group.length) lines.push('  해당 없음', '');
-      group.forEach((it, i) => {
-        lines.push(
-          `${i + 1}. ${it.title}`,
-          `   기관: ${it.org || '-'}`,
-          `   마감: ${it.deadline || '상시/미정'}`,
-          `   적합도: ${it.fit}`,
-          `   이유: ${it.reason}`,
-          `   링크: ${it.url}`,
-          '',
-        );
-      });
-    }
+    sorted.forEach((it, i) => {
+      lines.push(
+        `${i + 1}. ${it.title}`,
+        `   기관: ${it.org || '-'}`,
+        `   마감: ${it.deadline || '상시/미정'}`,
+        `   적합도: ${it.fit}`,
+        `   이유: ${it.reason}`,
+        `   링크: ${it.url}`,
+        '',
+      );
+    });
   }
 
   const data = {

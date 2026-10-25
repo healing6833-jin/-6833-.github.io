@@ -1,9 +1,7 @@
-// 매일 실행: 공고 수집 → 필터 → Claude 판단 → 메일 발송 → data/seen.json 갱신
+// 매일 실행: 기업마당 지원사업 공고 수집 → 필터 → Claude 판단 → 메일 발송 → data/seen.json 갱신
 import { readFile, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { fetchBizinfo } from './sources/bizinfo.js';
-import { fetchOnbid } from './sources/onbid.js';
-import { fetchWork24 } from './sources/work24.js';
 import { filterItems, todayKst } from './filter.js';
 import { judgeItems } from './summarize.js';
 import { buildMail, sendMail } from './mailer.js';
@@ -14,15 +12,6 @@ const DRY_RUN = process.env.DRY_RUN === '1';
 
 const SOURCES = [
   ['기업마당', fetchBizinfo],
-  ['온비드', fetchOnbid],
-  ['고용24 강사모집', fetchWork24],
-  // 지자체 평생학습관·문화센터·여성인력개발센터 게시판의 강사 모집은 공통 API가 없어 수집하지 않는다.
-  // 기업마당에 올라오는 강사 모집은 기업마당 수집 + 키워드 필터로 함께 잡힌다.
-  // 교육청 폐교 대부 공고는 아직 건너뜀:
-  // - 경남교육청 거창교육지원청(gne.go.kr), 경북교육청(gbe.kr) 게시판은 RSS를 제공하지 않고,
-  //   목록이 세션·스크립트 기반이라 안정적으로 긁기 어렵다.
-  // - 두 교육청의 폐교 대부는 대부분 온비드에도 함께 공고되므로 위 온비드 수집으로 상당 부분 잡힌다.
-  // - 나중에 RSS나 정적 목록 주소가 확인되면 src/sources/에 수집기를 추가하고 여기에 등록한다.
 ];
 
 async function loadSeen() {
