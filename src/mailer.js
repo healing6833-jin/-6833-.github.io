@@ -52,7 +52,7 @@ export function buildMail(items, today, notes = []) {
 }
 
 export async function sendMail({ subject, text }) {
-  const user = process.env.NAVER_SMTP_USER;
+  const user = process.env.NAVER_SMTP_USER?.trim();
   const pass = process.env.NAVER_SMTP_PASS;
   if (!user || !pass) throw new Error('NAVER_SMTP_USER / NAVER_SMTP_PASS가 설정되지 않았습니다');
 
@@ -60,11 +60,26 @@ export async function sendMail({ subject, text }) {
   const from = user.includes('@') ? user : `${user}@naver.com`;
   const to = process.env.MAIL_TO ? process.env.MAIL_TO.split(',').map((s) => s.trim()) : DEFAULT_TO;
 
-  const transporter = nodemailer.createTransport({
-    host: 'smtp.naver.com',
-    port: 465,
-    secure: true,
-    auth: { user, pass },
-  });
-  await transporter.sendMail({ from: `훼이맵 공고봇 <${from}>`, to, subject, text });
+  // 네이버 SMTP 로그인은 아이디만 받는 경우와 전체 주소를 받는 경우가 있어 둘 다 시도한다.
+  const logins = [...new Set([user, from.split('@')[0], from])];
+  let lastErr;
+  for (const login of logins) {
+    const transporter = nodemailer.createTransport({
+      host: 'smtp.naver.com',
+      port: 465,
+      secure: true,
+      auth: { user: login, pass: pass.trim() },
+    });
+    try {
+      await transporter.sendMail({ from: `훼이맵 공고봇 <${from}>`, to, subject, text });
+      return;
+    } catch (err) {
+      if (err.code !== 'EAUTH') throw err;
+      lastErr = err;
+    }
+  }
+  throw new Error(
+    `네이버 메일 로그인 실패 (${lastErr.response}). 네이버 메일 환경설정의 IMAP/SMTP 사용 여부와 ` +
+      'NAVER_SMTP_PASS(애플리케이션 비밀번호)를 확인하세요.',
+  );
 }
