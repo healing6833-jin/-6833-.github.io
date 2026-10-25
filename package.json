@@ -1,0 +1,20 @@
+{
+  "name": "hwaymap-notice-bot",
+  "version": "1.0.0",
+  "private": true,
+  "description": "훼이맵에 맞는 기업마당 지원사업 공고를 매일 수집해 메일로 보내는 봇",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dry-run": "DRY_RUN=1 node src/index.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^1.3.0",
+    "nodemailer": "^7.0.0",
+    "zod": "^4.0.0"
+  }
+}
