@@ -1,4 +1,55 @@
 {
-  "updated": "",
-  "items": []
+  "updated": "2026-10-25",
+  "items": [
+    {
+      "category": "지원사업",
+      "title": "2026년 4차 기술개발제품 시범구매 지원계획 공고",
+      "org": "중소벤처기업부 / 한국중소벤처기업유통원",
+      "deadline": "2026-11-10",
+      "fit": "중",
+      "reason": "설립 7년 이내 중소기업이면 자격 가능하나 기술개발제품 12종 또는 관련 인증 보유가 필요해 확인이 요구됨",
+      "url": "https://www.bizinfo.go.kr/sii/siia/selectSIIA200Detail.do?pblancId=PBLN_000000000127379",
+      "added": "2026-10-25"
+    },
+    {
+      "category": "지원사업",
+      "title": "[경북] 대구한의대학교 글로컬대학(특성화지방대학) K-MEDI AI Innovation 창업사관학교 예비창업자 모집 공고",
+      "org": "경상북도 / 대구한의대학교",
+      "deadline": "2026-10-28",
+      "fit": "중",
+      "reason": "경산 지역과 화장품·천연소재 분야는 맞지만, 예비창업자 또는 창업 1년 미만 조건의 업력 확인이 필요합니다.",
+      "url": "https://www.bizinfo.go.kr/sii/siia/selectSIIA200Detail.do?pblancId=PBLN_000000000127394",
+      "added": "2026-10-25"
+    },
+    {
+      "category": "지원사업",
+      "title": "2026년 K-소비재 온-오프라인 판촉 상담회 참가기업 모집 공고(정저우 중부6성 박람회 연계)",
+      "org": "산업통상부 / 대한무역투자진흥공사",
+      "deadline": "2026-10-30",
+      "fit": "중",
+      "reason": "화장품 등 국내 소비재 분야라 업종은 맞지만 중국 내륙 수출 상담회라 실제 해외 판로 준비 여부와 참가 조건 확인이 필요합니다.",
+      "url": "https://www.bizinfo.go.kr/sii/siia/selectSIIA200Detail.do?pblancId=PBLN_000000000127342",
+      "added": "2026-10-25"
+    },
+    {
+      "category": "지원사업",
+      "title": "일본진출 K-스타트업 AI 역직구 온라인 한국관 특별전 모집 공고",
+      "org": "산업통상부 / 대한무역투자진흥공사",
+      "deadline": "2026-10-31",
+      "fit": "상",
+      "reason": "1인 웰니스 소비재 기업이 일본 온라인 판로를 얻을 수 있고, 한국 온라인 스토어 보유 조건도 충족 가능성이 높음",
+      "url": "https://www.bizinfo.go.kr/sii/siia/selectSIIA200Detail.do?pblancId=PBLN_000000000127277",
+      "added": "2026-10-25"
+    },
+    {
+      "category": "지원사업",
+      "title": "[경북] 2026년 소상공인 출산장려 아이보듬 사업 참여자 추가모집 공고",
+      "org": "경상북도 / 경상북도경제진흥원",
+      "deadline": "",
+      "fit": "중",
+      "reason": "경산 소재 소상공인으로 지역 요건은 맞지만 2026년 출산 여부와 연매출 1,200만원 이상 확인이 필요하고, 사업 내용과는 간접적 관련",
+      "url": "https://www.bizinfo.go.kr/sii/siia/selectSIIA200Detail.do?pblancId=PBLN_000000000127233",
+      "added": "2026-10-25"
+    }
+  ]
 }
