@@ -32,6 +32,7 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           BIZINFO_API_KEY: ${{ secrets.BIZINFO_API_KEY }}
           ONBID_SERVICE_KEY: ${{ secrets.ONBID_SERVICE_KEY }}
+          WORK24_API_KEY: ${{ secrets.WORK24_API_KEY }}
           NAVER_SMTP_USER: ${{ secrets.NAVER_SMTP_USER }}
           NAVER_SMTP_PASS: ${{ secrets.NAVER_SMTP_PASS }}
 

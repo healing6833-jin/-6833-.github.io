@@ -5,6 +5,7 @@ const DEFAULT_TO = ['infor423@naver.com', 'healing6833@gmail.com'];
 const SECTIONS = [
   ['폐교임대', '■ 폐교 임대'],
   ['지원사업', '■ 지원사업'],
+  ['강사모집', '■ 강사 모집'],
 ];
 
 // 마감일 빠른 순, 마감일 없는 공고(상시 등)는 맨 뒤
