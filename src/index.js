@@ -8,6 +8,9 @@ import { buildMail, sendMail } from './mailer.js';
 
 const SEEN_PATH = fileURLToPath(new URL('../data/seen.json', import.meta.url));
 const SEEN_LIMIT = 5000; // 파일이 끝없이 커지지 않도록 최근 ID만 보관
+// 모바일 확인 페이지(notices.html)가 읽는 공고 목록
+const NOTICES_PATH = fileURLToPath(new URL('../data/notices.json', import.meta.url));
+const UNDATED_KEEP_DAYS = 60; // 마감일 없는(상시) 공고를 페이지에 남겨 두는 기간
 const DRY_RUN = process.env.DRY_RUN === '1';
 
 const SOURCES = [
@@ -26,6 +29,34 @@ async function loadSeen() {
 async function saveSeen(ids) {
   const trimmed = ids.slice(-SEEN_LIMIT);
   await writeFile(SEEN_PATH, JSON.stringify({ ids: trimmed }, null, 2) + '\n');
+}
+
+function daysBetween(from, to) {
+  return Math.round((Date.parse(to) - Date.parse(from)) / 86_400_000);
+}
+
+// 오늘 보낸 공고를 기존 목록에 더하고, 마감이 지났거나 오래된 상시 공고는 뺀다.
+async function saveNotices(picked, today) {
+  let old = [];
+  try {
+    old = JSON.parse(await readFile(NOTICES_PATH, 'utf8')).items ?? [];
+  } catch {
+    // 첫 실행이면 빈 목록에서 시작
+  }
+  const added = picked.map((it) => ({
+    category: it.category,
+    title: it.title,
+    org: it.org,
+    deadline: it.deadline,
+    fit: it.fit,
+    reason: it.reason,
+    url: it.url,
+    added: today,
+  }));
+  const items = [...new Map([...old, ...added].map((it) => [it.url, it])).values()].filter((it) =>
+    it.deadline ? it.deadline >= today : daysBetween(it.added, today) <= UNDATED_KEEP_DAYS,
+  );
+  await writeFile(NOTICES_PATH, JSON.stringify({ updated: today, items }, null, 2) + '\n');
 }
 
 async function main() {
@@ -70,6 +101,7 @@ async function main() {
 
   // 5. 판단이 끝난 공고("하" 포함)는 다시 보내지 않도록 기록. 판단 실패분은 다음 날 재시도.
   await saveSeen([...seenIds, ...judged.map((it) => it.id)]);
+  await saveNotices(picked, today);
 }
 
 main().catch((err) => {
