@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>훼이맵 장부</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Noto+Serif+KR:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F7F3EC; --bg-alt:#EFE8DC; --surface:#FFFFFF; --surface-2:#F6F1E8;
+  --text:#24212C; --muted:#6B6472; --border:#E6DDCF;
+  --navy:#1D2147; --navy-ink:#F4EFE6;
+  --gold:#A9843F; --gold-btn:#E9C46A; --gold-btn-ink:#2A2310; --gold-soft:#F3E6C4;
+  --in:#2E8B62; --in-soft:#E3F2EA; --out:#D4553A; --out-soft:#FBE7E2;
+  --amber:#D99A3E; --amber-2:#F2C879; --glass:#FBF8F2;
+  --scene:#E9EFE6; --scene-2:#DCE5D9; --wood:#9B6B43;
+  --shadow:0 6px 20px rgba(29,33,71,.07);
+  --radius:18px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#11122A; --bg-alt:#181A38; --surface:#1C1E3D; --surface-2:#24274A;
+    --text:#EEE8DC; --muted:#A9A3B9; --border:#31345C;
+    --navy:#0B0C1E; --gold:#D6B66F; --gold-btn:#D9B25A; --gold-soft:#3B3424;
+    --in:#56C08F; --in-soft:#17352B; --out:#EE7A5E; --out-soft:#3D2125;
+    --glass:#2A2D52; --scene:#20243F; --scene-2:#2A2F50; --wood:#7A5636;
+    --shadow:0 6px 20px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#11122A; --bg-alt:#181A38; --surface:#1C1E3D; --surface-2:#24274A;
+  --text:#EEE8DC; --muted:#A9A3B9; --border:#31345C;
+  --navy:#0B0C1E; --gold:#D6B66F; --gold-btn:#D9B25A; --gold-soft:#3B3424;
+  --in:#56C08F; --in-soft:#17352B; --out:#EE7A5E; --out-soft:#3D2125;
+  --glass:#2A2D52; --scene:#20243F; --scene-2:#2A2F50; --wood:#7A5636;
+  --shadow:0 6px 20px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif;font-size:15px;line-height:1.5;word-break:keep-all;-webkit-font-smoothing:antialiased}
+button,input,select,textarea{font:inherit;color:inherit}
+.num{font-variant-numeric:tabular-nums}
+
+/* 헤더 */
+.top{background:var(--navy);color:var(--navy-ink);position:sticky;top:0;z-index:10}
+.top-in{max-width:760px;margin:0 auto;padding:14px 16px;display:flex;align-items:center;gap:12px}
+.top h1{margin:0;font-family:'Noto Serif KR',serif;font-weight:900;font-size:20px;letter-spacing:-.02em;flex:1}
+.top h1 em{font-style:normal;color:var(--gold-btn)}
+.top .day{display:flex;align-items:center;gap:6px;font-size:13px;opacity:.95}
+.switch{flex:none;color:var(--navy-ink);text-decoration:none;font-size:13px;font-weight:700;border:1px solid rgba(255,255,255,.28);border-radius:999px;padding:5px 12px;white-space:nowrap}
+.switch:hover{background:rgba(255,255,255,.1)}
+.top input[type=date]{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);border-radius:10px;padding:6px 8px;color:var(--navy-ink);color-scheme:dark}
+.demo{background:var(--gold-btn);color:var(--gold-btn-ink);font-size:12px;font-weight:700;text-align:center;padding:5px 12px}
+
+main{max-width:760px;margin:0 auto;padding:14px 16px 60px;display:flex;flex-direction:column;gap:14px}
+.card{background:var(--surface);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px}
+.card h2{margin:0 0 14px;font-size:16px;font-weight:900;display:flex;align-items:center;gap:8px}
+.card h2 .sub{font-weight:500;font-size:12.5px;color:var(--muted)}
+.card h2 .right{margin-left:auto}
+.hint{font-size:12.5px;color:var(--muted);margin:8px 0 0}
+
+/* 히어로 — 별과 행성이 도는 밤하늘, 향이 피어오르는 오일병 */
+.scene{position:relative;border-radius:14px;overflow:hidden;background:radial-gradient(120% 90% at 50% 100%,#3A2F5C 0%,#1D2147 55%,#12153A 100%);height:240px}
+.scene svg{position:absolute;inset:0;width:100%;height:100%}
+.bubble{position:absolute;left:calc(50% + 52px);top:62px;max-width:calc(50% - 60px);background:rgba(255,255,255,.95);color:#24212C;border-radius:14px 14px 14px 4px;padding:6px 12px;font-size:12.5px;font-weight:700;line-height:1.35;box-shadow:0 6px 18px rgba(0,0,0,.25);animation:float 4s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+.hero-row{display:flex;align-items:flex-end;justify-content:space-between;gap:10px;margin-top:14px}
+.hero-label{font-size:12.5px;color:var(--muted);font-weight:500}
+.hero-amt{font-size:30px;font-weight:900;letter-spacing:-.02em;line-height:1.15}
+.badge{display:inline-flex;align-items:center;gap:6px;background:var(--navy);color:var(--navy-ink);border-radius:999px;padding:5px 12px;font-size:12.5px;font-weight:700;white-space:nowrap}
+.bar{height:12px;border-radius:99px;background:var(--surface-2);overflow:hidden;margin:10px 0 6px}
+.bar>i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--amber),var(--amber-2));transition:width .8s cubic-bezier(.2,.8,.2,1)}
+.bar.green>i{background:var(--in)}
+.bar-meta{display:flex;justify-content:space-between;font-size:12.5px;color:var(--muted)}
+.bar-meta b{color:var(--text)}
+
+/* 입력 */
+.row{display:flex;gap:8px;margin-top:12px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}
+.grid .wide{grid-column:span 2}
+.field{display:flex;flex-direction:column;gap:4px;min-width:0}
+.field>span{font-size:11.5px;color:var(--muted);font-weight:500;padding-left:2px}
+input,select,textarea{width:100%;min-width:0;background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:10px 12px;outline:none;transition:border-color .15s}
+input:focus,select:focus,textarea:focus{border-color:var(--gold)}
+textarea{min-height:86px;resize:vertical}
+.btn{border:0;border-radius:12px;padding:10px 18px;font-weight:700;cursor:pointer;white-space:nowrap;transition:transform .06s,filter .15s}
+.btn:active{transform:scale(.98)}
+.btn.gold{background:var(--gold-btn);color:var(--gold-btn-ink)}
+.btn.navy{background:var(--navy);color:var(--navy-ink);width:100%;padding:13px;margin-top:12px;font-size:15px}
+.btn.ghost{background:var(--surface-2);color:var(--text)}
+.btn:hover{filter:brightness(1.04)}
+.btn[disabled]{opacity:.55;cursor:wait}
+.chips{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+.chip{border:1.5px solid var(--border);background:var(--surface);border-radius:12px;padding:10px 4px;font-weight:700;cursor:pointer;font-size:14px}
+.chip[aria-pressed="true"]{color:#fff;border-color:transparent}
+.chip[data-k="매출"][aria-pressed="true"],.chip[data-k="기타입금"][aria-pressed="true"]{background:var(--in)}
+.chip[data-k="매입"][aria-pressed="true"],.chip[data-k="비용"][aria-pressed="true"],.chip[data-k="기타출금"][aria-pressed="true"]{background:var(--out)}
+.chip[data-k="계좌이체"][aria-pressed="true"]{background:var(--navy);color:var(--navy-ink)}
+.vatline{font-size:12.5px;color:var(--muted);margin-top:8px;min-height:18px}
+.vatline b{color:var(--text)}
+.check{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);margin-top:8px}
+.check input{width:auto}
+.hide{display:none!important}
+.rc-btns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.rc-pick{display:flex;align-items:center;justify-content:center;padding:14px 10px;font-size:15px}
+.rc-pick[disabled]{opacity:.55;pointer-events:none}
+.rc-pick input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+.rc-pick:focus-within{outline:2px solid var(--gold);outline-offset:2px}
+.rc-status{display:flex;align-items:center;gap:12px;margin-top:12px;background:var(--surface-2);border-radius:12px;padding:10px;font-size:13.5px}
+.rc-status img{width:56px;height:56px;object-fit:cover;border-radius:8px;flex:none}
+.rc-status.busy span::after{content:'';display:inline-block;width:12px;height:12px;margin-left:8px;border:2px solid var(--gold);border-right-color:transparent;border-radius:50%;vertical-align:-2px;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* 지표 타일 */
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.tile{background:var(--surface-2);border-radius:14px;padding:12px}
+.tile small{display:block;font-size:12px;color:var(--muted);font-weight:500}
+.tile b{display:block;font-size:19px;font-weight:900;letter-spacing:-.02em;margin-top:2px}
+.tile .tsub{font-size:11.5px;color:var(--muted);margin-top:2px}
+.c-in{color:var(--in)} .c-out{color:var(--out)}
+
+/* 표 */
+.table{width:100%;border-collapse:collapse;font-size:13.5px}
+.table th{font-size:12px;color:var(--muted);font-weight:500;text-align:left;padding:8px 6px;border-bottom:1.5px solid var(--border)}
+.table td{padding:10px 6px;border-bottom:1px solid var(--border);vertical-align:middle}
+.table .r{text-align:right}
+.table tfoot td{font-weight:900;border-bottom:0}
+.tag{display:inline-block;font-size:11px;font-weight:700;border-radius:6px;padding:2px 7px;background:var(--surface-2);color:var(--muted)}
+.tag.in{background:var(--in-soft);color:var(--in)} .tag.out{background:var(--out-soft);color:var(--out)}
+.del{border:0;background:none;cursor:pointer;color:var(--muted);padding:4px 6px;border-radius:8px;font-size:15px}
+.del:hover{background:var(--out-soft);color:var(--out)}
+.desc small{display:block;color:var(--muted);font-size:11.5px}
+.empty{text-align:center;color:var(--muted);padding:22px 0;font-size:13.5px}
+.seg{display:inline-flex;background:var(--surface-2);border-radius:10px;padding:3px}
+.seg button{border:0;background:none;padding:5px 12px;border-radius:8px;font-size:12.5px;font-weight:700;color:var(--muted);cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--text);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.scroll{overflow-x:auto;margin:0 -4px;padding:0 4px}
+
+/* 차트 */
+.donut-wrap{display:flex;align-items:center;gap:22px;flex-wrap:wrap}
+.donut{position:relative;width:170px;height:170px;flex:none}
+.donut svg{width:100%;height:100%;transform:rotate(-90deg)}
+.donut .mid{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.donut .mid small{font-size:12px;color:var(--muted)}
+.donut .mid b{font-size:26px;font-weight:900}
+.legend{display:flex;flex-direction:column;gap:8px;font-size:13.5px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:8px}
+.hbars{display:flex;flex-direction:column;gap:9px;margin-top:6px}
+.hbar{display:grid;grid-template-columns:92px 1fr 92px;align-items:center;gap:10px;font-size:13px}
+.hbar .track{height:10px;background:var(--surface-2);border-radius:99px;overflow:hidden}
+.hbar .track i{display:block;height:100%;background:var(--out);border-radius:99px;transition:width .8s}
+.hbar .lab{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sub-h{font-size:14px;font-weight:900;margin:22px 0 8px}
+
+/* 부가세 */
+.q-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.q{border:1.5px solid var(--border);border-radius:14px;padding:12px}
+.q.now{border-color:var(--gold);background:var(--gold-soft)}
+.q h3{margin:0 0 6px;font-size:13px}
+.q dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:2px 8px;font-size:12px}
+.q dt{color:var(--muted)} .q dd{margin:0;text-align:right}
+.q .pay{margin-top:8px;padding-top:8px;border-top:1px dashed var(--border);display:flex;justify-content:space-between;font-weight:900;font-size:13px}
+
+/* 재고 */
+.stock{display:flex;flex-wrap:wrap;gap:8px}
+.stock .s{display:flex;align-items:center;gap:8px;border-radius:12px;padding:8px 12px;background:var(--surface-2);font-size:13px}
+.stock .s.warn{background:var(--out-soft);color:var(--out);font-weight:700}
+
+.toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,30px);opacity:0;background:var(--navy);color:var(--navy-ink);padding:11px 18px;border-radius:12px;font-size:14px;font-weight:700;transition:.25s;z-index:20;box-shadow:var(--shadow);max-width:calc(100% - 32px)}
+.toast.on{transform:translate(-50%,0);opacity:1}
+.loading{text-align:center;padding:60px 0;color:var(--muted)}
+
+@keyframes twinkle{0%,100%{opacity:.25}50%{opacity:1}}
+.tw{animation:twinkle 3s ease-in-out infinite}
+@keyframes draw{0%{stroke-dashoffset:320;opacity:0}10%{opacity:.85}55%{stroke-dashoffset:0;opacity:.85}85%{opacity:.85}100%{stroke-dashoffset:0;opacity:0}}
+.const-line{stroke-dasharray:320;animation:draw 9s ease-in-out infinite}
+@keyframes mist{0%{stroke-dashoffset:70;opacity:0}25%{opacity:.9}100%{stroke-dashoffset:-70;opacity:0}}
+.mist{stroke-dasharray:70;animation:mist 4.2s ease-out infinite}
+.mist.m2{animation-delay:1.4s}.mist.m3{animation-delay:2.8s}
+@keyframes rise{0%{transform:translateY(0) scale(.6);opacity:0}20%{opacity:1}100%{transform:translateY(-90px) scale(1.1);opacity:0}}
+.spark{transform-box:fill-box;transform-origin:center;animation:rise 5s ease-in infinite}
+@keyframes glow{0%,100%{opacity:.35}50%{opacity:.7}}
+.glow{animation:glow 4s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+.bottle{animation:bob 5s ease-in-out infinite}
+@keyframes shoot{0%,82%{transform:translate(0,0);opacity:0}84%{opacity:1}94%{transform:translate(-190px,80px);opacity:0}100%{opacity:0}}
+.shoot{animation:shoot 8s linear infinite}
+@media (prefers-reduced-motion: reduce){.tw,.const-line,.mist,.spark,.glow,.bottle,.shoot,.bubble{animation:none}.const-line{stroke-dashoffset:0;opacity:.8}.bar>i,.hbar .track i{transition:none}}
+
+@media (max-width:620px){
+  .tiles,.q-grid{grid-template-columns:repeat(2,1fr)}
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .chips{grid-template-columns:repeat(3,1fr)}
+  .hero-amt{font-size:26px}
+  .top h1{font-size:17px;white-space:nowrap}
+  .top-in{gap:8px}
+  .switch{padding:5px 10px}
+  .hbar{grid-template-columns:76px 1fr 80px}
+  .hide-m{display:none}
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="top-in">
+    <h1><span id="biz">훼이맵</span> <em>장부</em><span class="hide-m"> · 오늘의 흐름</span></h1>
+    <label class="day"><span class="hide-m">기준일</span> <input type="date" id="day" aria-label="기준일"></label>
+    <a class="switch" id="toCrm" href="Crm.html" target="_top">고객관리 →</a>
+  </div>
+  <div class="demo hide" id="demoBar">미리보기(데모 데이터) — 구글 시트에 연결하면 실제 장부가 보입니다</div>
+</header>
+
+<main id="app"><div class="loading">장부를 불러오는 중…<br><small>처음 한 번은 장부 시트를 만드느라 30초~1분쯤 걸려요</small></div></main>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<template id="tpl">
+  <!-- ① 이번 달 매출 목표 -->
+  <section class="card" aria-label="이번 달 매출 목표">
+    <div class="scene">
+      <svg viewBox="0 0 600 240" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+        <defs>
+          <clipPath id="bodyClip"><rect x="262" y="112" width="76" height="100" rx="18"/></clipPath>
+          <linearGradient id="oil" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F6D58E"/><stop offset="1" stop-color="#C9822F"/></linearGradient>
+          <linearGradient id="glass" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8A5A2B" stop-opacity=".55"/><stop offset=".5" stop-color="#B9773A" stop-opacity=".35"/><stop offset="1" stop-color="#6E451F" stop-opacity=".6"/></linearGradient>
+          <radialGradient id="halo"><stop offset="0" stop-color="#E7D4A4" stop-opacity=".55"/><stop offset="1" stop-color="#E7D4A4" stop-opacity="0"/></radialGradient>
+          <radialGradient id="moonGlow"><stop offset="0" stop-color="#F3E6C4" stop-opacity=".5"/><stop offset="1" stop-color="#F3E6C4" stop-opacity="0"/></radialGradient>
+          <linearGradient id="tail" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#fff"/></linearGradient>
+          <path id="orbit" d="M150,176 a150,30 0 1,0 300,0 a150,30 0 1,0 -300,0"/>
+        </defs>
+
+        <!-- 반짝이는 별 (스크립트가 채움) -->
+        <g id="stars"></g>
+
+        <!-- 별자리: 선이 그려졌다 사라짐 -->
+        <g>
+          <polyline class="const-line" points="150,92 178,58 214,66 236,38 222,104 186,112 150,92" fill="none" stroke="#E7D4A4" stroke-width="1.2" stroke-linejoin="round"/>
+          <g fill="#F3E6C4">
+            <circle class="tw" cx="150" cy="92" r="2.6"/><circle class="tw" cx="178" cy="58" r="2.2" style="animation-delay:.6s"/>
+            <circle class="tw" cx="214" cy="66" r="2.8" style="animation-delay:1.2s"/><circle class="tw" cx="236" cy="38" r="2" style="animation-delay:1.8s"/>
+            <circle class="tw" cx="222" cy="104" r="2.4" style="animation-delay:.3s"/><circle class="tw" cx="186" cy="112" r="2" style="animation-delay:2.2s"/>
+          </g>
+        </g>
+
+        <!-- 초승달 -->
+        <circle cx="452" cy="52" r="44" fill="url(#moonGlow)"/>
+        <path d="M466 30a24 24 0 1 0 6 40a19 19 0 1 1 -6 -40z" fill="#F3E6C4"/>
+
+        <!-- 별똥별 -->
+        <g class="shoot"><line x1="560" y1="18" x2="600" y2="2" stroke="url(#tail)" stroke-width="2" stroke-linecap="round" transform="rotate(180 580 10)"/></g>
+
+        <!-- 바닥 빛 -->
+        <ellipse cx="300" cy="236" rx="260" ry="26" fill="#E7D4A4" opacity=".08"/>
+        <circle class="glow" cx="300" cy="150" r="110" fill="url(#halo)"/>
+
+        <!-- 행성 궤도 (오행 색) -->
+        <use href="#orbit" fill="none" stroke="#E7D4A4" stroke-opacity=".28" stroke-dasharray="2 5"/>
+        <circle r="6" fill="#E4703F"><animateMotion dur="16s" repeatCount="indefinite"><mpath href="#orbit"/></animateMotion></circle>
+        <circle r="4.5" fill="#8FB0C4"><animateMotion dur="16s" begin="-4s" repeatCount="indefinite"><mpath href="#orbit"/></animateMotion></circle>
+        <circle r="5" fill="#A4AC62"><animateMotion dur="16s" begin="-8s" repeatCount="indefinite"><mpath href="#orbit"/></animateMotion></circle>
+        <circle r="3.8" fill="#6EA2BC"><animateMotion dur="16s" begin="-12s" repeatCount="indefinite"><mpath href="#orbit"/></animateMotion></circle>
+
+        <!-- 오일병 -->
+        <g class="bottle">
+          <ellipse cx="300" cy="214" rx="46" ry="5" fill="#000" opacity=".35"/>
+          <rect x="262" y="112" width="76" height="100" rx="18" fill="url(#glass)"/>
+          <g clip-path="url(#bodyClip)">
+            <rect id="oilRect" x="258" y="212" width="84" height="0" fill="url(#oil)"/>
+            <path id="oilWave" d="M216 212 q10.5 -5 21 0 t21 0 t21 0 t21 0 t21 0 t21 0 t21 0 v10 h-147z" fill="#F6D58E" opacity=".75">
+              <animateTransform attributeName="transform" type="translate" from="0 0" to="42 0" dur="2.4s" repeatCount="indefinite"/>
+            </path>
+          </g>
+          <rect x="262" y="112" width="76" height="100" rx="18" fill="none" stroke="#E7D4A4" stroke-opacity=".55" stroke-width="1.5"/>
+          <rect x="270" y="122" width="7" height="74" rx="3.5" fill="#fff" opacity=".28"/>
+          <!-- 라벨 -->
+          <rect x="276" y="142" width="48" height="42" rx="5" fill="#F7F3EC"/>
+          <rect x="279" y="145" width="42" height="36" rx="3" fill="none" stroke="#A9843F" stroke-width=".8"/>
+          <path d="M300 151l1.6 4.2 4.4.3-3.4 2.8 1.1 4.3-3.7-2.4-3.7 2.4 1.1-4.3-3.4-2.8 4.4-.3z" fill="#A9843F"/>
+          <text x="300" y="175" text-anchor="middle" font-family="Georgia, 'Noto Serif KR', serif" font-style="italic" font-size="9.5" fill="#1D2147">FateMap</text>
+          <!-- 목과 스포이드 -->
+          <rect x="287" y="98" width="26" height="16" rx="3" fill="url(#glass)" stroke="#E7D4A4" stroke-opacity=".5"/>
+          <rect x="283" y="90" width="34" height="10" rx="2.5" fill="#C9A45C"/>
+          <path d="M288 90v-18c0-16 24-16 24 0v18z" fill="#24213A"/>
+          <!-- 피어오르는 향 -->
+          <g fill="none" stroke-linecap="round" stroke-width="3">
+            <path class="mist" d="M300 54 C 288 40, 314 28, 298 10" stroke="#F2C879"/>
+            <path class="mist m2" d="M294 56 C 276 40, 298 26, 280 8" stroke="#C9B8E8"/>
+            <path class="mist m3" d="M306 56 C 326 42, 304 26, 322 10" stroke="#F3E6C4"/>
+          </g>
+        </g>
+
+        <!-- 떠오르는 금빛 반짝임 -->
+        <g fill="#F2C879">
+          <path class="spark" d="M248 190l2 5 5 2-5 2-2 5-2-5-5-2 5-2z"/>
+          <path class="spark" d="M352 200l1.6 4 4 1.6-4 1.6-1.6 4-1.6-4-4-1.6 4-1.6z" style="animation-delay:1.7s"/>
+          <path class="spark" d="M330 176l1.3 3.2 3.2 1.3-3.2 1.3-1.3 3.2-1.3-3.2-3.2-1.3 3.2-1.3z" style="animation-delay:3.1s"/>
+          <path class="spark" d="M268 210l1.3 3.2 3.2 1.3-3.2 1.3-1.3 3.2-1.3-3.2-3.2-1.3 3.2-1.3z" style="animation-delay:2.4s"/>
+        </g>
+      </svg>
+      <div class="bubble" id="bubble">향이 차오르고 있어요</div>
+    </div>
+    <div class="hero-row">
+      <div>
+        <div class="hero-label" id="heroLabel">이번 달 매출</div>
+        <div class="hero-amt num" id="heroAmt">0원</div>
+      </div>
+      <span class="badge" id="heroBadge">목표를 정해 보세요</span>
+    </div>
+    <div class="bar"><i id="heroBar" style="width:0"></i></div>
+    <div class="bar-meta"><span id="heroPct">목표의 0%</span><span>목표 <b class="num" id="heroGoal">-</b></span></div>
+    <div class="row">
+      <input id="goalIn" inputmode="numeric" placeholder="이번 달 매출 목표(원)" aria-label="매출 목표 금액">
+      <button class="btn gold" id="goalBtn">목표 설정</button>
+    </div>
+  </section>
+
+  <!-- ② 영수증 사진 입력 -->
+  <section class="card" aria-label="영수증 사진 자동 입력">
+    <h2>영수증 사진으로 입력 <span class="sub">찍으면 Gemini가 읽어 줘요</span></h2>
+    <div class="rc-btns">
+      <label class="btn gold rc-pick"><input type="file" id="rcCam" accept="image/*" capture="environment">📷 카메라로 찍기</label>
+      <label class="btn ghost rc-pick"><input type="file" id="rcFile" accept="image/*">🖼 사진 고르기</label>
+    </div>
+    <div class="rc-status hide" id="rcStatus"><img id="rcImg" alt="올린 영수증 사진"><span id="rcMsg"></span></div>
+    <div class="hide" id="rcKey">
+      <p class="hint" style="margin-top:12px">처음 한 번만: <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">Google AI Studio</a>에서 무료 API 키를 만들어 붙여 넣으세요.</p>
+      <div class="row"><input id="rcKeyIn" type="password" autocomplete="off" placeholder="Gemini API 키 (AIza…)" aria-label="Gemini API 키"><button class="btn gold" id="rcKeyBtn">키 저장</button></div>
+    </div>
+    <p class="hint">날짜·상호·금액·결제수단·증빙·계정과목을 아래 입력칸에 채워요. 확인한 뒤 저장하세요.</p>
+  </section>
+
+  <!-- ③ 문자 자동 입력 -->
+  <section class="card" aria-label="결제 문자 자동 입력">
+    <h2>결제 문자로 자동 입력 <span class="sub">카드 승인·입출금 문자</span></h2>
+    <textarea id="sms" placeholder="카드 결제 문자나 통장 입출금 알림을 그대로 붙여 넣으세요.&#10;예) 신한카드(1234)승인 33,000원(일시불) 10/20 14:22 CJ대한통운"></textarea>
+    <div class="row" style="justify-content:flex-end">
+      <button class="btn ghost" id="smsClear">지우기</button>
+      <button class="btn gold" id="smsBtn">분석하기</button>
+    </div>
+    <p class="hint">분석 결과는 아래 입력칸에 채워져요. 확인한 뒤 저장하세요.</p>
+  </section>
+
+  <!-- ④ 오늘의 기록 -->
+  <section class="card" aria-label="거래 기록">
+    <h2>오늘의 기록</h2>
+    <div class="chips" id="chips"></div>
+    <div class="grid">
+      <label class="field"><span>일자</span><input type="date" id="fDate"></label>
+      <label class="field wide"><span>거래내용</span><input id="fDesc" placeholder="예) 라벤더 오일 원료"></label>
+      <label class="field"><span>금액 (부가세 포함)</span><input id="fTotal" inputmode="numeric" placeholder="0" class="num"></label>
+      <label class="field"><span>거래처</span><input id="fParty" placeholder="예) 스마트스토어"></label>
+      <label class="field js-nt"><span>계정과목</span><select id="fTitle"></select></label>
+      <label class="field js-nt"><span>증빙</span><select id="fEv"></select></label>
+      <label class="field js-nt"><span>과세구분</span><select id="fTax"></select></label>
+      <label class="field"><span id="fFromLab">계좌·결제수단</span><select id="fFrom"></select></label>
+      <label class="field js-t hide"><span>이체 받는 계좌</span><select id="fTo"></select></label>
+      <label class="field wide"><span>비고</span><input id="fMemo" placeholder="선택"></label>
+    </div>
+    <div class="vatline" id="vatLine"></div>
+    <label class="check js-nt"><input type="checkbox" id="fNo"> 매입세액 불공제 (접대비 등)</label>
+    <button class="btn navy" id="saveBtn">장부에 저장하기</button>
+  </section>
+
+  <!-- ⑤ 입출금 일보 -->
+  <section class="card" aria-label="입출금 일보">
+    <h2>입출금 일보 <span class="sub" id="dayLabel"></span></h2>
+    <div class="tiles">
+      <div class="tile"><small>당일 입금</small><b class="c-in num" id="tIn">0</b></div>
+      <div class="tile"><small>당일 출금</small><b class="c-out num" id="tOut">0</b></div>
+      <div class="tile"><small>순입출</small><b class="num" id="tNet">0</b></div>
+      <div class="tile"><small>전체 잔액</small><b class="num" id="tBal">0</b></div>
+    </div>
+    <div class="scroll" style="margin-top:12px">
+      <table class="table num">
+        <thead><tr><th>계좌</th><th class="r hide-m">전일잔액</th><th class="r">입금</th><th class="r">출금</th><th class="r">당일잔액</th></tr></thead>
+        <tbody id="acctBody"></tbody>
+        <tfoot id="acctFoot"></tfoot>
+      </table>
+    </div>
+  </section>
+
+  <!-- ⑥ 월별 요약 -->
+  <section class="card" aria-label="월별 요약">
+    <h2>월별 요약 <span class="right"><select id="month" aria-label="월 선택" style="padding:6px 10px"></select></span></h2>
+    <div class="tiles">
+      <div class="tile"><small>매출 (공급가)</small><b class="c-in num" id="mSale">0</b></div>
+      <div class="tile"><small>매입·비용</small><b class="c-out num" id="mCost">0</b></div>
+      <div class="tile"><small>이익</small><b class="num" id="mProfit">0</b><div class="tsub" id="mMargin"></div></div>
+      <div class="tile"><small>부가세 (이달분)</small><b class="num" id="mVat">0</b><div class="tsub" id="mVatSub"></div></div>
+    </div>
+  </section>
+
+  <!-- ⑦ 거래내역 -->
+  <section class="card" aria-label="거래내역">
+    <h2>거래내역 <span class="right seg" id="listSeg"><button data-m="day" aria-pressed="true">기준일</button><button data-m="month" aria-pressed="false">이번 달</button></span></h2>
+    <div class="scroll">
+      <table class="table">
+        <thead><tr><th>날짜</th><th>내용</th><th class="hide-m">분류</th><th class="r">금액</th><th></th></tr></thead>
+        <tbody id="listBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ⑧ 차트 -->
+  <section class="card" aria-label="매출과 비용 비율">
+    <h2>매출 vs 비용 <span class="sub" id="chartSub"></span></h2>
+    <div class="donut-wrap">
+      <div class="donut">
+        <svg viewBox="0 0 42 42"><circle cx="21" cy="21" r="15.9" fill="none" stroke="var(--surface-2)" stroke-width="6"/>
+          <circle id="dCost" cx="21" cy="21" r="15.9" fill="none" stroke="var(--out)" stroke-width="6" stroke-dasharray="0 100"/>
+          <circle id="dProfit" cx="21" cy="21" r="15.9" fill="none" stroke="var(--in)" stroke-width="6" stroke-dasharray="0 100"/></svg>
+        <div class="mid"><small>이익률</small><b class="num" id="dPct">-</b></div>
+      </div>
+      <div class="legend num">
+        <div><i style="background:var(--out)"></i><span id="lgCost">비용</span></div>
+        <div><i style="background:var(--in)"></i><span id="lgProfit">이익</span></div>
+      </div>
+    </div>
+    <div class="sub-h">비용 분류별</div>
+    <div class="hbars num" id="hbars"></div>
+  </section>
+
+  <!-- ⑨ 부가세 -->
+  <section class="card" aria-label="부가세 분기 집계">
+    <h2>부가세 <span class="sub" id="vatYear"></span></h2>
+    <div class="q-grid num" id="qGrid"></div>
+    <p class="hint">일반과세자 기준 예상치입니다. 신고 전에 홈택스 자료와 대조하세요. 자세한 표는 시트의 [부가세집계]에 있습니다.</p>
+  </section>
+
+  <!-- ⑩ 재고 -->
+  <section class="card" aria-label="재고 알림">
+    <h2>재고 <span class="sub" id="stockSub"></span></h2>
+    <div class="stock num" id="stock"></div>
+  </section>
+</template>
+
+<script>
+const DEDUCT_EV = ['세금계산서', '신용카드', '현금영수증'];
+const IN_K = ['매출', '기타입금'], OUT_K = ['매입', '비용', '기타출금'];
+const S = { d: null, day: '', month: '', list: 'day', kind: '비용', demo: typeof google === 'undefined' || !google.script };
+const $ = (id) => document.getElementById(id);
+const won = (n) => Math.round(n).toLocaleString('ko-KR');
+const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const toNum = (s) => Number(String(s || '').replace(/[^\d.-]/g, '')) || 0;
+
+function api(fn, ...args) {
+  if (S.demo) return Promise.resolve(DEMO[fn](...args));
+  return new Promise((res, rej) => google.script.run.withSuccessHandler(res).withFailureHandler(rej)[fn](...args));
+}
+function toast(msg) { const t = $('toast'); t.textContent = msg; t.classList.add('on'); clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove('on'), 2600); }
+
+// ---------- 계산 (시트 수식과 같은 규칙) ----------
+function vatOf(e) { return e.vat != null && e.vat !== '' ? Number(e.vat) : (e.tax === '과세' ? Math.round(e.total / 11) : 0); }
+function supplyOf(e) { return e.total - vatOf(e); }
+function deductible(e) { return (e.kind === '매입' || e.kind === '비용') && !e.nodeduct && DEDUCT_EV.includes(e.evidence); }
+function costOf(e) { return e.total - (deductible(e) ? vatOf(e) : 0); }
+function flows(acc, pred) {
+  let inn = 0, out = 0;
+  for (const e of S.d.entries) {
+    if (!pred(e.date)) continue;
+    if (e.kind === '계좌이체') { if (e.to === acc) inn += e.total; if (e.from === acc) out += e.total; continue; }
+    if (e.from !== acc) continue;
+    if (IN_K.includes(e.kind)) inn += e.total; else if (OUT_K.includes(e.kind)) out += e.total;
+  }
+  return { inn, out };
+}
+const inMonth = (e, ym) => e.date.slice(0, 7) === ym;
+const quarterOf = (date) => Math.ceil(Number(date.slice(5, 7)) / 3);
+
+// ---------- 렌더 ----------
+function renderAll() {
+  renderHero(); renderDaily(); renderMonth(); renderList(); renderCharts(); renderVat(); renderStock();
+}
+function renderHero() {
+  const ym = S.day.slice(0, 7);
+  const sale = S.d.entries.filter((e) => e.kind === '매출' && inMonth(e, ym)).reduce((a, e) => a + e.total, 0);
+  const goal = S.d.goal;
+  const pct = goal > 0 ? Math.min(100, Math.round(sale / goal * 100)) : 0;
+  $('heroLabel').textContent = `${Number(ym.slice(5))}월 매출 (부가세 포함)`;
+  $('heroAmt').textContent = won(sale) + '원';
+  $('heroGoal').textContent = goal ? won(goal) + '원' : '미설정';
+  $('heroPct').textContent = goal ? `목표의 ${pct}%` : '목표를 정하면 병이 채워져요';
+  $('heroBar').style.width = pct + '%';
+  const msg = !goal ? ['목표를 정해 주세요', '향기 병을 준비했어요']
+    : pct >= 100 ? ['이번 달 목표 달성!', '향이 가득 찼어요']
+    : pct >= 70 ? ['거의 다 왔어요', '병이 넘칠 것 같아요']
+    : pct >= 35 ? ['좋은 흐름이에요', '향이 절반쯤 찼어요']
+    : sale > 0 ? ['한 방울씩 차오르는 중', '향이 피어나기 시작했어요'] : ['첫 판매를 기다려요', '빈 병이 기다리고 있어요'];
+  $('heroBadge').textContent = msg[0];
+  $('bubble').textContent = msg[1];
+  const h = 100 * pct / 100, y = 212 - h;
+  $('oilRect').setAttribute('y', y); $('oilRect').setAttribute('height', h);
+  $('oilWave').setAttribute('d', `M216 ${y} q10.5 -5 21 0 t21 0 t21 0 t21 0 t21 0 t21 0 t21 0 v10 h-147z`);
+  $('oilWave').style.display = pct > 0 && pct < 100 ? '' : 'none';
+}
+// 밤하늘 별: 매번 같은 자리에 찍히도록 고정된 의사난수 사용
+function drawSky() {
+  let seed = 6833;
+  const rnd = () => (seed = (seed * 9301 + 49297) % 233280) / 233280;
+  let html = '';
+  for (let i = 0; i < 46; i++) {
+    const x = Math.round(rnd() * 600), y = Math.round(rnd() * 150), r = (0.6 + rnd() * 1.3).toFixed(1);
+    if (x > 255 && x < 345 && y > 40) continue;   // 병 주변은 비움
+    html += `<circle class="tw" cx="${x}" cy="${y}" r="${r}" fill="#fff" style="animation-delay:${(rnd() * 3).toFixed(1)}s;animation-duration:${(2 + rnd() * 3).toFixed(1)}s"/>`;
+  }
+  $('stars').innerHTML = html;
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.querySelectorAll('.scene animate, .scene animateMotion, .scene animateTransform').forEach((a) => a.remove());
+  }
+}
+function renderDaily() {
+  const d = S.day, w = '일월화수목금토'[new Date(d + 'T00:00:00').getDay()];
+  $('dayLabel').textContent = `${d.slice(5).replace('-', '/')} (${w})`;
+  let tot = { prev: 0, inn: 0, out: 0 };
+  const rows = S.d.accounts.map((a) => {
+    const before = flows(a.name, (x) => x < d), today = flows(a.name, (x) => x === d);
+    const prev = a.opening + before.inn - before.out, bal = prev + today.inn - today.out;
+    tot.prev += prev; tot.inn += today.inn; tot.out += today.out;
+    return `<tr><td>${esc(a.name)}</td><td class="r hide-m">${won(prev)}</td><td class="r c-in">${today.inn ? won(today.inn) : '-'}</td><td class="r c-out">${today.out ? won(today.out) : '-'}</td><td class="r"><b class="${bal < 0 ? 'c-out' : ''}">${won(bal)}</b></td></tr>`;
+  });
+  $('acctBody').innerHTML = rows.join('') || '<tr><td colspan="5" class="empty">기초설정에 계좌를 등록하세요</td></tr>';
+  const bal = tot.prev + tot.inn - tot.out;
+  $('acctFoot').innerHTML = `<tr><td>합계</td><td class="r hide-m">${won(tot.prev)}</td><td class="r c-in">${won(tot.inn)}</td><td class="r c-out">${won(tot.out)}</td><td class="r">${won(bal)}</td></tr>`;
+  // 계좌이체는 합계에서 서로 상쇄되므로 타일은 이체를 뺀 실제 입출금
+  const ext = S.d.entries.filter((e) => e.date === d && e.kind !== '계좌이체');
+  const inn = ext.filter((e) => IN_K.includes(e.kind)).reduce((a, e) => a + e.total, 0);
+  const out = ext.filter((e) => OUT_K.includes(e.kind)).reduce((a, e) => a + e.total, 0);
+  $('tIn').textContent = won(inn); $('tOut').textContent = won(out);
+  $('tNet').textContent = (inn - out > 0 ? '+' : '') + won(inn - out);
+  $('tNet').className = 'num ' + (inn - out >= 0 ? 'c-in' : 'c-out');
+  $('tBal').textContent = won(bal);
+}
+function monthStats(ym) {
+  const es = S.d.entries.filter((e) => inMonth(e, ym));
+  const sale = es.filter((e) => e.kind === '매출').reduce((a, e) => a + supplyOf(e), 0);
+  const cost = es.filter((e) => e.kind === '매입' || e.kind === '비용').reduce((a, e) => a + costOf(e), 0);
+  const outVat = es.filter((e) => e.kind === '매출').reduce((a, e) => a + vatOf(e), 0);
+  const inVat = es.filter(deductible).reduce((a, e) => a + vatOf(e), 0);
+  const byTitle = {};
+  es.filter((e) => e.kind === '매입' || e.kind === '비용').forEach((e) => { const k = e.title || '기타'; byTitle[k] = (byTitle[k] || 0) + costOf(e); });
+  return { es, sale, cost, outVat, inVat, byTitle };
+}
+function renderMonth() {
+  const m = monthStats(S.month), p = m.sale - m.cost;
+  $('mSale').textContent = won(m.sale); $('mCost').textContent = won(m.cost);
+  $('mProfit').textContent = won(p); $('mProfit').className = 'num ' + (p >= 0 ? 'c-in' : 'c-out');
+  $('mMargin').textContent = m.sale ? `이익률 ${Math.round(p / m.sale * 100)}%` : '';
+  const v = m.outVat - m.inVat;
+  $('mVat').textContent = won(v); $('mVat').className = 'num ' + (v > 0 ? 'c-out' : 'c-in');
+  $('mVatSub').textContent = v > 0 ? '납부 예상' : v < 0 ? '환급 예상' : '';
+}
+function renderList() {
+  const es = S.d.entries.filter((e) => S.list === 'day' ? e.date === S.day : inMonth(e, S.month))
+    .slice().sort((a, b) => b.date.localeCompare(a.date) || b.row - a.row);
+  $('listBody').innerHTML = es.map((e) => {
+    const sign = IN_K.includes(e.kind) ? 'in' : OUT_K.includes(e.kind) ? 'out' : '';
+    const amt = (sign === 'in' ? '+' : sign === 'out' ? '−' : '') + won(e.total);
+    const sub = e.kind === '계좌이체' ? `${esc(e.from)} → ${esc(e.to)}` : esc([e.party, e.from].filter(Boolean).join(' · '));
+    return `<tr><td class="num">${e.date.slice(5)}</td><td class="desc">${esc(e.desc || e.title || e.kind)}<small>${sub}</small></td>
+      <td class="hide-m"><span class="tag ${sign}">${esc(e.kind)}</span> <span style="font-size:12px;color:var(--muted)">${esc(e.title)}</span></td>
+      <td class="r num ${sign ? 'c-' + sign : ''}"><b>${amt}</b></td>
+      <td class="r"><button class="del" data-row="${e.row}" aria-label="삭제" title="삭제">🗑</button></td></tr>`;
+  }).join('') || `<tr><td colspan="5" class="empty">${S.list === 'day' ? '이 날은 기록이 없어요' : '이번 달 기록이 없어요'}</td></tr>`;
+}
+function renderCharts() {
+  const m = monthStats(S.month);
+  $('chartSub').textContent = `${Number(S.month.slice(5))}월 · 공급가 기준`;
+  const base = Math.max(m.sale, m.cost) || 1;
+  const costPct = Math.min(100, m.cost / base * 100), profit = Math.max(0, m.sale - m.cost), profitPct = profit / base * 100;
+  $('dCost').setAttribute('stroke-dasharray', `${costPct} ${100 - costPct}`);
+  $('dProfit').setAttribute('stroke-dasharray', `${profitPct} ${100 - profitPct}`);
+  $('dProfit').setAttribute('stroke-dashoffset', -costPct);
+  $('dPct').textContent = m.sale ? Math.round((m.sale - m.cost) / m.sale * 100) + '%' : '-';
+  $('lgCost').textContent = `비용 ${won(m.cost)}원` + (m.sale ? ` (${Math.round(m.cost / m.sale * 100)}%)` : '');
+  $('lgProfit').textContent = m.sale >= m.cost ? `이익 ${won(profit)}원` : `손실 ${won(m.cost - m.sale)}원`;
+  const arr = Object.entries(m.byTitle).sort((a, b) => b[1] - a[1]).slice(0, 8);
+  const max = arr.length ? arr[0][1] : 1;
+  $('hbars').innerHTML = arr.map(([k, v]) => `<div class="hbar"><span class="lab">${esc(k)}</span><span class="track"><i style="width:${v / max * 100}%"></i></span><span style="text-align:right">${won(v)}원</span></div>`).join('')
+    || '<div class="empty">이번 달 비용이 없어요</div>';
+}
+function renderVat() {
+  const y = S.day.slice(0, 4), nowQ = quarterOf(S.day);
+  $('vatYear').textContent = `${y}년 분기별`;
+  let html = '';
+  for (let q = 1; q <= 4; q++) {
+    const es = S.d.entries.filter((e) => e.date.slice(0, 4) === y && quarterOf(e.date) === q);
+    const out = es.filter((e) => e.kind === '매출').reduce((a, e) => a + vatOf(e), 0);
+    const inn = es.filter(deductible).reduce((a, e) => a + vatOf(e), 0);
+    const pay = out - inn;
+    html += `<div class="q ${q === nowQ ? 'now' : ''}"><h3>${q}분기 <span style="font-weight:500;color:var(--muted);font-size:11.5px">${q * 3 - 2}~${q * 3}월</span></h3>
+      <dl><dt>매출세액</dt><dd>${won(out)}</dd><dt>매입세액</dt><dd>${won(inn)}</dd></dl>
+      <div class="pay"><span>${pay < 0 ? '환급' : '납부'}</span><span class="${pay > 0 ? 'c-out' : 'c-in'}">${won(Math.abs(pay))}</span></div></div>`;
+  }
+  $('qGrid').innerHTML = html;
+}
+function renderStock() {
+  const it = S.d.items || [];
+  const warn = it.filter((i) => i.status === '발주필요');
+  $('stockSub').textContent = it.length ? (warn.length ? `발주 필요 ${warn.length}개` : '모두 정상') : '';
+  const sorted = warn.concat(it.filter((i) => i.status !== '발주필요'));
+  $('stock').innerHTML = sorted.map((i) => `<span class="s ${i.status === '발주필요' ? 'warn' : ''}">${esc(i.name)} <b>${won(i.stock)}${esc(i.unit)}</b>${i.status === '발주필요' ? ' · 발주 필요' : ''}</span>`).join('')
+    || '<div class="empty" style="width:100%">품목·재고 시트에 품목을 등록하면 여기에 보여요</div>';
+}
+
+// ---------- 입력 폼 ----------
+const DEFAULTS = {
+  '매출': { title: '상품매출', ev: '신용카드', tax: '과세', from: '스마트스토어 정산' },
+  '매입': { title: '원재료매입', ev: '세금계산서', tax: '과세', from: '사업용 통장' },
+  '비용': { title: '운반비', ev: '신용카드', tax: '과세', from: '사업용 카드' },
+  '기타입금': { title: '대표자 입금·인출', ev: '기타', tax: '', from: '사업용 통장' },
+  '기타출금': { title: '대표자 입금·인출', ev: '기타', tax: '', from: '사업용 통장' },
+  '계좌이체': { from: '스마트스토어 정산', to: '사업용 통장' },
+};
+function fillSelect(el, vals, blank) { el.innerHTML = (blank ? '<option value="">-</option>' : '') + vals.map((v) => `<option>${esc(v)}</option>`).join(''); }
+function pick(el, v) { if (v != null && [...el.options].some((o) => o.value === v)) el.value = v; }
+function setKind(k, keep) {
+  S.kind = k;
+  document.querySelectorAll('.chip').forEach((c) => c.setAttribute('aria-pressed', c.dataset.k === k));
+  const t = k === '계좌이체';
+  document.querySelectorAll('.js-nt').forEach((x) => x.classList.toggle('hide', t));
+  document.querySelectorAll('.js-t').forEach((x) => x.classList.toggle('hide', !t));
+  $('fFromLab').textContent = t ? '보내는 계좌' : IN_K.includes(k) ? '들어온 계좌' : '나간 계좌·결제수단';
+  if (!keep) { const d = DEFAULTS[k] || {}; pick($('fTitle'), d.title); pick($('fEv'), d.ev); pick($('fTax'), d.tax); pick($('fFrom'), d.from); pick($('fTo'), d.to); }
+  updateVat();
+}
+function formEntry() {
+  return { date: $('fDate').value, kind: S.kind, desc: $('fDesc').value.trim(), party: $('fParty').value.trim(),
+    title: $('fTitle').value, evidence: $('fEv').value, tax: $('fTax').value, total: toNum($('fTotal').value), vat: null,
+    from: $('fFrom').value, to: $('fTo').value, nodeduct: $('fNo').checked, memo: $('fMemo').value.trim() };
+}
+function updateVat() {
+  const e = formEntry();
+  if (!e.total || S.kind === '계좌이체') { $('vatLine').innerHTML = ''; return; }
+  const v = vatOf(e);
+  $('vatLine').innerHTML = `공급가액 <b>${won(e.total - v)}원</b> · 부가세 <b>${won(v)}원</b>` + (deductible(e) ? ' · 매입세액 공제 대상' : (e.kind === '매입' || e.kind === '비용') ? ' · 공제 안 됨' : '');
+}
+async function save() {
+  const e = formEntry();
+  if (!e.date) return toast('일자를 입력하세요');
+  if (!e.total) return toast('금액을 입력하세요');
+  if (e.kind === '계좌이체' && (!e.to || e.to === e.from)) return toast('받는 계좌를 다르게 고르세요');
+  const b = $('saveBtn'); b.disabled = true; b.textContent = '저장 중…';
+  try {
+    await api('addEntry', e);
+    ['fDesc', 'fTotal', 'fParty', 'fMemo'].forEach((id) => { $(id).value = ''; }); $('fNo').checked = false;
+    await reload();
+    toast(`${e.kind} ${won(e.total)}원을 장부에 적었어요`);
+  } catch (err) { toast('저장 실패: ' + (err.message || err)); }
+  b.disabled = false; b.textContent = '장부에 저장하기';
+}
+
+// ---------- 문자 분석 ----------
+function parseSms(text) {
+  const t = text.replace(/\[Web발신\]/g, ' ').replace(/\s+/g, ' ').trim();
+  if (!t) return null;
+  const r = {};
+  const amt = t.match(/([\d,]{2,})\s*원/); if (amt) r.total = toNum(amt[1]);
+  const md = t.match(/(\d{1,2})[\/.\-](\d{1,2})(?!\d)/);
+  if (md) { const y = S.day.slice(0, 4); r.date = `${y}-${md[1].padStart(2, '0')}-${md[2].padStart(2, '0')}`; }
+  const cancel = /취소/.test(t);
+  if (/카드/.test(t) && /승인|결제|사용/.test(t)) {
+    r.kind = '비용'; r.ev = '신용카드'; r.from = '사업용 카드';
+    const tm = t.match(/\d{1,2}:\d{2}\s*(.+?)(?:\s*누적|\s*잔액|$)/);
+    if (tm) r.party = tm[1].replace(/\(.*?\)/g, '').trim().slice(0, 30);
+    const card = t.match(/(신한|삼성|현대|KB국민|국민|롯데|하나|우리|BC|비씨|NH농협|농협|씨티|IBK기업|기업)\s*카드/);
+    r.memo = (card ? card[0] + ' ' : '') + (cancel ? '승인취소 — 확인 필요' : '');
+  } else if (/입금/.test(t)) {
+    r.kind = '기타입금'; r.from = '사업용 통장';
+    const who = t.match(/입금\s*[\d,]+\s*원?\s*([^\s\d][^\s]*)/); if (who) r.party = who[1];
+    if (/네이버|스마트스토어|와디즈/.test(t)) { r.kind = '계좌이체'; r.from = /와디즈/.test(t) ? '와디즈 정산' : '스마트스토어 정산'; r.to = '사업용 통장'; r.party = /와디즈/.test(t) ? '와디즈' : '네이버'; }
+  } else if (/출금|이체/.test(t)) {
+    r.kind = '비용'; r.from = '사업용 통장'; r.ev = '기타';
+    const who = t.match(/출금\s*[\d,]+\s*원?\s*([^\s\d][^\s]*)/); if (who) r.party = who[1];
+  }
+  return r.total ? r : null;
+}
+function applySms() {
+  const r = parseSms($('sms').value);
+  if (!r) return toast('금액을 찾지 못했어요. 문자 전체를 붙여 넣어 주세요');
+  setKind(r.kind || '비용');
+  if (r.date) $('fDate').value = r.date;
+  $('fTotal').value = won(r.total);
+  if (r.party) { $('fParty').value = r.party; if (!$('fDesc').value) $('fDesc').value = r.party; }
+  pick($('fEv'), r.ev); pick($('fFrom'), r.from); pick($('fTo'), r.to);
+  if (r.memo) $('fMemo').value = r.memo.trim();
+  updateVat();
+  $('fDesc').focus();
+  toast('입력칸을 채웠어요. 계정과목을 확인하고 저장하세요');
+}
+
+// ---------- 영수증 사진 ----------
+// 휴대폰 사진은 수 MB라서, 글씨가 읽힐 만큼(긴 변 1600px)만 줄여 JPEG로 보냅니다.
+function shrinkImage(file) {
+  return new Promise((res, rej) => {
+    const url = URL.createObjectURL(file), img = new Image();
+    img.onload = () => {
+      const k = Math.min(1, 1600 / Math.max(img.width, img.height));
+      const c = document.createElement('canvas');
+      c.width = Math.round(img.width * k); c.height = Math.round(img.height * k);
+      c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+      URL.revokeObjectURL(url);
+      res(c.toDataURL('image/jpeg', 0.85));
+    };
+    img.onerror = () => { URL.revokeObjectURL(url); rej(new Error('사진을 열 수 없어요')); };
+    img.src = url;
+  });
+}
+function rcState(msg, busy) {
+  $('rcStatus').classList.remove('hide'); $('rcStatus').classList.toggle('busy', !!busy); $('rcMsg').textContent = msg;
+  document.querySelectorAll('.rc-pick').forEach((b) => b.toggleAttribute('disabled', !!busy));
+}
+const MAEIP_TITLES = ['상품매입', '원재료매입', '포장재·용기'];
+async function readReceiptFile(file) {
+  if (!file) return;
+  if (!S.demo && !S.d.receiptReady) { $('rcKey').classList.remove('hide'); return toast('먼저 Gemini API 키를 저장하세요'); }
+  try {
+    const dataUrl = await shrinkImage(file);
+    $('rcImg').src = dataUrl;
+    rcState('영수증을 읽는 중…', true);
+    const r = await api('readReceipt', dataUrl.split(',')[1], 'image/jpeg');
+    if (!r || !r.total) { rcState('금액을 찾지 못했어요. 영수증 전체가 나오게 다시 찍어 주세요'); return; }
+    setKind(MAEIP_TITLES.includes(r.title) ? '매입' : '비용');
+    if (/^\d{4}-\d{2}-\d{2}$/.test(r.date)) $('fDate').value = r.date;
+    $('fTotal').value = won(r.total);
+    $('fDesc').value = r.desc || r.party || '';
+    $('fParty').value = r.party || '';
+    pick($('fTitle'), r.title);
+    pick($('fEv'), r.evidence === '간이영수증' ? '기타' : r.evidence);
+    pick($('fTax'), r.tax === '면세' ? '면세' : '과세');
+    pick($('fFrom'), r.pay === '카드' ? '사업용 카드' : r.pay === '현금' ? '현금' : r.pay === '계좌이체' ? '사업용 통장' : null);
+    // 영수증 부가세가 1/11 계산과 다르면(일부 면세 등) 메모로 알려 줌
+    const memo = [r.evidence === '간이영수증' ? '간이영수증' : '', r.vat && Math.abs(r.vat - Math.round(r.total / 11)) > 1 && r.tax !== '면세' ? `영수증 부가세 ${won(r.vat)}원` : '', r.note || ''];
+    $('fMemo').value = memo.filter(Boolean).join(' · ');
+    updateVat();
+    rcState(`${r.party || '영수증'} ${won(r.total)}원 — 아래 칸을 확인하고 저장하세요`);
+    $('saveBtn').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  } catch (err) {
+    rcState('읽기 실패: ' + (err.message || err));
+    if (/키/.test(err.message || '')) $('rcKey').classList.remove('hide');
+  } finally {
+    $('rcCam').value = ''; $('rcFile').value = '';
+  }
+}
+
+// ---------- 시작 ----------
+function monthOptions() {
+  const y = S.day.slice(0, 4);
+  $('month').innerHTML = Array.from({ length: 12 }, (_, i) => `${y}-${String(i + 1).padStart(2, '0')}`).map((m) => `<option value="${m}">${y}년 ${Number(m.slice(5))}월</option>`).join('');
+  $('month').value = S.month;
+}
+async function reload() { S.d = await api('getData'); renderAll(); }
+function bind() {
+  $('chips').innerHTML = ['매출', '매입', '비용', '기타입금', '기타출금', '계좌이체'].map((k) => `<button type="button" class="chip" data-k="${k}">${k}</button>`).join('');
+  $('chips').addEventListener('click', (ev) => { const c = ev.target.closest('.chip'); if (c) setKind(c.dataset.k); });
+  fillSelect($('fTitle'), S.d.titles, true); fillSelect($('fEv'), S.d.evidences); fillSelect($('fTax'), S.d.taxes, true);
+  const accs = S.d.accounts.map((a) => a.name); fillSelect($('fFrom'), accs); fillSelect($('fTo'), accs);
+  ['fTotal', 'fTax', 'fEv', 'fNo'].forEach((id) => $(id).addEventListener('input', updateVat));
+  ['fTax', 'fEv', 'fNo'].forEach((id) => $(id).addEventListener('change', updateVat));
+  $('fTotal').addEventListener('blur', () => { const n = toNum($('fTotal').value); $('fTotal').value = n ? won(n) : ''; });
+  $('saveBtn').addEventListener('click', save);
+  $('smsBtn').addEventListener('click', applySms);
+  $('smsClear').addEventListener('click', () => { $('sms').value = ''; });
+  ['rcCam', 'rcFile'].forEach((id) => $(id).addEventListener('change', (ev) => readReceiptFile(ev.target.files[0])));
+  if (!S.demo && !S.d.receiptReady) $('rcKey').classList.remove('hide');
+  $('rcKeyBtn').addEventListener('click', async () => {
+    const k = $('rcKeyIn').value.trim(); if (!k) return toast('API 키를 붙여 넣으세요');
+    try { await api('setGeminiKey', k); S.d.receiptReady = true; $('rcKeyIn').value = ''; $('rcKey').classList.add('hide'); toast('키를 저장했어요. 이제 영수증을 찍어 보세요'); }
+    catch (err) { toast(err.message || String(err)); }
+  });
+  $('goalBtn').addEventListener('click', async () => {
+    const n = toNum($('goalIn').value); if (!n) return toast('목표 금액을 입력하세요');
+    S.d.goal = await api('setGoal', n); $('goalIn').value = ''; renderHero(); toast(`이번 달 목표를 ${won(n)}원으로 정했어요`);
+  });
+  $('goalIn').addEventListener('keydown', (e) => { if (e.key === 'Enter') $('goalBtn').click(); });
+  $('day').addEventListener('change', () => {
+    if (!$('day').value) return;
+    const yChanged = $('day').value.slice(0, 4) !== S.day.slice(0, 4);
+    S.day = $('day').value; S.month = S.day.slice(0, 7); $('fDate').value = S.day;
+    if (yChanged) monthOptions(); else $('month').value = S.month;
+    renderAll();
+  });
+  $('month').addEventListener('change', () => { S.month = $('month').value; renderMonth(); renderCharts(); if (S.list === 'month') renderList(); });
+  $('listSeg').addEventListener('click', (ev) => {
+    const b = ev.target.closest('button'); if (!b) return;
+    S.list = b.dataset.m; $('listSeg').querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', x === b)); renderList();
+  });
+  $('listBody').addEventListener('click', async (ev) => {
+    const b = ev.target.closest('.del'); if (!b) return;
+    const e = S.d.entries.find((x) => x.row === Number(b.dataset.row)); if (!e) return;
+    if (!confirm(`${e.date} ${e.desc || e.kind} ${won(e.total)}원\n이 거래를 장부에서 지울까요?`)) return;
+    try { await api('deleteEntry', e.row, { date: e.date, desc: e.desc, total: e.total }); await reload(); toast('지웠어요'); }
+    catch (err) { toast('삭제 실패: ' + (err.message || err)); }
+  });
+}
+async function start() {
+  if (S.demo) $('demoBar').classList.remove('hide');
+  else api('appUrl').then((u) => { $('toCrm').href = u + '?page=crm'; }).catch(() => {});
+  try { S.d = await api('getData'); }
+  catch (err) { $('app').innerHTML = `<div class="loading">장부를 불러오지 못했어요.<br>${esc(err.message || err)}</div>`; return; }
+  $('app').innerHTML = ''; $('app').appendChild($('tpl').content.cloneNode(true));
+  $('biz').textContent = (S.d.bizName || '훼이맵').replace(/\(.*\)/, '');
+  S.day = S.d.today; S.month = S.day.slice(0, 7);
+  $('day').value = S.day; $('fDate').value = S.day;
+  monthOptions(); bind(); setKind('비용'); drawSky(); renderAll();
+}
+
+// ---------- 데모 데이터 (구글 시트 밖에서 열었을 때만 사용) ----------
+const DEMO = (() => {
+  let row = 5;
+  const E = (date, kind, desc, party, title, evidence, tax, total, from, to, memo) =>
+    ({ row: row++, date, kind, desc, party, title: title || '', evidence: evidence || '', tax: tax || '', total, vat: null, from, to: to || '', nodeduct: false, memo: memo || '' });
+  const data = {
+    bizName: '훼이맵(FateMap)', year: 2026, today: '2026-10-21', goal: 3000000,
+    accounts: [{ name: '사업용 통장', opening: 3000000 }, { name: '사업용 카드', opening: 0 }, { name: '현금', opening: 200000 }, { name: '스마트스토어 정산', opening: 0 }, { name: '와디즈 정산', opening: 0 }],
+    kinds: ['매출', '매입', '비용', '기타입금', '기타출금', '계좌이체'],
+    titles: ['상품매출', '제품매출', '펀딩매출(와디즈)', '기타수입', '상품매입', '원재료매입', '포장재·용기', '판매수수료', '광고선전비', '운반비', '지급수수료', '통신비', '소모품비', '도서인쇄비', '교육훈련비', '임차료', '수도광열비', '여비교통비', '차량유지비', '복리후생비', '접대비', '세금과공과', '이자비용', '대표자 입금·인출', '기타'],
+    evidences: ['세금계산서', '계산서', '신용카드', '현금영수증', '기타'], taxes: ['과세', '면세', '영세'],
+    entries: [
+      E('2026-10-02', '매출', '아로마테라피 20 세트', '스마트스토어', '상품매출', '신용카드', '과세', 398000, '스마트스토어 정산'),
+      E('2026-10-05', '비용', '인스타그램 광고', 'Meta', '광고선전비', '신용카드', '과세', 110000, '사업용 카드'),
+      E('2026-10-08', '매입', '10ml 갈색 공병 200개', '용기 거래처', '포장재·용기', '세금계산서', '과세', 110000, '사업용 통장'),
+      E('2026-10-10', '매출', '와디즈 펀딩 정산분', '와디즈', '펀딩매출(와디즈)', '신용카드', '과세', 995000, '와디즈 정산'),
+      E('2026-10-13', '비용', '향기카드 인쇄', '인쇄소', '도서인쇄비', '세금계산서', '과세', 88000, '사업용 통장'),
+      E('2026-10-15', '계좌이체', '와디즈 정산금 입금', '와디즈', '', '', '', 905000, '와디즈 정산', '사업용 통장'),
+      E('2026-10-15', '비용', '와디즈 수수료', '와디즈', '판매수수료', '세금계산서', '과세', 90000, '와디즈 정산'),
+      E('2026-10-20', '매출', '스마트스토어 판매 (10/20 주문분)', '스마트스토어', '상품매출', '신용카드', '과세', 132000, '스마트스토어 정산'),
+      E('2026-10-20', '비용', '택배비', '택배사', '운반비', '신용카드', '과세', 33000, '사업용 카드'),
+      E('2026-10-21', '매입', '라벤더 에센셜오일 원료', '원료 거래처', '원재료매입', '세금계산서', '과세', 550000, '사업용 통장'),
+      E('2026-10-21', '비용', '스마트스토어 판매수수료', '네이버', '판매수수료', '세금계산서', '과세', 4000, '스마트스토어 정산'),
+      E('2026-10-21', '계좌이체', '스마트스토어 정산금 입금', '네이버', '', '', '', 526000, '스마트스토어 정산', '사업용 통장'),
+      E('2026-10-21', '매출', '공방 현장 판매 (실습키트)', '개인 고객', '제품매출', '현금영수증', '과세', 55000, '현금'),
+      E('2026-10-21', '비용', '사무용 소모품', '문구점', '소모품비', '기타', '과세', 11000, '현금', '', '간이영수증'),
+    ],
+    items: [
+      { code: 'P001', name: '아로마테라피 20 세트', unit: '세트', stock: 4, safe: 3, status: '정상' },
+      { code: 'R001', name: '라벤더 에센셜오일', unit: '병', stock: 2, safe: 2, status: '발주필요' },
+      { code: 'B001', name: '10ml 갈색 공병', unit: '개', stock: 497, safe: 200, status: '정상' },
+      { code: 'B002', name: '세트 패키지 박스', unit: '개', stock: 8, safe: 10, status: '발주필요' },
+      { code: 'K001', name: '실습키트 구성품', unit: '세트', stock: 9, safe: 5, status: '정상' },
+    ],
+  };
+  const copy = () => JSON.parse(JSON.stringify(data));
+  return {
+    getData: copy,
+    addEntry: (e) => { data.entries.push({ ...e, row: row++ }); return row - 1; },
+    deleteEntry: (r) => { data.entries = data.entries.filter((x) => x.row !== r); return true; },
+    setGoal: (n) => (data.goal = n),
+    setGeminiKey: () => true,
+    readReceipt: () => new Promise((r) => setTimeout(() => r({ date: '2026-10-21', party: '오피스디포 강남점', desc: 'A4용지 외 2건', total: 23800, vat: 2164, tax: '과세', pay: '카드', evidence: '신용카드', title: '소모품비', note: '' }), 900)),
+  };
+})();
+
+start();
+</script>
+</body>
+</html>
