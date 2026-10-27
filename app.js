@@ -957,3 +957,25 @@ document.addEventListener('click', e => {
   s += `<g class="shoot"><line x1="0" y1="0" x2="140" y2="0" stroke="url(#trail)" stroke-width="1.6" stroke-linecap="round"/></g></svg>`;
   sky.innerHTML = s;
 })();
+
+// 히어로 소개 영상: 소리 없이 자동 반복, 버튼을 누른 사람만 소리를 들음. 화면 밖에선 멈춤.
+(() => {
+  const video = document.getElementById('hero-video'), btn = document.getElementById('hero-video-sound');
+  if (!video || !btn) return;
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) { video.removeAttribute('autoplay'); video.pause(); }
+  btn.addEventListener('click', () => {
+    const on = video.muted;
+    video.muted = !on;
+    if (on) { video.currentTime = 0; video.play().catch(() => {}); }
+    btn.textContent = on ? '🔇 소리 끄기' : '🔊 소리 켜기';
+    btn.setAttribute('aria-pressed', String(on));
+  });
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) { if (!reduce || !video.muted) video.play().catch(() => {}); }
+      else video.pause();
+    }, { threshold: 0.25 }).observe(video);
+  }
+})();
+
