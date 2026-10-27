@@ -12,6 +12,10 @@ const SEEN_LIMIT = 5000; // 파일이 끝없이 커지지 않도록 최근 ID만
 const NOTICES_PATH = fileURLToPath(new URL('../data/notices.json', import.meta.url));
 const UNDATED_KEEP_DAYS = 60; // 마감일 없는(상시) 공고를 페이지에 남겨 두는 기간
 const DRY_RUN = process.env.DRY_RUN === '1';
+// 수동 실행은 오늘 이미 보냈어도 다시 보낸다.
+const FORCE = process.env.FORCE_RUN === '1';
+// 아침 예약 실행 중 마지막 회차. 수집이 실패해도 이때는 실패 안내 메일을 보낸다.
+const FINAL_ATTEMPT = process.env.FINAL_ATTEMPT === '1';
 
 const SOURCES = [
   ['기업마당', fetchBizinfo],
@@ -20,15 +24,16 @@ const SOURCES = [
 async function loadSeen() {
   try {
     const data = JSON.parse(await readFile(SEEN_PATH, 'utf8'));
-    return Array.isArray(data.ids) ? data.ids : [];
+    return { ids: Array.isArray(data.ids) ? data.ids : [], lastSent: data.lastSent || '' };
   } catch {
-    return [];
+    return { ids: [], lastSent: '' };
   }
 }
 
-async function saveSeen(ids) {
+// lastSent: 메일을 보낸 마지막 날짜. 같은 날 예약 실행이 여러 번 돌아도 메일은 한 번만 간다.
+async function saveSeen(ids, lastSent) {
   const trimmed = ids.slice(-SEEN_LIMIT);
-  await writeFile(SEEN_PATH, JSON.stringify({ ids: trimmed }, null, 2) + '\n');
+  await writeFile(SEEN_PATH, JSON.stringify({ lastSent, ids: trimmed }, null, 2) + '\n');
 }
 
 function daysBetween(from, to) {
@@ -61,9 +66,14 @@ async function saveNotices(picked, today) {
 
 async function main() {
   const today = todayKst();
-  const seenIds = await loadSeen();
+  const { ids: seenIds, lastSent } = await loadSeen();
+  if (lastSent === today && !FORCE && !DRY_RUN) {
+    console.log(`[건너뜀] 오늘(${today}) 메일은 이미 보냈습니다`);
+    return;
+  }
   const seen = new Set(seenIds);
   const notes = [];
+  let failedSources = 0;
 
   // 1. 수집: 한 곳이 실패해도 나머지는 계속 진행
   const collected = [];
@@ -74,8 +84,15 @@ async function main() {
       collected.push(...items);
     } catch (err) {
       console.error(`[수집] ${name} 건너뜀: ${err.message}`);
+      failedSources++;
       notes.push(`${name} 수집 실패로 이번 메일에서 빠졌습니다 (${err.message})`);
     }
+  }
+
+  // 모든 수집처가 실패하면 빈 메일 대신 다음 예약 실행에서 다시 시도한다.
+  if (failedSources === SOURCES.length && !FINAL_ATTEMPT && !FORCE && !DRY_RUN) {
+    console.log('[수집] 모두 실패해 메일을 보내지 않고 다음 예약 실행에서 다시 시도합니다');
+    return;
   }
 
   // 2. 중복·기발송 제거 후 필터
@@ -100,7 +117,8 @@ async function main() {
   console.log(`[메일] 발송 완료: ${mail.subject}`);
 
   // 5. 판단이 끝난 공고("하" 포함)는 다시 보내지 않도록 기록. 판단 실패분은 다음 날 재시도.
-  await saveSeen([...seenIds, ...judged.map((it) => it.id)]);
+  // 수집에 실패한 날은 lastSent를 남기지 않아, 이후 수동 실행 등으로 다시 받을 수 있게 한다.
+  await saveSeen([...seenIds, ...judged.map((it) => it.id)], failedSources ? lastSent : today);
   await saveNotices(picked, today);
 }
 
