@@ -958,24 +958,33 @@ document.addEventListener('click', e => {
   sky.innerHTML = s;
 })();
 
-// 히어로 소개 영상: 소리 없이 자동 반복, 버튼을 누른 사람만 소리를 들음. 화면 밖에선 멈춤.
+// 히어로 소개 영상: 소리 없이 계속 반복 재생, 버튼을 누른 사람만 소리를 들음. 화면 밖에선 멈춤.
+// 휴대폰의 저전력 모드·데이터 절약 모드는 자동 재생을 막으므로, 첫 터치 때 다시 재생을 시도한다.
 (() => {
   const video = document.getElementById('hero-video'), btn = document.getElementById('hero-video-sound');
   if (!video || !btn) return;
-  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduce) { video.removeAttribute('autoplay'); video.pause(); }
+  video.muted = true; video.defaultMuted = true; video.playsInline = true;
+  video.setAttribute('webkit-playsinline', '');
+  let visible = true;
+  const play = () => { if (visible && video.paused) video.play().catch(() => {}); };
+  const kick = () => { play(); if (!video.paused) ['touchstart', 'pointerdown', 'scroll'].forEach(ev => window.removeEventListener(ev, kick)); };
+  ['touchstart', 'pointerdown', 'scroll'].forEach(ev => window.addEventListener(ev, kick, { passive: true }));
+  video.addEventListener('canplay', play);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) play(); });
   btn.addEventListener('click', () => {
     const on = video.muted;
     video.muted = !on;
-    if (on) { video.currentTime = 0; video.play().catch(() => {}); }
+    if (on) video.currentTime = 0;
+    video.play().catch(() => {});
     btn.textContent = on ? '🔇 소리 끄기' : '🔊 소리 켜기';
     btn.setAttribute('aria-pressed', String(on));
   });
   if ('IntersectionObserver' in window) {
     new IntersectionObserver(([e]) => {
-      if (e.isIntersecting) { if (!reduce || !video.muted) video.play().catch(() => {}); }
-      else video.pause();
-    }, { threshold: 0.25 }).observe(video);
+      visible = e.isIntersecting;
+      visible ? play() : video.pause();
+    }, { threshold: 0.1 }).observe(video);
   }
+  play();
 })();
 
