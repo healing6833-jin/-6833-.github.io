@@ -86,6 +86,17 @@ h1,h2,h3,h4{ font-family:var(--serif); line-height:1.35; margin:0; letter-spacin
 .nav a:not(.nav-cta)::after{ content:""; position:absolute; left:0; right:0; bottom:-6px; height:2px; background:var(--gold); transform:scaleX(0); transition:transform .25s; }
 .nav a.active::after, .nav a:hover::after{ transform:scaleX(1); }
 .nav-cta{ padding:8px 18px; border-radius:999px; background:var(--gold); color:#1D2147 !important; font-weight:700; opacity:1 !important; }
+/* 언어 선택 */
+.sr-only{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+.lang{ position:relative; flex:none; }
+.lang::before{ content:"🌐"; position:absolute; left:10px; top:50%; transform:translateY(-50%); font-size:13px; pointer-events:none; }
+.lang select{ appearance:none; -webkit-appearance:none; font:inherit; font-size:13.5px; color:inherit; background:transparent; border:1px solid currentColor; border-radius:999px; padding:6px 14px 6px 30px; cursor:pointer; opacity:.9; }
+.lang select:hover{ opacity:1; }
+.lang option{ color:#1D2147; background:#fff; }
+/* 구글 번역이 끼워 넣는 상단 막대와 말풍선 숨기기 */
+iframe.skiptranslate, .goog-te-banner-frame, #goog-gt-tt, .goog-te-balloon-frame{ display:none !important; }
+body{ top:0 !important; }
+.goog-text-highlight{ background:none !important; box-shadow:none !important; }
 .menu-btn{ display:none; width:42px; height:42px; background:none; border:none; position:relative; cursor:pointer; }
 .menu-btn span{ position:absolute; left:10px; width:22px; height:2px; background:currentColor; border-radius:2px; transition:transform .3s, opacity .3s; }
 .menu-btn span:nth-child(1){ top:14px; } .menu-btn span:nth-child(2){ top:20px; } .menu-btn span:nth-child(3){ top:26px; }
