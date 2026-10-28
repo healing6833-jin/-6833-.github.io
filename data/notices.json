@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-27",
+  "updated": "2026-10-28",
   "items": [
     {
       "category": "지원사업",
@@ -60,6 +60,26 @@
       "reason": "경산 소재 소상공인으로 자체 제품을 제작·판매하며 판로 확대 지원과 직접 맞음",
       "url": "https://www.bizinfo.go.kr/sii/siia/selectSIIA200Detail.do?pblancId=PBLN_000000000127444",
       "added": "2026-10-27"
+    },
+    {
+      "category": "지원사업",
+      "title": "2026년 4차 성남 시니어산업혁신센터 고령친화 우수제품 전시 지원사업 모집 공고",
+      "org": "경기도 / 성남시니어산업혁신센터",
+      "deadline": "2026-10-30",
+      "fit": "중",
+      "reason": "고령친화 제품 전시·판로 지원이라 화장품·웰니스 제품 홍보에 일부 활용 가능하나, 모집분야가 고령친화 특화이며 제조·유통 기업 대상이라 자격·품목 적합성 확인 필요.",
+      "url": "https://www.bizinfo.go.kr/sii/siia/selectSIIA200Detail.do?pblancId=PBLN_000000000127478",
+      "added": "2026-10-28"
+    },
+    {
+      "category": "지원사업",
+      "title": "[경북] 2026년 영천시 북안면 상리 돌봄마을 돌봄ㆍ경제 프로그램 실증 지원사업 참여기업(경상북도 사회연대경제기업) 모집공고(영천시 자립형 공동체 돌봄마을 조성사업)",
+      "org": "경상북도 / 지역과소셜비즈",
+      "deadline": "2026-11-02",
+      "fit": "중",
+      "reason": "경북 소재이고 웰니스·교육 콘텐츠가 맞지만, 사회연대경제기업 인증과 3년 이상 업력 확인이 필요함",
+      "url": "https://www.bizinfo.go.kr/sii/siia/selectSIIA200Detail.do?pblancId=PBLN_000000000127491",
+      "added": "2026-10-28"
     }
   ]
 }
