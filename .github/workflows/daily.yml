@@ -1,14 +1,19 @@
 name: 훼이맵 공고 메일
 
 on:
-  # GitHub 예약 실행은 정각에 몰려 1~3시간씩 밀리기도 해서, 정각을 피해 아침에 세 번 예약한다.
+  # 아침 실행은 Claude 예약 작업이 매일 06:52 KST에 workflow_dispatch(force=false)로 시작한다.
+  # GitHub 예약 실행은 1~3시간씩 밀려 아래 두 회차는 예비용이다.
   # 메일은 하루 한 번만 가고(seen.json의 lastSent), 기업마당 접속이 실패하면 다음 회차에서 다시 시도한다.
   # 마지막 회차(09:37 KST)에서도 실패하면 실패 안내 메일을 보낸다.
   schedule:
-    - cron: '37 21 * * *' # 06:37 KST
-    - cron: '37 22 * * *' # 07:37 KST
-    - cron: '37 0 * * *'  # 09:37 KST (마지막 회차)
-  workflow_dispatch: {}
+    - cron: '37 22 * * *' # 07:37 KST (예비)
+    - cron: '37 0 * * *'  # 09:37 KST (예비·마지막 회차)
+  workflow_dispatch:
+    inputs:
+      force:
+        description: '오늘 이미 보냈어도 다시 보내기'
+        type: boolean
+        default: true
 
 permissions:
   contents: write
@@ -38,7 +43,7 @@ jobs:
           BIZINFO_API_KEY: ${{ secrets.BIZINFO_API_KEY }}
           NAVER_SMTP_USER: ${{ secrets.NAVER_SMTP_USER }}
           NAVER_SMTP_PASS: ${{ secrets.NAVER_SMTP_PASS }}
-          FORCE_RUN: ${{ github.event_name == 'workflow_dispatch' && '1' || '' }}
+          FORCE_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.force && '1' || '' }}
           FINAL_ATTEMPT: ${{ github.event.schedule == '37 0 * * *' && '1' || '' }}
 
       - name: seen.json·notices.json 커밋
