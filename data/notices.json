@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-28",
+  "updated": "2026-10-29",
   "items": [
     {
       "category": "지원사업",
@@ -9,16 +9,6 @@
       "fit": "중",
       "reason": "설립 7년 이내 중소기업이면 자격 가능하나 기술개발제품 12종 또는 관련 인증 보유가 필요해 확인이 요구됨",
       "url": "https://www.bizinfo.go.kr/sii/siia/selectSIIA200Detail.do?pblancId=PBLN_000000000127379",
-      "added": "2026-10-25"
-    },
-    {
-      "category": "지원사업",
-      "title": "[경북] 대구한의대학교 글로컬대학(특성화지방대학) K-MEDI AI Innovation 창업사관학교 예비창업자 모집 공고",
-      "org": "경상북도 / 대구한의대학교",
-      "deadline": "2026-10-28",
-      "fit": "중",
-      "reason": "경산 지역과 화장품·천연소재 분야는 맞지만, 예비창업자 또는 창업 1년 미만 조건의 업력 확인이 필요합니다.",
-      "url": "https://www.bizinfo.go.kr/sii/siia/selectSIIA200Detail.do?pblancId=PBLN_000000000127394",
       "added": "2026-10-25"
     },
     {
@@ -80,6 +70,26 @@
       "reason": "경북 소재이고 웰니스·교육 콘텐츠가 맞지만, 사회연대경제기업 인증과 3년 이상 업력 확인이 필요함",
       "url": "https://www.bizinfo.go.kr/sii/siia/selectSIIA200Detail.do?pblancId=PBLN_000000000127491",
       "added": "2026-10-28"
+    },
+    {
+      "category": "지원사업",
+      "title": "2026년 바이오글로벌 사업화지원센터 기업지원사업 상시 공고",
+      "org": "산업통상부 / 한국바이오특화센터협의회",
+      "deadline": "",
+      "fit": "중",
+      "reason": "대상은 바이오 생체활성제품 활용 영리기업이며 해외마케팅 지원은 유용하나, 바이오 소재 활용 여부와 기술지원 요건 확인이 필요함",
+      "url": "https://www.bizinfo.go.kr/sii/siia/selectSIIA200Detail.do?pblancId=PBLN_000000000127513",
+      "added": "2026-10-29"
+    },
+    {
+      "category": "지원사업",
+      "title": "[경북] 2026년 K-통합 마케팅 생태계 조성 사업 오프라인 특판전(롯데백화점(인천점)) 참가기업 모집 공고",
+      "org": "경상북도 / 경상북도경제진흥원",
+      "deadline": "2026-11-13",
+      "fit": "상",
+      "reason": "경북 경산 소재 소상공인으로 제품 직접 제조가 가능하고 웰니스 제품 판로 확대에 직접 부합",
+      "url": "https://www.bizinfo.go.kr/sii/siia/selectSIIA200Detail.do?pblancId=PBLN_000000000127508",
+      "added": "2026-10-29"
     }
   ]
 }
