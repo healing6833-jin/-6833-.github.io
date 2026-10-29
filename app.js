@@ -11,6 +11,11 @@ const SITE = {
   formEndpoint: '',
   // 탈리 폼 ID (https://tally.so/r/ 뒤의 글자). 채우면 문의 칸이 탈리 폼으로 바뀝니다.
   tallyId: 'q5ZJ2Y',
+  // 상담 시간 예약 — Make 웹훅 주소 (https://hook.○○.make.com/…). 채우면 문의 칸 위에 '시간 예약'이 생깁니다.
+  bookingHook: '',
+  // 요일(0=일 … 6=토) · 시작~끝 시각 · 1회 길이(분) · 며칠 앞까지 · 최소 몇 시간 전까지 받을지
+  booking: { days:[1,2,3,4,5], open:10, close:18, minutes:60, aheadDays:21, leadHours:12,
+    programs:['1:1 오행·별자리 아로마 컨설팅', '아로마 케어', '나만의 블렌딩 클래스'] },
 };
 // 주소가 생기면 채워 주세요. 비어 있으면 버튼이 예약 문의로 연결됩니다.
 const LINKS = {
@@ -784,7 +789,141 @@ function tallySrc(program, note){
   document.body.appendChild(s);
 })();
 
+/* ---------- 상담 시간 예약 (Make 웹훅 ↔ 구글 캘린더) ---------- */
+// Make에 보내는 것: GET ?action=slots&date=2026-11-03  → {"busy":[{"start":"…","end":"…"}]}
+//                  POST action=book, name, tel, program, start, end, message → {"ok":true} 또는 {"ok":false,"reason":"taken"}
+// 시간은 모두 한국 시간(+09:00) 기준
+const booking = $('#booking');
+const BK = SITE.booking;
+const KST = 9 * 3600e3;
+const pad2 = n => String(n).padStart(2, '0');
+const kstDate = d => new Date(d.getTime() + KST).toISOString().slice(0, 10);
+// 그날 0시(한국 시간)에서 h시간 m분 뒤
+const kstAt = (date, h, m = 0) => new Date(new Date(`${date}T00:00:00+09:00`).getTime() + (h * 60 + m) * 60e3);
+const busyCache = {};
+let bkDate = '', bkSlot = null;
+
+function bookingSlots(){
+  const out = [];
+  for (let t = BK.open * 60; t + BK.minutes <= BK.close * 60; t += BK.minutes) out.push(t);
+  return out;
+}
+// 구글 캘린더 일정 → [시작, 끝] (종일 일정은 그날 전체를 막음)
+function busyRange(ev){
+  const one = v => (v && typeof v === 'object') ? (v.dateTime || v.date) : v;
+  const s = one(ev.start), e = one(ev.end) || s;
+  if (!s) return null;
+  if (String(s).includes('T')) return [new Date(s), new Date(e)];
+  return [kstAt(s, 0), e !== s ? kstAt(e, 0) : kstAt(s, 24)];
+}
+async function loadBusy(date){
+  if (busyCache[date]) return busyCache[date];
+  const res = await fetch(`${SITE.bookingHook}?${new URLSearchParams({action:'slots', date})}`);
+  if (!res.ok) throw new Error(res.status);
+  // 그날 일정이 하나도 없으면 Make가 JSON 대신 'Accepted'만 돌려줄 수 있음 → 빈 날로 봄
+  let data = {};
+  try { data = JSON.parse(await res.text()); } catch (_) {}
+  return (busyCache[date] = (data.busy || []).map(busyRange).filter(Boolean));
+}
+function renderDates(){
+  const box = $('#booking-dates'), now = new Date(), wk = '일월화수목금토';
+  let html = '';
+  for (let i = 0; i <= BK.aheadDays; i++){
+    const date = kstDate(new Date(now.getTime() + i * 864e5)), day = new Date(`${date}T12:00:00+09:00`).getUTCDay();
+    if (!BK.days.includes(day)) continue;
+    // 받을 수 있는 시간이 하나도 안 남은 날은 건너뜀
+    const last = kstAt(date, 0, bookingSlots().at(-1));
+    if (last - now < BK.leadHours * 3600e3) continue;
+    html += `<button type="button" class="booking-date" role="radio" aria-checked="false" data-date="${date}"><small>${+date.slice(5, 7)}월 ${wk[day]}</small><b>${+date.slice(8)}</b></button>`;
+  }
+  box.innerHTML = html || '<p class="booking-msg">지금은 예약 가능한 날짜가 없어요. 아래 문의로 남겨 주세요.</p>';
+}
+async function pickDate(date){
+  bkDate = date; bkSlot = null;
+  $$('.booking-date', booking).forEach(b => b.setAttribute('aria-checked', String(b.dataset.date === date)));
+  const [, m, d] = date.split('-');
+  $('#booking-date-text').textContent = `· ${+m}월 ${+d}일`;
+  const box = $('#booking-slots');
+  box.innerHTML = '<p class="booking-msg">비어 있는 시간을 확인하는 중…</p>';
+  let busy;
+  try { busy = await loadBusy(date); }
+  catch (_) { box.innerHTML = '<p class="booking-msg">시간표를 불러오지 못했어요. 잠시 뒤 다시 누르시거나 아래 문의 · 전화로 남겨 주세요.</p>'; return; }
+  if (bkDate !== date) return;
+  const now = Date.now();
+  const html = bookingSlots().map(t => {
+    const s = kstAt(date, 0, t), e = new Date(s.getTime() + BK.minutes * 60e3);
+    const off = s - now < BK.leadHours * 3600e3 || busy.some(([bs, be]) => s < be && e > bs);
+    return `<button type="button" class="booking-slot" role="radio" aria-checked="false" data-t="${t}"${off ? ' disabled aria-label="예약 마감"' : ''}>${pad2(t / 60 | 0)}:${pad2(t % 60)}</button>`;
+  });
+  box.innerHTML = html.join('');
+  if (!$('.booking-slot:not(:disabled)', box)) box.insertAdjacentHTML('beforeend', '<p class="booking-msg">이날은 예약이 모두 찼어요. 다른 날짜를 골라 주세요.</p>');
+}
+(function initBooking(){
+  if (!SITE.bookingHook) return;
+  booking.hidden = false; $('#booking-or').hidden = false;
+  const h = n => `${pad2(n)}:00`, wk = '일월화수목금토';
+  $('#booking-rule').textContent = `${BK.days.map(d => wk[d]).join('·')} ${h(BK.open)}–${h(BK.close)} · 1회 ${BK.minutes}분 · 100% 예약제`;
+  $('#booking-program').innerHTML = BK.programs.map(p => `<option>${esc(p)}</option>`).join('');
+  renderDates();
+  const first = $('.booking-date', booking);
+  if (first) pickDate(first.dataset.date);
+  booking.addEventListener('click', e => {
+    const d = e.target.closest('.booking-date'); if (d){ pickDate(d.dataset.date); return; }
+    const s = e.target.closest('.booking-slot'); if (!s || s.disabled) return;
+    bkSlot = +s.dataset.t;
+    $$('.booking-slot', booking).forEach(b => b.setAttribute('aria-checked', String(b === s)));
+    $('#booking-error').textContent = '';
+  });
+  booking.addEventListener('submit', async e => {
+    e.preventDefault();
+    const err = $('#booking-error'), f = booking;
+    const name = f.name.value.trim(), tel = f.tel.value.trim();
+    const telOk = /^[0-9\-+\s]{9,}$/.test(tel);
+    f.name.classList.toggle('is-invalid', !name);
+    f.tel.classList.toggle('is-invalid', !telOk);
+    if (bkSlot === null){ err.textContent = '날짜와 시간을 골라 주세요.'; return; }
+    if (!name){ err.textContent = '성함을 입력해 주세요.'; f.name.focus(); return; }
+    if (!telOk){ err.textContent = '연락처를 올바르게 입력해 주세요.'; f.tel.focus(); return; }
+    if (!f.agree.checked){ err.textContent = '개인정보 수집·이용에 동의해 주세요.'; return; }
+    err.textContent = '';
+
+    const s = kstAt(bkDate, 0, bkSlot), en = new Date(s.getTime() + BK.minutes * 60e3);
+    const iso = d => new Date(d.getTime() + KST).toISOString().slice(0, 19) + '+09:00';
+    const when = `${+bkDate.slice(5, 7)}월 ${+bkDate.slice(8)}일 ${pad2(bkSlot / 60 | 0)}:${pad2(bkSlot % 60)}`;
+    const body = new URLSearchParams({action:'book', name, tel, program:f.program.value, start:iso(s), end:iso(en), when, message:f.message.value.trim()});
+    const btn = $('#booking-submit');
+    btn.disabled = true; btn.textContent = '예약 신청 중…';
+    let result;
+    try {
+      const res = await fetch(SITE.bookingHook, {method:'POST', body});
+      const text = await res.text();
+      try { result = JSON.parse(text); } catch (_) { result = {ok:res.ok}; }
+    } catch (_) { result = {ok:false, reason:'network'}; }
+    btn.disabled = false; btn.textContent = '이 시간으로 예약 신청';
+
+    if (result.ok){
+      const done = $('#booking-done');
+      done.innerHTML = `<h4>예약 신청이 접수되었어요</h4><p>${esc(name)} 님, <b>${when}</b> ${esc(f.program.value)} 시간을 잡아 두었어요.<br>대표가 확인한 뒤 확정 알림톡을 보내드릴게요.</p>`;
+      done.hidden = false;
+      delete busyCache[bkDate];
+      f.reset(); pickDate(bkDate);
+      done.scrollIntoView({behavior:'smooth', block:'center'});
+    } else if (result.reason === 'taken'){
+      err.textContent = '방금 다른 분이 이 시간을 예약했어요. 다른 시간을 골라 주세요.';
+      delete busyCache[bkDate]; pickDate(bkDate);
+    } else {
+      err.textContent = `예약을 보내지 못했어요. 잠시 뒤 다시 시도하시거나 ${SITE.phone}로 문자 주세요.`;
+    }
+  });
+})();
+
 function prefillContact(program, note){
+  // 시간 예약이 열려 있고 예약 가능한 프로그램이면 예약 칸에 담음
+  if (!booking.hidden && BK.programs.includes(program)){
+    $('#booking-program').value = program;
+    if (note) $('#booking-message').value = note;
+    return;
+  }
   if (tallyFrame){ tallyFrame.src = tallySrc(program, note); return; }
   if (program && [...programSel.options].some(o => o.text === program)) programSel.value = program;
   if (note) $('#contact-message').value = note;
@@ -901,7 +1040,10 @@ document.addEventListener('click', e => {
   if (!id || !scrollToId(id)) return;
   e.preventDefault();
   if (location.hash) history.replaceState(null, '', location.pathname + location.search);
-  if (id === 'contact' && a.dataset.prefill) setTimeout(() => $('#contact-form [name=name]').focus({preventScroll:true}), 600);
+  if (id === 'contact' && a.dataset.prefill){
+    const target = !booking.hidden && BK.programs.includes(a.dataset.prefill) ? '#booking [name=name]' : '#contact-form [name=name]';
+    setTimeout(() => $(target).focus({preventScroll:true}), 600);
+  }
 });
 // 다른 곳에서 #주소로 들어온 경우에도 해당 위치로 이동한 뒤 주소는 깔끔하게
 if (location.hash){

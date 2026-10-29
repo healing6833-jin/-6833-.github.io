@@ -389,6 +389,35 @@
       <div class="channels channels-icon" data-channels aria-label="훼이맵 SNS 채널"></div>
     </div>
 
+    <div class="contact-side">
+    <!-- 상담 시간 예약: app.js의 SITE.bookingHook(Make 웹훅 주소)을 채우면 나타납니다 -->
+    <form class="contact-form booking reveal" id="booking" name="booking" novalidate hidden>
+      <div class="full booking-head">
+        <h3>상담 시간 예약</h3>
+        <p class="fine" id="booking-rule"></p>
+      </div>
+      <label class="full">상담 · 프로그램
+        <select name="program" id="booking-program"></select>
+      </label>
+      <div class="full">
+        <p class="booking-label">날짜</p>
+        <div class="booking-dates" id="booking-dates" role="radiogroup" aria-label="날짜 고르기"></div>
+      </div>
+      <div class="full">
+        <p class="booking-label">시간 <span id="booking-date-text"></span></p>
+        <div class="booking-slots" id="booking-slots" role="radiogroup" aria-label="시간 고르기" aria-live="polite"></div>
+      </div>
+      <label><span>성함 <b>*</b></span><input type="text" name="name" required autocomplete="name" placeholder="홍길동"></label>
+      <label><span>연락처 <b>*</b></span><input type="tel" name="tel" required autocomplete="tel" inputmode="tel" placeholder="010-0000-0000"></label>
+      <label class="full">요청사항<textarea name="message" id="booking-message" rows="3" placeholder="컨디션, 좋아하는 향, 피하고 싶은 향을 알려주세요."></textarea></label>
+      <label class="check full"><input type="checkbox" name="agree" value="동의" required> <span>개인정보 수집·이용에 동의합니다. <button type="button" class="link" data-open="privacy">내용 보기</button></span></label>
+      <p class="form-error full" id="booking-error" aria-live="polite"></p>
+      <button type="submit" class="btn btn-gold btn-block full" id="booking-submit">이 시간으로 예약 신청</button>
+      <p class="fine full" style="margin:0">신청하시면 시간을 잡아 두고, 대표가 확인한 뒤 확정 알림톡을 보내드려요.</p>
+      <div class="form-done full" id="booking-done" hidden></div>
+    </form>
+    <p class="booking-or" id="booking-or" hidden>리포트 신청 · 제품 문의 · 그 밖의 문의는 아래에 남겨 주세요</p>
+
     <form class="contact-form reveal" id="contact-form" name="contact" novalidate>
       <label><span>성함 <b>*</b></span><input type="text" name="name" required autocomplete="name" placeholder="홍길동"></label>
       <label><span>연락처 <b>*</b></span><input type="tel" name="tel" required autocomplete="tel" inputmode="tel" placeholder="010-0000-0000"></label>
@@ -419,6 +448,7 @@
       <p class="fine full" style="margin:0">버튼을 누르면 작성하신 내용이 담긴 문자 · 메일 보내기 화면이 열립니다.</p>
       <div class="form-done full" id="form-done" hidden></div>
     </form>
+    </div>
   </div>
 </section>
 
