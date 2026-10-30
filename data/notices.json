@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-30",
+  "updated": "2026-10-31",
   "items": [
     {
       "category": "지원사업",
@@ -9,16 +9,6 @@
       "fit": "중",
       "reason": "설립 7년 이내 중소기업이면 자격 가능하나 기술개발제품 12종 또는 관련 인증 보유가 필요해 확인이 요구됨",
       "url": "https://www.bizinfo.go.kr/sii/siia/selectSIIA200Detail.do?pblancId=PBLN_000000000127379",
-      "added": "2026-10-25"
-    },
-    {
-      "category": "지원사업",
-      "title": "2026년 K-소비재 온-오프라인 판촉 상담회 참가기업 모집 공고(정저우 중부6성 박람회 연계)",
-      "org": "산업통상부 / 대한무역투자진흥공사",
-      "deadline": "2026-10-30",
-      "fit": "중",
-      "reason": "화장품 등 국내 소비재 분야라 업종은 맞지만 중국 내륙 수출 상담회라 실제 해외 판로 준비 여부와 참가 조건 확인이 필요합니다.",
-      "url": "https://www.bizinfo.go.kr/sii/siia/selectSIIA200Detail.do?pblancId=PBLN_000000000127342",
       "added": "2026-10-25"
     },
     {
@@ -53,16 +43,6 @@
     },
     {
       "category": "지원사업",
-      "title": "2026년 4차 성남 시니어산업혁신센터 고령친화 우수제품 전시 지원사업 모집 공고",
-      "org": "경기도 / 성남시니어산업혁신센터",
-      "deadline": "2026-10-30",
-      "fit": "중",
-      "reason": "고령친화 제품 전시·판로 지원이라 화장품·웰니스 제품 홍보에 일부 활용 가능하나, 모집분야가 고령친화 특화이며 제조·유통 기업 대상이라 자격·품목 적합성 확인 필요.",
-      "url": "https://www.bizinfo.go.kr/sii/siia/selectSIIA200Detail.do?pblancId=PBLN_000000000127478",
-      "added": "2026-10-28"
-    },
-    {
-      "category": "지원사업",
       "title": "[경북] 2026년 영천시 북안면 상리 돌봄마을 돌봄ㆍ경제 프로그램 실증 지원사업 참여기업(경상북도 사회연대경제기업) 모집공고(영천시 자립형 공동체 돌봄마을 조성사업)",
       "org": "경상북도 / 지역과소셜비즈",
       "deadline": "2026-11-02",
@@ -90,6 +70,26 @@
       "reason": "경북 경산 소재 소상공인으로 제품 직접 제조가 가능하고 웰니스 제품 판로 확대에 직접 부합",
       "url": "https://www.bizinfo.go.kr/sii/siia/selectSIIA200Detail.do?pblancId=PBLN_000000000127508",
       "added": "2026-10-29"
+    },
+    {
+      "category": "지원사업",
+      "title": "[경북] 제2차 소담 라이브 스테이션 지원사업 참여기업 공고",
+      "org": "경상북도 / 지역과소셜비즈",
+      "deadline": "2026-11-03",
+      "fit": "상",
+      "reason": "경북 소재 소상공인 대상이며 온라인 판로·라이브커머스 지원으로 웰니스 제품 판매에 직접 활용 가능",
+      "url": "https://www.bizinfo.go.kr/sii/siia/selectSIIA200Detail.do?pblancId=PBLN_000000000127591",
+      "added": "2026-10-31"
+    },
+    {
+      "category": "지원사업",
+      "title": "[경북] 2026년 소담스타(SODAM STAR) 육성사업 참여 소상공인 모집 공고",
+      "org": "경상북도 / 지역과소셜비즈",
+      "deadline": "2026-11-03",
+      "fit": "중",
+      "reason": "경북 소재 소상공인 자격은 맞지만 디지털커머스 매출 성과가 선정 조건이라 현재 실적 충족 여부 확인 필요",
+      "url": "https://www.bizinfo.go.kr/sii/siia/selectSIIA200Detail.do?pblancId=PBLN_000000000127590",
+      "added": "2026-10-31"
     }
   ]
 }

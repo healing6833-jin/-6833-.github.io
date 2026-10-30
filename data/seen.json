@@ -1,5 +1,5 @@
 {
-  "lastSent": "2026-10-30",
+  "lastSent": "2026-10-31",
   "ids": [
     "bizinfo:PBLN_000000000127435",
     "bizinfo:PBLN_000000000127432",
@@ -57,6 +57,9 @@
     "bizinfo:PBLN_000000000127549",
     "bizinfo:PBLN_000000000127550",
     "bizinfo:PBLN_000000000127547",
-    "bizinfo:PBLN_000000000127545"
+    "bizinfo:PBLN_000000000127545",
+    "bizinfo:PBLN_000000000127591",
+    "bizinfo:PBLN_000000000127590",
+    "bizinfo:PBLN_000000000127583"
   ]
 }
